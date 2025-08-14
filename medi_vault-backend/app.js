@@ -2,7 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
-const errorHandler = require("./middleware/errorMiddleware");
+const errorHandler = require("./middleware/errorMiddleware"); // Correct import
+const authRoutes = require("./routes/authRoutes");
 
 dotenv.config(); // Load .env file
 
@@ -37,7 +38,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 // Error handling middleware (must be last)
-app.use(errorMiddleware);
+app.use(errorHandler); // <-- corrected here
 
 // Server start
 const PORT = process.env.PORT || 3000;
