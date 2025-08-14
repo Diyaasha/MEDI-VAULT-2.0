@@ -1,10 +1,8 @@
-// app.js
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoutes.js";
-import errorMiddleware from "./middleware/errorMiddleware.js";
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const connectDB = require('./config/db');
+const errorHandler = require("./middleware/errorMiddleware");
 
 dotenv.config(); // Load .env file
 
