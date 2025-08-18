@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { login } from "../api/auth"; // ✅ Import login API
+import { login } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+
+import { toast } from "react-toastify";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,12 +20,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await login(formData); // ✅ Call API
-      alert("Login successful!");
-      console.log("Logged in user:", res.data);
-
-      // Optional redirect after login:
-      // window.location.href = "/dashboard";
+      const res = await login(formData);
+      localStorage.setItem("user", JSON.stringify(res.data)); // save user data
+      toast.success("Login successful!");
+      navigate("/"); // redirect to Home after login
     } catch (err) {
       console.error("Login error:", err.response?.data || err);
       alert(err.response?.data?.message || "Login failed. Invalid credentials.");
