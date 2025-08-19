@@ -1,0 +1,188 @@
+/* ------------------- Medicine Reminder Scoped Styles ------------------- */
+
+/* Page Background ONLY for Medicine Reminder */
+.medicine-reminder-container {
+  font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
+  margin: 0 auto;
+  padding: 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column; /* everything stacks vertically */
+  align-items: center;
+  background: url("/public/medications-1628372_1280.jpg") no-repeat center center/cover;
+  position: relative;
+  color: #fff;
+}
+
+/* Dark overlay for readability */
+.medicine-reminder-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(30, 60, 114, 0.75); /* semi-transparent dark blue overlay */
+  z-index: 0;
+}
+
+.medicine-reminder-container > * {
+  position: relative;
+  z-index: 1; /* bring all content above overlay */
+}
+
+/* Title */
+.medicine-reminder-container h2 {
+  font-size: 2.2rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* Glassmorphism Form */
+.medicine-reminder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 25px;
+  border-radius: 18px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  margin-bottom: 30px; /* space below form */
+}
+
+.medicine-reminder-form label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.medicine-reminder-form input,
+.medicine-reminder-form textarea,
+.medicine-reminder-form button {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+/* Input & Textarea */
+.medicine-reminder-form input,
+.medicine-reminder-form textarea {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.medicine-reminder-form input::placeholder,
+.medicine-reminder-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.medicine-reminder-form input:focus,
+.medicine-reminder-form textarea:focus {
+  outline: none;
+  border: 1px solid #60a5fa;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Submit Button */
+.medicine-reminder-form button {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.medicine-reminder-form button:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+}
+
+/* Reminder Cards stack vertically */
+.reminder-card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 15px auto; /* vertical spacing */
+  max-width: 500px;
+  width: 100%;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.reminder-card:hover {
+  transform: translateY(-5px);
+}
+
+.reminder-card h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.reminder-card p {
+  margin: 6px 0;
+  font-size: 1rem;
+  color: #e2e8f0;
+}
+
+.reminder-card .notes {
+  font-style: italic;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+/* Buttons inside cards */
+.actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.reminder-card button {
+  flex: 1;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  color: white;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.edit-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}

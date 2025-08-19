@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
+import "./MedicineReminder.css";
 
 const MedicineReminder = () => {
   const [reminders, setReminders] = useState([]);
@@ -12,16 +13,16 @@ const MedicineReminder = () => {
   });
   const [editingId, setEditingId] = useState(null);
 
-  const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
+  const token = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).token
+    : null;
   const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
   const fetchReminders = useCallback(async () => {
     if (!token) return;
     try {
       const res = await fetch(`${baseUrl}/api/medicine-reminders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
         const data = await res.json();
@@ -101,9 +102,7 @@ const MedicineReminder = () => {
     try {
       const res = await fetch(`${baseUrl}/api/medicine-reminders/${id}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
         fetchReminders();
@@ -116,116 +115,114 @@ const MedicineReminder = () => {
   };
 
   return (
-    <div style={{ maxWidth: 700, margin: "auto", padding: 20 }}>
-      <h2>Medicine Reminders</h2>
+    <div className="medicine-reminder-page">
+      <div className="medicine-reminder-container">
+        <h2 className="medicine-reminder-title">Medicine Reminders</h2>
 
-      <form onSubmit={handleSubmit} style={{ marginBottom: 40 }}>
-        <input
-          type="text"
-          name="medicineName"
-          placeholder="Medicine Name"
-          value={formData.medicineName}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-        />
-        <input
-          type="text"
-          name="dose"
-          placeholder="Dose (e.g. 500mg)"
-          value={formData.dose}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-        />
-        <input
-          type="text"
-          name="frequency"
-          placeholder="Frequency (e.g. Twice a day)"
-          value={formData.frequency}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-        />
-        <label>
-          Start Date:
+        <form onSubmit={handleSubmit} className="medicine-reminder-form">
           <input
-            type="date"
-            name="startDate"
-            value={formData.startDate}
+            type="text"
+            name="medicineName"
+            placeholder="Medicine Name"
+            value={formData.medicineName}
             onChange={handleChange}
             required
-            style={{ marginLeft: 10, marginBottom: 10 }}
           />
-        </label>
-        <br />
-        <label>
-          End Date:
           <input
-            type="date"
-            name="endDate"
-            value={formData.endDate}
+            type="text"
+            name="dose"
+            placeholder="Dose (e.g. 500mg)"
+            value={formData.dose}
             onChange={handleChange}
-            style={{ marginLeft: 18, marginBottom: 10 }}
+            required
           />
-        </label>
-        <br />
-        <textarea
-          name="notes"
-          placeholder="Notes"
-          value={formData.notes}
-          onChange={handleChange}
-          style={{ width: "100%", marginBottom: 10, padding: 8 }}
-        />
-        <button type="submit">{editingId ? "Update Reminder" : "Add Reminder"}</button>
-        {editingId && (
-          <button
-            type="button"
-            onClick={() => {
-              setFormData({
-                medicineName: "",
-                dose: "",
-                frequency: "",
-                startDate: "",
-                endDate: "",
-                notes: "",
-              });
-              setEditingId(null);
-            }}
-            style={{ marginLeft: 10 }}
-          >
-            Cancel
-          </button>
-        )}
-      </form>
-
-      <div>
-        {reminders.length === 0 && <p>No medicine reminders found.</p>}
-        {reminders.map((r) => (
-          <div
-            key={r._id}
-            style={{
-              border: "1px solid #ccc",
-              borderRadius: 6,
-              padding: 10,
-              marginBottom: 10,
-            }}
-          >
-            <h3>{r.medicineName}</h3>
-            <p>
-              Dose: {r.dose} | Frequency: {r.frequency}
-            </p>
-            <p>
-              From: {new Date(r.startDate).toLocaleDateString()}{" "}
-              {r.endDate && `- To: ${new Date(r.endDate).toLocaleDateString()}`}
-            </p>
-            {r.notes && <p>Notes: {r.notes}</p>}
-            <button onClick={() => handleEdit(r)}>Edit</button>
-            <button onClick={() => handleDelete(r._id)} style={{ marginLeft: 10 }}>
-              Delete
+          <input
+            type="text"
+            name="frequency"
+            placeholder="Frequency (e.g. Twice a day)"
+            value={formData.frequency}
+            onChange={handleChange}
+            required
+          />
+          <label>
+            Start Date:
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label>
+            End Date:
+            <input
+              type="date"
+              name="endDate"
+              value={formData.endDate}
+              onChange={handleChange}
+            />
+          </label>
+          <textarea
+            name="notes"
+            placeholder="Notes"
+            value={formData.notes}
+            onChange={handleChange}
+          />
+          <div className="form-buttons">
+            <button type="submit">
+              {editingId ? "Update Reminder" : "Add Reminder"}
             </button>
+            {editingId && (
+              <button
+                type="button"
+                className="cancel-btn"
+                onClick={() => {
+                  setFormData({
+                    medicineName: "",
+                    dose: "",
+                    frequency: "",
+                    startDate: "",
+                    endDate: "",
+                    notes: "",
+                  });
+                  setEditingId(null);
+                }}
+              >
+                Cancel
+              </button>
+            )}
           </div>
-        ))}
+        </form>
+
+        <div className="medicine-reminders-list">
+          {reminders.length === 0 && (
+            <p className="no-reminders">No medicine reminders found.</p>
+          )}
+          {reminders.map((r) => (
+            <div className="reminder-card" key={r._id}>
+              <h3>{r.medicineName}</h3>
+              <p>
+                <span>Dose:</span> {r.dose} | <span>Frequency:</span> {r.frequency}
+              </p>
+              <p>
+                <span>From:</span> {new Date(r.startDate).toLocaleDateString()}{" "}
+                {r.endDate && (
+                  <> - <span>To:</span> {new Date(r.endDate).toLocaleDateString()}</>
+                )}
+              </p>
+              {r.notes && <p className="notes">Notes: {r.notes}</p>}
+              <div className="actions">
+                <button className="edit-btn" onClick={() => handleEdit(r)}>
+                  Edit
+                </button>
+                <button className="delete-btn" onClick={() => handleDelete(r._id)}>
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
