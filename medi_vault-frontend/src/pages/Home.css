@@ -1,25 +1,11 @@
 /* src/pages/Home.css */
-/* .home-container {
-  text-align: center;
-  margin-top: 100px;
-}
-
-.home-buttons {
-  margin-top: 20px;
-}
-
-.home-buttons button {
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-size: 16px;
-  cursor: pointer;
-} */
 
 body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
+/* Navbar styles */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -79,18 +65,95 @@ body {
   background-color: #2563eb;
 }
 
-/* Existing styles */
-.home-container {
+/* Landing section styles */
+.landing-main {
   text-align: center;
   margin-top: 100px;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.home-buttons {
-  margin-top: 20px;
+.landing-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #fff; /* Or use #fff for readability over the gradient */
+  margin-bottom: 24px;
 }
 
-.home-buttons button {
-  margin: 0 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+.landing-desc {
+  font-size: 1.25rem;
+  color: #eee;
+  margin-bottom: 36px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Get Started button */
+.get-started-btn {
+  background: linear-gradient(90deg, #3ecbff 0%, #ff8c70 100%);
+  color: #fff;
+  border: none;
+  border-radius: 40px;
+  padding: 16px 40px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  align-self: center; /* center horizontally */
+}
+
+.get-started-btn:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+/* Add cursor pointer for nav links for UX */
+.nav-links a:hover {
+  text-decoration: underline;
+}
+.features-section {
+  padding: 40px 0 80px 0;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(280px, 1fr));
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px 24px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.feature-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  transform: translateY(-3px) scale(1.025);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 18px;
+}
+
+.feature-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #191725;
+  margin-bottom: 16px;
+}
+
+.feature-desc {
+  font-size: 1rem;
+  color: #51526f;
 }

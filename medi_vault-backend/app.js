@@ -4,6 +4,7 @@ const cors = require('cors');
 const connectDB = require('./config/db');
 const errorHandler = require("./middleware/errorMiddleware"); // Correct import
 const authRoutes = require("./routes/authRoutes");
+const medicineReminderRoutes = require("./routes/medicineReminderRoutes");
 
 dotenv.config(); // Load .env file
 
@@ -36,6 +37,8 @@ app.get("/health", (req, res) => {
 
 // API routes
 app.use("/api/auth", authRoutes);
+
+app.use("/api/medicine-reminders", medicineReminderRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler); // <-- corrected here
