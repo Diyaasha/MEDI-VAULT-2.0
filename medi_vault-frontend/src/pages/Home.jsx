@@ -141,19 +141,22 @@ function Home() {
         </div>
       </nav>
 
-      <div className="landing-main">
-        <h1 className="landing-title">Your Health, Simplified</h1>
-        <p className="landing-desc">
-          Take control of your wellness journey with our comprehensive health management platform.<br />
-          From medication reminders to finding the right doctor, we've got you covered.
-        </p>
-        <button
-          className="get-started-btn"
-          onClick={() => navigate("/login")}
-        >
-          Get Started Today
-        </button>
-      </div>
+     {!user && (
+  <div className="landing-main">
+    <h1 className="landing-title">Your Health, Simplified</h1>
+    <p className="landing-desc">
+      Take control of your wellness journey with our comprehensive health management platform.<br />
+      From medication reminders to finding the right doctor, we've got you covered.
+    </p>
+    <button
+      className="get-started-btn"
+      onClick={() => navigate("/login")}
+    >
+      Get Started Today
+    </button>
+  </div>
+)}
+
 
       {/* Feature Cards Section */}
       <div className="features-section">
