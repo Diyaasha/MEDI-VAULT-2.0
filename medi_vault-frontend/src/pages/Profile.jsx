@@ -163,8 +163,8 @@ const Profile = () => {
                   <div className="profile-info-value">{userData.height || "N/A"} cm</div>
                 </div>
                 <div className="profile-info-card">
-                  <div className="profile-info-title">Primary Doctor</div>
-                  <div className="profile-info-value">{userData.primaryDoctor || "N/A"}</div>
+                  <div className="profile-info-title">Blood-Glucose Level</div>
+                  <div className="profile-info-value">{userData.blood_glucose || "N/A"}</div>
                 </div>
                 <div className="profile-info-card">
                   <div className="profile-info-title">Eye Power (L)</div>

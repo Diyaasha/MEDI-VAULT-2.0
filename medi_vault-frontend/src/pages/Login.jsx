@@ -35,7 +35,8 @@ const Login = () => {
       {/* Left Section */}
       <div className="login-left">
         <h1>HELLO, FRIEND!</h1>
-        <p>Enter your personal details and start your journey with us</p>
+        <p>Enter your personal details  </p>
+      <p>            Start your journey today with us</p>
       </div>
 
       {/* Right Section */}

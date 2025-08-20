@@ -1,5 +1,5 @@
 .profile-page {
-  background: #ccd1f8;
+  background: #a7c0e7;
   min-height: 100vh;
   padding: 18px;
 }
@@ -65,7 +65,7 @@
 }
 
 .profile-info-title {
-  color: #8e8ca4;
+  color: #8c94a4;
   font-size: 0.98rem;
   margin-bottom: 0.4em;
   font-weight: 500;
@@ -130,8 +130,8 @@
 }
 
 .save-btn {
-  background: #8874ff;
-  color: white;
+  background: #536fd5;
+  color: rgb(255, 255, 255);
   font-weight: 700;
   border: none;
   border-radius: 8px;
@@ -141,7 +141,7 @@
 }
 
 .save-btn:hover {
-  background: #6c55e0;
+  background: #2207ac;
 }
 
 .cancel-btn {
@@ -155,7 +155,7 @@
 }
 
 .edit-btn {
-  background: linear-gradient(90deg, #6a0f7a 0%, #ffb347 100%);
+  background: linear-gradient(90deg, #6d96e8 0%, #a0aa40 100%);
   color: #fff;
   border: none;
   border-radius: 12px;
@@ -169,7 +169,7 @@
 
 .edit-btn:hover,
 .edit-btn:focus {
-  background: linear-gradient(90deg, #ac86da 0%, #4c1d63 100%);
+  background: linear-gradient(90deg, #16387e 0%, #128705 100%);
   box-shadow: 0 4px 14px rgba(255, 160, 53, 0.16);
   outline: none;
 }
