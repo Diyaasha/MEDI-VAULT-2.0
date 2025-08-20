@@ -19,21 +19,38 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await signup(formData);
+  e.preventDefault();
+  try {
+    const res = await signup(formData);
 
-      // save user data locally same as login for consistency
-      localStorage.setItem("user", JSON.stringify(res.data));
+    // save user data locally same as login for consistency
+    localStorage.setItem("user", JSON.stringify(res.data));
 
-      toast.success("Signup successful! Welcome.");
-      navigate("/"); // redirect to Home after signup
+    // Show toast always on signup success
+    toast.success("Signup successful! Welcome.");
 
-    } catch (err) {
-      console.error("Signup error:", err.response?.data || err);
-      alert(err.response?.data?.message || "Signup failed. Try again.");
+    // Fetch profile data to check completeness
+    const profileRes = await fetch(
+      `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/user/profile`,
+      {
+        headers: { Authorization: `Bearer ${res.data.token}` },
+      }
+    );
+    const profileData = await profileRes.json();
+
+    // Redirect based on profile completeness
+    if (!profileData.dob || !profileData.gender) {
+      navigate("/setup-profile");
+    } else {
+      navigate("/");
     }
-  };
+
+  } catch (err) {
+    console.error("Signup error:", err.response?.data || err);
+    alert(err.response?.data?.message || "Signup failed. Try again.");
+  }
+};
+
 
   return (
     <div className="signup-container">

@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const errorHandler = require("./middleware/errorMiddleware"); // Correct import
 const authRoutes = require("./routes/authRoutes");
 const medicineReminderRoutes = require("./routes/medicineReminderRoutes");
+const userRoutes = require("./routes/userRoutes");
 
 dotenv.config(); // Load .env file
 
@@ -39,6 +40,8 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 app.use("/api/medicine-reminders", medicineReminderRoutes);
+
+app.use("/api/user", userRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler); // <-- corrected here

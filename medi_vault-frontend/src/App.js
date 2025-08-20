@@ -1,11 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import MedicineReminder from "./pages/MedicineReminder";
-// Import other feature pages as needed
+import Profile from "./pages/Profile";
+import SetupProfile from "./pages/SetupProfile";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -45,8 +49,27 @@ function App() {
           }
         />
 
-        {/* Add other protected feature routes here wrapping with ProtectedRoute */}
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/setup-profile"
+          element={
+            <ProtectedRoute>
+              <SetupProfile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
+
+      {/* Add ToastContainer here */}
+      <ToastContainer />
     </Router>
   );
 }

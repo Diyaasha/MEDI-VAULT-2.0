@@ -21,7 +21,15 @@ const userSchema = new mongoose.Schema({
     type: String,
      enum: ['patient', 'doctor', 'admin'], 
      default: 'patient' 
-  }
+  },
+  dob: { type: Date },
+gender: { type: String, enum: ['Male', 'Female', 'Other'] },
+bloodGroup: { type: String },
+weight: { type: String },
+height: { type: String },
+eyePowerL: { type: String },
+eyePowerR: { type: String },
+allergies: [{ type: String }],
 }, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

@@ -64,6 +64,7 @@ function Home() {
   };
 
   return (
+    <div className="home-page">
     <>
       <nav className="navbar">
         <div className="navbar-left">
@@ -181,6 +182,7 @@ function Home() {
         </div>
       </div>
     </>
+    </div>
   );
 }
 
