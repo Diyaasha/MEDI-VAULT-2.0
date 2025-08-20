@@ -110,19 +110,28 @@
 }
 
 /* Reminder Cards stack vertically */
+/* Reminder Cards container */
+.medicine-reminders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;              /* space between cards */
+  align-items: center;    /* center horizontally */
+  width: 100%;
+}
+
 .reminder-card {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   padding: 20px;
-  margin: 15px auto; /* vertical spacing */
   max-width: 500px;
   width: 100%;
   backdrop-filter: blur(12px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
   transition: transform 0.2s ease;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* card’s own content still vertical */
 }
+
 
 .reminder-card:hover {
   transform: translateY(-5px);
@@ -185,4 +194,37 @@
 .delete-btn:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+/* Add this CSS for spacing buttons */
+
+.form-buttons {
+  display: flex;
+  flex-direction: column; /* stack buttons vertically */
+  gap: 12px; /* vertical spacing between buttons */
+  margin-top: 15px;
+}
+
+.form-buttons button {
+  width: 100%; /* full width buttons */
+  padding: 12px 0;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  color: white;
+}
+
+.form-buttons button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.form-buttons .cancel-btn {
+  background: linear-gradient(135deg, #ef4444, #b91c1c);
+}
+
+.form-buttons button[type="submit"] {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }

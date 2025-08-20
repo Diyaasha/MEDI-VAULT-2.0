@@ -208,7 +208,10 @@ const MedicineReminder = () => {
               <p>
                 <span>From:</span> {new Date(r.startDate).toLocaleDateString()}{" "}
                 {r.endDate && (
-                  <> - <span>To:</span> {new Date(r.endDate).toLocaleDateString()}</>
+                  <>
+                    {" "}
+                    - <span>To:</span> {new Date(r.endDate).toLocaleDateString()}
+                  </>
                 )}
               </p>
               {r.notes && <p className="notes">Notes: {r.notes}</p>}

@@ -68,23 +68,26 @@ function Home() {
       <nav className="navbar">
         <div className="navbar-left">
           <div className="logo">
-            <span className="logo-icon">💙</span>
-            <span className="logo-text"><strong>Medi-Vault</strong></span>
+            <span className="logo-icon">🩺</span>
+            <span className="logo-text">
+              <strong>MEDI-VAULT</strong>
+            </span>
           </div>
           <div className="nav-links">
-            <Link to="/">Appointments</Link>
-            <Link to="/">Prescriptions</Link>
-            <Link to="/">Doctors</Link>
-            <Link to="/">Emergency</Link>
+            <Link to="/">Home</Link>
+            <Link to="/">About-Us</Link>
+            <Link to="/">My Profile</Link>
+            <Link to="/">Contact-Us</Link>
           </div>
         </div>
+        
+  
+
         <div className="navbar-right">
           <FiBell className="icon" />
-
           {user && (
             <>
               <span className="username">Hi, {user.name}!</span>
-
               <div
                 className="profile-menu-wrapper"
                 onMouseEnter={() => setDropdownVisible(true)}
@@ -92,7 +95,6 @@ function Home() {
                 style={{ position: "relative", display: "inline-block" }}
               >
                 <FiUser className="icon profile-icon" />
-
                 {dropdownVisible && (
                   <div
                     className="dropdown-menu"
@@ -123,7 +125,11 @@ function Home() {
                     <div
                       className="dropdown-item"
                       onClick={logout}
-                      style={{ padding: "8px 12px", cursor: "pointer", color: "#333" }}
+                      style={{
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        color: "#333",
+                      }}
                     >
                       Logout
                     </div>
@@ -132,7 +138,6 @@ function Home() {
               </div>
             </>
           )}
-
           {!user && (
             <Link to="/login" className="signin-btn">
               Sign In
@@ -141,22 +146,23 @@ function Home() {
         </div>
       </nav>
 
-     {!user && (
-  <div className="landing-main">
-    <h1 className="landing-title">Your Health, Simplified</h1>
-    <p className="landing-desc">
-      Take control of your wellness journey with our comprehensive health management platform.<br />
-      From medication reminders to finding the right doctor, we've got you covered.
-    </p>
-    <button
-      className="get-started-btn"
-      onClick={() => navigate("/login")}
-    >
-      Get Started Today
-    </button>
-  </div>
-)}
-
+      {!user && (
+        <div className="landing-main">
+          <h1 className="landing-title">Your Health, Simplified</h1>
+          <p className="landing-desc">
+            Take control of your wellness journey with our comprehensive health
+            management platform.
+            <br /> From medication reminders to finding the right doctor, we've
+            got you covered.
+          </p>
+          <button
+            className="get-started-btn"
+            onClick={() => navigate("/login")}
+          >
+            Get Started Today
+          </button>
+        </div>
+      )}
 
       {/* Feature Cards Section */}
       <div className="features-section">

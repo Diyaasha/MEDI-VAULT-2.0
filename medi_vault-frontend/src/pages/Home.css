@@ -1,8 +1,9 @@
-/* src/pages/Home.css */
-
+/* Global background */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background:  url("/public/BackgroundIamge.jpeg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 /* Navbar styles */
@@ -11,8 +12,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 12px 24px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e5e5e5;
+  background-color: #5d96b3;
+  border-bottom: 1px solid #110825;
 }
 
 .navbar-left {
@@ -53,8 +54,8 @@ body {
 }
 
 .signin-btn {
-  background-color: #3b82f6;
-  color: white;
+  background-color:  #ca8372;
+  color: rgb(12, 1, 1);
   padding: 8px 16px;
   border-radius: 8px;
   text-decoration: none;
@@ -62,7 +63,7 @@ body {
 }
 
 .signin-btn:hover {
-  background-color: #2563eb;
+  background-color: #ff8c70;
 }
 
 /* Landing section styles */
@@ -78,13 +79,13 @@ body {
 .landing-title {
   font-size: 3rem;
   font-weight: 700;
-  color: #fff; /* Or use #fff for readability over the gradient */
+  color: #2d2c3d;
   margin-bottom: 24px;
 }
 
 .landing-desc {
   font-size: 1.25rem;
-  color: #eee;
+  color: #4355ba;
   margin-bottom: 36px;
   max-width: 600px;
   margin-left: auto;
@@ -100,20 +101,21 @@ body {
   padding: 16px 40px;
   font-size: 1.25rem;
   font-weight: 600;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
   cursor: pointer;
   transition: box-shadow 0.2s;
-  align-self: center; /* center horizontally */
+  align-self: center;
 }
 
 .get-started-btn:hover {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Add cursor pointer for nav links for UX */
+/* Add cursor pointer for nav links */
 .nav-links a:hover {
   text-decoration: underline;
 }
+
 .features-section {
   padding: 40px 0 80px 0;
 }
@@ -131,13 +133,13 @@ body {
   border-radius: 24px;
   padding: 40px 24px;
   text-align: center;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .feature-card:hover {
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
   transform: translateY(-3px) scale(1.025);
 }
 
