@@ -9,38 +9,38 @@ const features = [
   {
     title: "Medicine Reminder",
     desc: "Never miss a dose again with smart notifications and personalized medication schedules.",
-    route: "/medicine-reminder",
+    route: "/Medicine-Reminder",
     icon: "💊",
   },
   {
-    title: "Appointment Reminder",
-    desc: "Stay on top of your appointments with intelligent reminders and calendar integration.",
-    route: "/appointment-reminder",
-    icon: "📅",
-  },
-  {
     title: "Medical History",
-    desc: "Securely store and access your medical records, test results, and health data.",
-    route: "/medical-history",
+    desc: "Securely store and access your medical records, test results, and health checkups.",
+    route: "/Medical-History",
     icon: "📋",
   },
   {
-    title: "Vaccination and Surgeries",
-    desc: "Track all vaccination dates and surgical history conveniently.",
+    title: "Vaccinations & Surgeries",
+    desc: "Track all vaccination dates and your surgical history conveniently in one place.",
     route: "/vaccination-surgeries",
+    icon: "💉",
+  },
+  {
+    title: "Find Medical Facilities",
+    desc: "Locate nearby hospitals, clinics, and doctors quickly when you need care.",
+    route: "/hospitals-clinics-doctors",
     icon: "🏥",
   },
   {
-    title: "Blood Group & Allergies",
-    desc: "Keep your blood group, allergies, and emergency info ready anytime.",
-    route: "/blood-allergies",
-    icon: "🩸",
+    title: "Insurance Details",
+    desc: "Keep your insurance, emergency info, and blood group details ready anytime.",
+    route: "/insurance-details",
+    icon: "💼",
   },
   {
-    title: "Ayurveda Treatments",
-    desc: "Explore and track holistic treatments and wellness remedies.",
-    route: "/ayurveda-treatments",
-    icon: "🌿",
+    title: "Treatments & Wellness",
+    desc: "Explore and track holistic treatments, therapies, and wellness remedies.",
+    route: "/treatments",
+    icon: "⚕️",
   },
 ];
 
@@ -80,8 +80,6 @@ function Home() {
             <Link to="/">Contact-Us</Link>
           </div>
         </div>
-        
-  
 
         <div className="navbar-right">
           <FiBell className="icon" />
@@ -147,22 +145,25 @@ function Home() {
       </nav>
 
       {!user && (
-        <div className="landing-main">
-          <h1 className="landing-title">Your Health, Simplified</h1>
-          <p className="landing-desc">
-            Take control of your wellness journey with our comprehensive health
-            management platform.
-            <br /> From medication reminders to finding the right doctor, we've
-            got you covered.
+        <div className="landing-main floating-center">
+          <h1 className="landing-title">Hassle-Free Healthcare.</h1>
+          <p className="custom-subtext">
+            Empower your health journey with a secure, AI-powered platform.
+            <br />
+            Store prescriptions, lab reports, and track medicines.
+            <br />
+            Connect with doctors and manage all your medical needs—just a click away!
           </p>
-          <button
-            className="get-started-btn"
-            onClick={() => navigate("/login")}
-          >
-            Get Started Today
+          <button className="get-started-btn" onClick={() => navigate("/login")}>
+            Get Started
           </button>
         </div>
       )}
+
+      {/* Feature Label Only */}
+      <div className="feature-hero">
+        <div className="feature-label">Features</div>
+      </div>
 
       {/* Feature Cards Section */}
       <div className="features-section">

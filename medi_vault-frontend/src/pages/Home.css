@@ -13,7 +13,7 @@ body {
   align-items: center;
   padding: 12px 24px;
   background-color: #5d96b3;
-  border-bottom: 1px solid #110825;
+  border-bottom: 1px solid #76aceb;
 }
 
 .navbar-left {
@@ -75,6 +75,15 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.custom-subtext {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #426b94;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
 
 .landing-title {
   font-size: 3rem;
@@ -129,14 +138,23 @@ body {
 }
 
 .feature-card {
-  background: #fff;
+  background: rgba(13, 47, 115, 0.18);
   border-radius: 24px;
   padding: 40px 24px;
   text-align: center;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 4px 24px 4px rgba(30, 37, 63, 0.22),  /* Large, soft shadow */
+    0 1.5px 12px rgba(30, 37, 63, 0.14),    /* Subtle base */
+    0 0.5px 2px rgba(255,255,255,0.32) inset; /* Optional, inner brightness */
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1.5px solid rgba(255, 255, 255, 0.23);
+  outline: 1px solid rgba(255,255,255,0.07);
 }
+
+
 
 .feature-card:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -158,4 +176,25 @@ body {
 .feature-desc {
   font-size: 1rem;
   color: #51526f;
+}
+.feature-hero {
+  text-align: center;
+  margin: 36px 0 24px 0; /* Adjust vertical spacing to fit your layout */
+  background: none;      /* Remove any background */
+  box-shadow: none;      /* Remove any box shadow */
+  padding: 0;            /* Remove all extra padding */
+}
+
+.feature-label {
+  display: inline-block;
+  background: none;
+  color: #161929;        /* Text color, change as needed */
+  font-size: 2.2rem;     /* Increased font size */
+  font-weight: 700;      /* Bold */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Change to your preferred font */
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  letter-spacing: 0.06em;
+  border: none;
 }
