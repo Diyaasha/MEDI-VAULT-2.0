@@ -192,82 +192,82 @@ const Profile = () => {
               </button>
             </>
           ) : (
-        <div className="profile-edit">
-  <div className="edit-field">
-    <label>Name:</label>
-    <input name="name" value={formData.name || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>DOB:</label>
-    <input
-      type="date"
-      name="dob"
-      value={formData.dob ? formData.dob.slice(0, 10) : ""}
-      onChange={handleChange}
-    />
-  </div>
-  <div className="edit-field">
-    <label>Gender:</label>
-    <select name="gender" value={formData.gender || ""} onChange={handleChange}>
-      <option value="">Select</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select>
-  </div>
-  <div className="edit-field">
-    <label>Blood Group:</label>
-    <input name="bloodGroup" value={formData.bloodGroup || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>Weight:</label>
-    <input name="weight" value={formData.weight || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>Height:</label>
-    <input name="height" value={formData.height || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>Eye Power (L):</label>
-    <input name="eyePowerL" value={formData.eyePowerL || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>Eye Power (R):</label>
-    <input name="eyePowerR" value={formData.eyePowerR || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>Primary Doctor:</label>
-    <input name="primaryDoctor" value={formData.primaryDoctor || ""} onChange={handleChange} />
-  </div>
-  <div className="edit-field">
-    <label>Allergies (comma separated):</label>
-    <input
-      name="allergies"
-      value={
-        Array.isArray(formData.allergies)
-          ? formData.allergies.join(", ")
-          : formData.allergies || ""
-      }
-      onChange={(e) =>
-        setFormData((prev) => ({
-          ...prev,
-          allergies: e.target.value
-            .split(",")
-            .map((a) => a.trim())
-            .filter((a) => a),
-        }))
-                 }
-    />
-  </div>
-  <div className="edit-buttons">
-    <button className="save-btn" onClick={handleSave}>
-      Save
-    </button>
-    <button className="cancel-btn" onClick={() => setEditing(false)}>
-      Cancel
-    </button>
-  </div>
-</div>
+            <div className="profile-edit">
+              <div className="edit-field">
+                <label>Name:</label>
+                <input name="name" value={formData.name || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>DOB:</label>
+                <input
+                  type="date"
+                  name="dob"
+                  value={formData.dob ? formData.dob.slice(0, 10) : ""}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="edit-field">
+                <label>Gender:</label>
+                <select name="gender" value={formData.gender || ""} onChange={handleChange}>
+                  <option value="">Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div className="edit-field">
+                <label>Blood Group:</label>
+                <input name="bloodGroup" value={formData.bloodGroup || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>Weight:</label>
+                <input name="weight" value={formData.weight || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>Height:</label>
+                <input name="height" value={formData.height || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>Eye Power (L):</label>
+                <input name="eyePowerL" value={formData.eyePowerL || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>Eye Power (R):</label>
+                <input name="eyePowerR" value={formData.eyePowerR || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>Primary Doctor:</label>
+                <input name="primaryDoctor" value={formData.primaryDoctor || ""} onChange={handleChange} />
+              </div>
+              <div className="edit-field">
+                <label>Allergies (comma separated):</label>
+                <input
+                  name="allergies"
+                  value={
+                    Array.isArray(formData.allergies)
+                      ? formData.allergies.join(", ")
+                      : formData.allergies || ""
+                  }
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      allergies: e.target.value
+                        .split(",")
+                        .map((a) => a.trim())
+                        .filter((a) => a),
+                    }))
+                  }
+                />
+              </div>
+              <div className="edit-buttons">
+                <button className="save-btn" onClick={handleSave}>
+                  Save
+                </button>
+                <button className="cancel-btn" onClick={() => setEditing(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
           )}
         </div>
       )}
