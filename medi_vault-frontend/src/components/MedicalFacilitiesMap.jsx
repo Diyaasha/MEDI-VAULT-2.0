@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -21,7 +21,6 @@ function RecenterMap({ center }) {
   return null;
 }
 
-// Distinct user location icon
 const userIcon = new L.Icon({
   iconUrl:
     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
@@ -33,10 +32,9 @@ const userIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
-// Haversine distance calculation
 const haversineDistance = ([lat1, lon1], [lat2, lon2]) => {
   const toRad = (x) => (x * Math.PI) / 180;
-  const R = 6371000; // meters
+  const R = 6371000;
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lon2 - lon1);
   const a =
@@ -56,6 +54,8 @@ const MedicalFacilitiesMap = () => {
   const [loadingFacilities, setLoadingFacilities] = useState(false);
   const [errorFacilities, setErrorFacilities] = useState(null);
 
+  const [locationAllowed, setLocationAllowed] = useState(false);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchError, setSearchError] = useState(null);
@@ -63,9 +63,9 @@ const MedicalFacilitiesMap = () => {
   const [selectedFacilityId, setSelectedFacilityId] = useState(null);
   const listRefs = useRef({});
 
-  // Wrap fetchFacilities in useCallback to prevent unnecessary re-creation
   const fetchFacilities = useCallback(
     async (lat, lng) => {
+      console.log("Fetching facilities at", lat, lng);
       try {
         setLoadingFacilities(true);
         setErrorFacilities(null);
@@ -96,8 +96,8 @@ const MedicalFacilitiesMap = () => {
     [userLocation]
   );
 
-  // Detect user location on mount
-  useEffect(() => {
+  // Request geolocation with user gesture
+  const requestUserLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
@@ -105,16 +105,29 @@ const MedicalFacilitiesMap = () => {
           setUserLocation([latitude, longitude]);
           setMapCenter([latitude, longitude]);
           fetchFacilities(latitude, longitude);
+          setLocationAllowed(true);
         },
-        () => {
+        (err) => {
+          console.warn("Geolocation denied or failed:", err);
+          setLocationAllowed(true);
           setMapCenter(DEFAULT_POSITION);
           fetchFacilities(DEFAULT_POSITION[0], DEFAULT_POSITION[1]);
         }
       );
     } else {
+      setLocationAllowed(true);
       fetchFacilities(DEFAULT_POSITION, DEFAULT_POSITION[1]);
     }
-  }, [fetchFacilities]);
+  };
+
+  // If location allowed and no userLocation, load default facilities
+  useEffect(() => {
+    if (!locationAllowed) return;
+    if (!userLocation) {
+      fetchFacilities(DEFAULT_POSITION, DEFAULT_POSITION[1]);
+      setMapCenter(DEFAULT_POSITION);
+    }
+  }, [locationAllowed, userLocation, fetchFacilities]);
 
   // Fetch Nominatim suggestions on input debounce
   useEffect(() => {
@@ -159,7 +172,6 @@ const MedicalFacilitiesMap = () => {
     };
   }, [searchTerm]);
 
-  // On selecting a suggestion: recenters map, fetches hospitals
   const selectSearchResult = (result) => {
     const latNum = parseFloat(result.lat);
     const lonNum = parseFloat(result.lon);
@@ -174,7 +186,6 @@ const MedicalFacilitiesMap = () => {
     setSelectedFacilityId(null);
   };
 
-  // Search button click: if suggestions exist, select first, else fallback fetch
   const handleSearchClick = () => {
     if (searchResults.length > 0) {
       selectSearchResult(searchResults[0]);
@@ -205,7 +216,6 @@ const MedicalFacilitiesMap = () => {
     }
   };
 
-  // Scroll list item into view when selected
   useEffect(() => {
     if (selectedFacilityId && listRefs.current[selectedFacilityId]) {
       listRefs.current[selectedFacilityId].scrollIntoView({
@@ -217,7 +227,6 @@ const MedicalFacilitiesMap = () => {
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
-      {/* Sidebar */}
       <div
         style={{
           width: "320px",
@@ -229,127 +238,145 @@ const MedicalFacilitiesMap = () => {
           position: "relative",
         }}
       >
-        {/* Search input and button */}
-        <div style={{ display: "flex", gap: "6px", marginBottom: "6px" }}>
-          <input
-            type="text"
-            placeholder="Search location or hospital"
-            value={searchTerm}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-              setSearchError(null);
-            }}
-            style={{ flexGrow: 1, padding: "8px", boxSizing: "border-box" }}
-          />
+        {!locationAllowed ? (
           <button
-            onClick={handleSearchClick}
+            onClick={requestUserLocation}
             style={{
-              padding: "8px 12px",
+              padding: "10px 20px",
+              fontSize: "16px",
               cursor: "pointer",
-              backgroundColor: "#007bff",
-              border: "none",
-              color: "#fff",
-              fontWeight: "bold",
-              borderRadius: "4px",
-              userSelect: "none",
+              marginBottom: "10px",
+              width: "100%",
+              boxSizing: "border-box",
             }}
           >
-            Search
+            Locate Me
           </button>
-        </div>
-
-        {/* Suggestions dropdown */}
-        {searchResults.length > 0 && (
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: "4px 0 10px 0",
-              border: "1px solid #ccc",
-              borderRadius: 4,
-              maxHeight: 150,
-              overflowY: "auto",
-              backgroundColor: "white",
-              position: "absolute",
-              width: "calc(100% - 20px)",
-              zIndex: 1000,
-            }}
-          >
-            {searchResults.map((res) => (
-              <li
-                key={res.place_id}
-                onClick={() => selectSearchResult(res)}
-                style={{
-                  padding: "6px 10px",
-                  cursor: "pointer",
-                  borderBottom: "1px solid #eee",
+        ) : (
+          <>
+            {/* Search input and button */}
+            <div style={{ display: "flex", gap: "6px", marginBottom: "6px" }}>
+              <input
+                type="text"
+                placeholder="Search location or hospital"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setSearchError(null);
                 }}
-                tabIndex={0}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") selectSearchResult(res);
-                }}
-              >
-                {res.display_name}
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {searchError && <p style={{ color: "red" }}>{searchError}</p>}
-
-        {/* Facilities list */}
-        {loadingFacilities && <p>Loading medical facilities...</p>}
-        {errorFacilities && <p style={{ color: "red" }}>{errorFacilities}</p>}
-        {!loadingFacilities && facilities.length === 0 && <p>No facilities found.</p>}
-
-        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          {facilities.map(({ id, name, lat, lng, address, emergency, distanceMeters }) => {
-            const isSelected = id === selectedFacilityId;
-            return (
-              <li
-                key={id}
-                ref={(el) => (listRefs.current[id] = el)}
-                onClick={() => setSelectedFacilityId(id)}
+                style={{ flexGrow: 1, padding: "8px", boxSizing: "border-box" }}
+              />
+              <button
+                onClick={handleSearchClick}
                 style={{
-                  padding: "10px",
-                  marginBottom: "8px",
+                  padding: "8px 12px",
                   cursor: "pointer",
-                  backgroundColor: isSelected ? "#cce5ff" : "#fff",
-                  border: isSelected ? "2px solid #007bff" : "1px solid #ddd",
+                  backgroundColor: "#007bff",
+                  border: "none",
+                  color: "#fff",
+                  fontWeight: "bold",
                   borderRadius: "4px",
+                  userSelect: "none",
                 }}
-                tabIndex={0}
               >
-                <strong>{name}</strong> <br />
-                <small>{address || "Address not available"}</small> <br />
-                <small>Distance: {formatDistance(distanceMeters)}</small> <br />
-                {emergency && <span style={{ color: "red" }}>Emergency Services</span>} <br />
-                {isSelected && (
-                  <a
-                    href={`https://www.google.com/maps/dir/?api=1&origin=${
-                      userLocation ? userLocation[0] : mapCenter
-                    },${userLocation ? userLocation[1] : mapCenter[1]}&destination=${lat},${lng}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                Search
+              </button>
+            </div>
+
+            {/* Suggestions dropdown */}
+            {searchResults.length > 0 && (
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: "4px 0 10px 0",
+                  border: "1px solid #ccc",
+                  borderRadius: 4,
+                  maxHeight: 150,
+                  overflowY: "auto",
+                  backgroundColor: "white",
+                  position: "absolute",
+                  width: "calc(100% - 20px)",
+                  zIndex: 1000,
+                }}
+              >
+                {searchResults.map((res) => (
+                  <li
+                    key={res.place_id}
+                    onClick={() => selectSearchResult(res)}
                     style={{
-                      display: "inline-block",
-                      marginTop: "6px",
-                      padding: "6px 12px",
-                      backgroundColor: "#007bff",
-                      color: "#fff",
-                      textDecoration: "none",
-                      borderRadius: "4px",
+                      padding: "6px 10px",
                       cursor: "pointer",
+                      borderBottom: "1px solid #eee",
                     }}
-                    onClick={(e) => e.stopPropagation()}
+                    tabIndex={0}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") selectSearchResult(res);
+                    }}
                   >
-                    Get Directions
-                  </a>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+                    {res.display_name}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {searchError && <p style={{ color: "red" }}>{searchError}</p>}
+
+            {/* Facilities list */}
+            {loadingFacilities && <p>Loading medical facilities...</p>}
+            {errorFacilities && <p style={{ color: "red" }}>{errorFacilities}</p>}
+            {!loadingFacilities && facilities.length === 0 && <p>No facilities found.</p>}
+
+            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+              {facilities.map(({ id, name, lat, lng, address, emergency, distanceMeters }) => {
+                const isSelected = id === selectedFacilityId;
+                return (
+                  <li
+                    key={id}
+                    ref={(el) => (listRefs.current[id] = el)}
+                    onClick={() => setSelectedFacilityId(id)}
+                    style={{
+                      padding: "10px",
+                      marginBottom: "8px",
+                      cursor: "pointer",
+                      backgroundColor: isSelected ? "#cce5ff" : "#fff",
+                      border: isSelected ? "2px solid #007bff" : "1px solid #ddd",
+                      borderRadius: "4px",
+                    }}
+                    tabIndex={0}
+                  >
+                    <strong>{name}</strong> <br />
+                    <small>{address || "Address not available"}</small> <br />
+                    <small>Distance: {formatDistance(distanceMeters)}</small> <br />
+                    {emergency && <span style={{ color: "red" }}>Emergency Services</span>} <br />
+                    {isSelected && (
+                      <a
+                        href={`https://www.google.com/maps/dir/?api=1&origin=${
+                          userLocation ? userLocation[0] : mapCenter
+                        },${userLocation ? userLocation[1] : mapCenter[1]}&destination=${lat},${lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: "inline-block",
+                          marginTop: "6px",
+                          padding: "6px 12px",
+                          backgroundColor: "#007bff",
+                          color: "#fff",
+                          textDecoration: "none",
+                          borderRadius: "4px",
+                          cursor: "pointer",
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Get Directions
+                      </a>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </>
+        )}
       </div>
 
       {/* Map */}
@@ -360,7 +387,6 @@ const MedicalFacilitiesMap = () => {
           attribution="&copy; OpenStreetMap contributors"
         />
 
-        {/* User location marker */}
         {userLocation && (
           <Marker position={userLocation} icon={userIcon}>
             <Popup>Your Location</Popup>
