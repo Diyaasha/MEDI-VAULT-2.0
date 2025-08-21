@@ -23,13 +23,12 @@ const features = [
     desc: "Track all vaccination dates and your surgical history conveniently in one place.",
     route: "/vaccination-surgeries",
     icon: "💉",
-  },
-  {
-    title: "Find Medical Facilities",
-    desc: "Locate nearby hospitals, clinics, and doctors quickly when you need care.",
-    route: "/hospitals-clinics-doctors",
-    icon: "🏥",
-  },
+  },{
+  title: "Find Medical Facilities",
+  desc: "Locate nearby hospitals, clinics, and doctors quickly when you need care.",
+  route: "/medical-facilities",
+  icon: "🏥",
+},
   {
     title: "Insurance Details",
     desc: "Keep your insurance, emergency info, and blood group details ready anytime.",

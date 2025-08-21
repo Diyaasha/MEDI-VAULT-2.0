@@ -10,6 +10,8 @@ import Signup from "./pages/Signup";
 import MedicineReminder from "./pages/MedicineReminder";
 import Profile from "./pages/Profile";
 import SetupProfile from "./pages/SetupProfile";
+import MedicalFacilitiesMap from "./components/MedicalFacilitiesMap";
+
 
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
@@ -66,6 +68,16 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Medical Facilities - Protected (moved inside Routes) */}
+        <Route
+          path="/medical-facilities"
+          element={
+            <ProtectedRoute>
+              <MedicalFacilitiesMap />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {/* Add ToastContainer here */}
@@ -73,5 +85,6 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
