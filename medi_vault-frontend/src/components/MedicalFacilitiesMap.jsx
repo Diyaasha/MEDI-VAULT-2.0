@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -63,6 +63,39 @@ const MedicalFacilitiesMap = () => {
   const [selectedFacilityId, setSelectedFacilityId] = useState(null);
   const listRefs = useRef({});
 
+  // Wrap fetchFacilities in useCallback to prevent unnecessary re-creation
+  const fetchFacilities = useCallback(
+    async (lat, lng) => {
+      try {
+        setLoadingFacilities(true);
+        setErrorFacilities(null);
+        const res = await fetch(
+          `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/medical-facilities?lat=${lat}&lng=${lng}&type=hospital,pharmacy`
+        );
+        if (!res.ok) throw new Error("Failed to fetch facilities");
+        let data = await res.json();
+
+        const refPoint = userLocation || [lat, lng];
+
+        data = data.map((f) => ({
+          ...f,
+          distanceMeters: haversineDistance(refPoint, [f.lat, f.lng]),
+        }));
+
+        data.sort((a, b) => a.distanceMeters - b.distanceMeters);
+
+        setFacilities(data);
+        setSelectedFacilityId(null);
+      } catch (err) {
+        setErrorFacilities(err.message);
+        setFacilities([]);
+      } finally {
+        setLoadingFacilities(false);
+      }
+    },
+    [userLocation]
+  );
+
   // Detect user location on mount
   useEffect(() => {
     if (navigator.geolocation) {
@@ -74,7 +107,6 @@ const MedicalFacilitiesMap = () => {
           fetchFacilities(latitude, longitude);
         },
         () => {
-          // fallback
           setMapCenter(DEFAULT_POSITION);
           fetchFacilities(DEFAULT_POSITION[0], DEFAULT_POSITION[1]);
         }
@@ -82,36 +114,7 @@ const MedicalFacilitiesMap = () => {
     } else {
       fetchFacilities(DEFAULT_POSITION, DEFAULT_POSITION[1]);
     }
-  }, []);
-
-  const fetchFacilities = async (lat, lng) => {
-    try {
-      setLoadingFacilities(true);
-      setErrorFacilities(null);
-      const res = await fetch(
-        `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/medical-facilities?lat=${lat}&lng=${lng}&type=hospital,pharmacy`
-      );
-      if (!res.ok) throw new Error("Failed to fetch facilities");
-      let data = await res.json();
-
-      const refPoint = userLocation || [lat, lng];
-
-      data = data.map((f) => ({
-        ...f,
-        distanceMeters: haversineDistance(refPoint, [f.lat, f.lng]),
-      }));
-
-      data.sort((a, b) => a.distanceMeters - b.distanceMeters);
-
-      setFacilities(data);
-      setSelectedFacilityId(null);
-    } catch (err) {
-      setErrorFacilities(err.message);
-      setFacilities([]);
-    } finally {
-      setLoadingFacilities(false);
-    }
-  };
+  }, [fetchFacilities]);
 
   // Fetch Nominatim suggestions on input debounce
   useEffect(() => {
