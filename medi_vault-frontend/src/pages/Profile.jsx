@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../components/Modal";
-import './Profile.css'; // Make sure this path is correct
+import './Profile.css';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -16,7 +16,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!token) {
-      window.location.href = "/login"; // Redirect if not logged in
+      window.location.href = "/login";
       return;
     }
     const fetchProfile = async () => {
@@ -31,7 +31,7 @@ const Profile = () => {
           ...data,
           allergies: Array.isArray(data.allergies)
             ? data.allergies
-            : (data.allergies || "").split(",").map((a) => a.trim()).filter((a) => a),
+            : (data.allergies || "").split(",").map(a => a.trim()).filter(a => a),
         });
         setLoading(false);
       } catch (error) {
@@ -39,11 +39,10 @@ const Profile = () => {
         setLoading(false);
       }
     };
-
     fetchProfile();
   }, [token]);
 
-  const calculateAge = (dob) => {
+  const calculateAge = dob => {
     if (!dob) return "";
     const birthDate = new Date(dob);
     const diff = Date.now() - birthDate.getTime();
@@ -70,7 +69,6 @@ const Profile = () => {
           body: JSON.stringify({ password }),
         }
       );
-
       if (res.ok) {
         setEditing(true);
         setIsModalOpen(false);
@@ -83,9 +81,9 @@ const Profile = () => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSave = async () => {
@@ -94,7 +92,7 @@ const Profile = () => {
         ...formData,
         allergies:
           typeof formData.allergies === "string"
-            ? formData.allergies.split(",").map((a) => a.trim()).filter((a) => a)
+            ? formData.allergies.split(",").map(a => a.trim()).filter(a => a)
             : formData.allergies,
       };
       const res = await fetch(
@@ -121,15 +119,7 @@ const Profile = () => {
     }
   };
 
-  // Styled Loader while fetching profile
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="spinner"></div>
-        <p className="loading-text">Loading Profile...</p>
-      </div>
-    );
-  }
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="profile-page">
@@ -140,7 +130,9 @@ const Profile = () => {
         <div className="profile-card">
           <div className="profile-header">
             <div className="profile-avatar" title={userData.gender || "User"}>
-              <span role="img" aria-label="User">👤</span>
+              <span role="img" aria-label="User">
+                👤
+              </span>
             </div>
             <div className="profile-main-info">
               <h1>{userData.name || "User"}</h1>
@@ -256,13 +248,10 @@ const Profile = () => {
                       ? formData.allergies.join(", ")
                       : formData.allergies || ""
                   }
-                  onChange={(e) =>
-                    setFormData((prev) => ({
+                  onChange={e =>
+                    setFormData(prev => ({
                       ...prev,
-                      allergies: e.target.value
-                        .split(",")
-                        .map((a) => a.trim())
-                        .filter((a) => a),
+                      allergies: e.target.value.split(",").map(a => a.trim()).filter(a => a),
                     }))
                   }
                 />
@@ -280,22 +269,21 @@ const Profile = () => {
         </div>
       )}
 
+      {/* Modal Component */}
       <Modal
         isOpen={isModalOpen}
         title="Enter Password to Edit Profile"
         onClose={() => setIsModalOpen(false)}
+        onVerify={verifyPassword}
       >
         <input
           type="password"
           placeholder="Password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={e => setPassword(e.target.value)}
           style={{ width: "100%", padding: "8px", marginTop: "10px" }}
         />
         {verificationError && <p style={{ color: "red" }}>{verificationError}</p>}
-        <button onClick={verifyPassword} style={{ marginTop: "12px" }}>
-          Verify
-        </button>
       </Modal>
     </div>
   );

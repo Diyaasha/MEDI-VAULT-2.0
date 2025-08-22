@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
+  padding: 22px 70px;
   background-color: #5d96b3;
   border-bottom: 1px solid #76aceb;
 }
@@ -197,4 +197,27 @@
   box-shadow: none;
   letter-spacing: 0.06em;
   border: none;
+}
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.feature-card {
+  animation: floatUpDown 3s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes floatButton {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.get-started-btn {
+  /* ...your existing styles... */
+  animation: floatButton 3s ease-in-out infinite;
+  will-change: transform;
 }
