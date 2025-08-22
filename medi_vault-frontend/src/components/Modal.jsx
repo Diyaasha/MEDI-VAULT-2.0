@@ -1,7 +1,6 @@
-// src/components/Modal.jsx
 import React from "react";
 
-const Modal = ({ isOpen, title, children, onClose }) => {
+const Modal = ({ isOpen, title, children, onClose, onVerify }) => {
   if (!isOpen) return null;
 
   return (
@@ -15,27 +14,53 @@ const Modal = ({ isOpen, title, children, onClose }) => {
         justifyContent: "center",
         zIndex: 1000,
       }}
-      onClick={onClose} // close on clicking outside modal content
+      onClick={onClose} // Close modal on outside click
     >
       <div
         style={{
-          background: "white",
+          background: "#c4c9d8ff",
           padding: "20px 30px",
           borderRadius: "8px",
           minWidth: "320px",
           maxWidth: "90%",
           boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
         }}
-        onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+        onClick={e => e.stopPropagation()} // Prevent closing when clicking inside
       >
-        <h3>{title}</h3>
+        <h3 style={{ marginTop: 0, marginBottom: "18px" }}>{title}</h3>
         {children}
-        <button 
-          onClick={onClose} 
-          style={{ marginTop: "10px", padding: "6px 12px" }}
-        >
-          Cancel
-        </button>
+        <div style={{ marginTop: "15px", display: "flex", gap: "12px", justifyContent: "flex-end" }}>
+          <button
+            onClick={onVerify}
+            style={{
+              backgroundColor: "#28a745",
+              color: "#fff",
+              padding: "10px 24px",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              fontSize: "16px",
+            }}
+          >
+            Verify
+          </button>
+          <button
+            onClick={onClose}
+            style={{
+              backgroundColor: "#dc3545",
+              color: "#fff",
+              padding: "10px 24px",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              fontWeight: "bold",
+              fontSize: "16px",
+            }}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
