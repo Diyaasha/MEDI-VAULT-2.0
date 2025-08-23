@@ -49,9 +49,16 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Load user from localStorage once after mount
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (err) {
+        console.error("Failed parsing user from localStorage:", err);
+        localStorage.removeItem("user");
+      }
     }
   }, []);
 
@@ -64,128 +71,125 @@ function Home() {
 
   return (
     <div className="home-page">
-      <>
-        <nav className="navbar">
-          <div className="navbar-left" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            {/* Logo Image */}
-            <img
-              src="/logooo.png"   // Use only the filename as it is in /public
-              alt="MEDI-VAULT logo"
-              
-   style={{
-    height: "38px",
-    width: "38px",
-    objectFit: "contain",
-    marginRight: "6px",
-    filter: "drop-shadow(0 1px 2px rgba(0, 5, 9, 0.28))"}}
-            />
-            <span className="logo-text">
-              <strong>MEDI-VAULT</strong>
-            </span>
-            <div className="nav-links">
-              <Link to="/">Home</Link>
-              <Link to="/">About-Us</Link>
-              <Link to="/">My Profile</Link>
-              <Link to="/">Contact-Us</Link>
-            </div>
+      <nav className="navbar">
+        <div className="navbar-left" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <img
+            src="/logooo.png"
+            alt="MEDI-VAULT logo"
+            style={{
+              height: "38px",
+              width: "38px",
+              objectFit: "contain",
+              marginRight: "6px",
+              filter: "drop-shadow(0 1px 2px rgba(0, 5, 9, 0.28))"
+            }}
+          />
+          <span className="logo-text">
+            <strong>MEDI-VAULT</strong>
+          </span>
+          <div className="nav-links">
+            <Link to="/">Home</Link>
+            <Link to="/">About-Us</Link>
+            <Link to="/">My Profile</Link>
+            <Link to="/">Contact-Us</Link>
           </div>
+        </div>
 
-          <div className="navbar-right">
-            <FiBell className="icon" />
-            {user ? (
-              <>
-                <span className="username">Hi, {user.name}!</span>
-                <div
-                  className="profile-menu-wrapper"
-                  onMouseEnter={() => setDropdownVisible(true)}
-                  onMouseLeave={() => setDropdownVisible(false)}
-                  style={{ position: "relative", display: "inline-block" }}
-                >
-                  <FiUser className="icon profile-icon" />
-                  {dropdownVisible && (
-                    <div
-                      className="dropdown-menu"
+        <div className="navbar-right">
+          <FiBell className="icon" />
+          {user ? (
+            <>
+              <span className="username">Hi, {user.name}!</span>
+              <div
+                className="profile-menu-wrapper"
+                onMouseEnter={() => setDropdownVisible(true)}
+                onMouseLeave={() => setDropdownVisible(false)}
+                style={{ position: "relative", display: "inline-block" }}
+              >
+                <FiUser className="icon profile-icon" />
+                {dropdownVisible && (
+                  <div
+                    className="dropdown-menu"
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      backgroundColor: "white",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                      borderRadius: "4px",
+                      padding: "10px",
+                      zIndex: 1000,
+                      minWidth: "150px",
+                    }}
+                  >
+                    <Link
+                      to="/profile"
+                      className="dropdown-item"
                       style={{
-                        position: "absolute",
-                        right: 0,
-                        backgroundColor: "white",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-                        borderRadius: "4px",
-                        padding: "10px",
-                        zIndex: 1000,
-                        minWidth: "150px",
+                        display: "block",
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        color: "#333",
+                        textDecoration: "none",
                       }}
                     >
-                      <Link
-                        to="/profile"
-                        className="dropdown-item"
-                        style={{
-                          display: "block",
-                          padding: "8px 12px",
-                          cursor: "pointer",
-                          color: "#333",
-                          textDecoration: "none",
-                        }}
-                      >
-                        Your Profile
-                      </Link>
-                      <div
-                        className="dropdown-item"
-                        onClick={logout}
-                        style={{
-                          padding: "8px 12px",
-                          cursor: "pointer",
-                          color: "#333"
-                        }}
-                      >
-                        Logout
-                      </div>
+                      Your Profile
+                    </Link>
+                    <div
+                      className="dropdown-item"
+                      onClick={logout}
+                      style={{
+                        padding: "8px 12px",
+                        cursor: "pointer",
+                        color: "#333"
+                      }}
+                    >
+                      Logout
                     </div>
-                  )}
-                </div>
-              </>
-            ) : (
-              <Link to="/login" className="signin-btn">
-                Sign In
-              </Link>
-            )}
-          </div>
-        </nav>
-
-        {!user && (
-          <div className="landing-main floating-center">
-            <h1 className="landing-title">Hassle-Free Healthcare.</h1>
-            <p className="custom-subtext">
-              Empower your health journey with a secure, AI-powered platform.<br />
-              Store prescriptions, lab reports, and track medicines.<br />
-              Connect with doctors and manage all your medical needs—just a click away!
-            </p>
-            <button className="get-started-btn" onClick={() => navigate("/login")}>
-              Get Started
-            </button>
-          </div>
-        )}
-
-        <div className="feature-hero">
-          <div className="feature-label">Features</div>
-        </div>
-
-        <div className="features-section">
-          <div className="features-grid">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="feature-card"
-                onClick={() => navigate(feature.route)}
-              >
-                <div className="feature-icon">{feature.icon}</div>
-                <h2 className="feature-title">{feature.title}</h2>
-                <p className="feature-desc">{feature.desc}</p>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            </>
+          ) : (
+            <Link to="/login" className="signin-btn">
+              Sign In
+            </Link>
+          )}
         </div>
-      </>
+      </nav>
+
+      {!user && (
+        <div className="landing-main floating-center">
+          <h1 className="landing-title">Hassle-Free Healthcare.</h1>
+          <p className="custom-subtext">
+            Empower your health journey with a secure, AI-powered platform.<br />
+            Store prescriptions, lab reports, and track medicines.<br />
+            Connect with doctors and manage all your medical needs—just a click away!
+          </p>
+          <button className="get-started-btn" onClick={() => navigate("/login")}>
+            Get Started
+          </button>
+        </div>
+      )}
+
+      <div className="feature-hero">
+        <div className="feature-label">Features</div>
+      </div>
+
+      <div className="features-section">
+        <div className="features-grid">
+          {features.map((feature) => (
+            <div
+              key={feature.title}
+              className="feature-card"
+              onClick={() => navigate(feature.route)}
+            >
+              <div className="feature-icon">{feature.icon}</div>
+              <h2 className="feature-title">{feature.title}</h2>
+              <p className="feature-desc">{feature.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
