@@ -218,6 +218,108 @@
 
 .get-started-btn {
   /* ...your existing styles... */
-  animation: floatButton 3s ease-in-out infinite;
+  animation: floatButton 6s ease-in-out infinite;
   will-change: transform;
+}
+/* Animated Gradient Background for the whole app */
+body, #root, .animated-bg {
+  min-height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg, #a8edea, #fed6e3, #97e9fe, #a7ffeb);
+  background-size: 400% 400%;
+  animation: gradientBG 16s ease infinite;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.lively-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #2d2c3d;
+  text-align: center;
+  animation: floatTitle 3.5s ease-in-out infinite;
+  margin-top: 2.5rem;
+}
+@keyframes floatTitle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.subtext {
+  margin-top: 24px;
+  font-size: 1.25rem;
+  color: #426b94;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.lively-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #2d2c3d;
+  text-align: center;
+  animation: floatTitle 3.5s ease-in-out infinite;
+  margin-top: 2.5rem;
+}
+@keyframes floatTitle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+.subtext {
+  margin-top: 24px;
+  font-size: 1.25rem;
+  color: #426b94;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%, center; }
+  25%  { background-position: 50% 60%, center; }
+  50%  { background-position: 100% 50%, center; }
+  75%  { background-position: 50% 40%, center; }
+  100% { background-position: 0% 50%, center; }}
+
+
+/* Animated floating title */
+.landing-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #203354;
+  text-align: center;
+  animation: floatTitle 10s ease-in-out infinite;
+}
+
+@keyframes floatTitle {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-12px);}
+}
+
+
+/* Animated floating title */
+.landing-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #203354;
+  text-align: center;
+  animation: floatTitle 10s ease-in-out infinite;
+}
+
+@keyframes floatTitle {
+  0%, 100% { transform: translateY(0);}
+  50% { transform: translateY(-12px);}
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
