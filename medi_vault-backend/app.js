@@ -1,5 +1,6 @@
-const express = require('express');
 const dotenv = require('dotenv');
+dotenv.config(); // Load .env file
+const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const errorHandler = require("./middleware/errorMiddleware"); // Correct import
@@ -7,9 +8,7 @@ const authRoutes = require("./routes/authRoutes");
 const medicineReminderRoutes = require("./routes/medicineReminderRoutes");
 const userRoutes = require("./routes/userRoutes");
 const medicalFacilityRoutes = require("./routes/medicalFacilityRoutes");
-
-
-dotenv.config(); // Load .env file
+const medicalHistoryRoutes = require("./routes/medicalHistoryRoutes");
 
 // Connect to MongoDB
 connectDB();
@@ -46,6 +45,8 @@ app.use("/api/medicine-reminders", medicineReminderRoutes);
 app.use("/api/user", userRoutes);
 
 app.use("/api/medical-facilities", medicalFacilityRoutes);
+
+app.use("/api/medical-history", medicalHistoryRoutes);
 
 
 // Error handling middleware (must be last)

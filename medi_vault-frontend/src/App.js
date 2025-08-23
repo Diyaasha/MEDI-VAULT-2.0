@@ -11,6 +11,10 @@ import MedicineReminder from "./pages/MedicineReminder";
 import Profile from "./pages/Profile";
 import SetupProfile from "./pages/SetupProfile";
 import MedicalFacilitiesMap from "./components/MedicalFacilitiesMap";
+import MedicalHistory from "./pages/MedicalHistory";
+
+
+
 
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -78,6 +82,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+         <Route
+    path="/medical-history"
+    element={
+      <ProtectedRoute>
+        <MedicalHistory />
+      </ProtectedRoute>
+    }
+  />
       </Routes>
 
       {/* Add ToastContainer here */}
