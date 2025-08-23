@@ -1,49 +1,46 @@
 import React, { useState } from "react";
-import "./Login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { login } from "../api/auth";
 import { useNavigate } from "react-router-dom";
-
 import { toast } from "react-toastify";
+import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await login(formData);
-      localStorage.setItem("user", JSON.stringify(res.data)); // save user data
-      toast.success("Login successful!");
-      navigate("/"); // redirect to Home after login
-    } catch (err) {
-      console.error("Login error:", err.response?.data || err);
-      alert(err.response?.data?.message || "Login failed. Invalid credentials.");
-    }
+    toast.success("Login successful!");
+    navigate("/");
   };
 
   return (
-    <div className="login-container">
-      {/* Left Section */}
-      <div className="login-left">
-        <h1>HELLO, FRIEND!</h1>
-        <p>Enter your personal details  </p>
-      <p>            Start your journey today with us</p>
+    <div className="login-bg">
+      <div className="login-left-part">
+        <div className="left-box">
+          <div className="left-title">Welcome! </div>
+          <div className="left-highlight">
+            For those who care.
+          </div>
+          <div className="left-note">
+            Log in and discover a smarter way to organize your healthcare.
+
+<br/>
+            <br/>
+            <span style={{color:"#4c6959ff",fontWeight:"bold"}}>Empower your health today!</span>
+          </div>
+        </div>
       </div>
-
-      {/* Right Section */}
-      <div className="login-right">
-        <form className="login-form" onSubmit={handleSubmit}>
-          <h2>Login</h2>
-
+      <div className="login-right-part">
+        <form className="login-card" onSubmit={handleSubmit}>
+          <div className="login-logo">
+            <img src="/logooo.png" alt="logo" style={{height:40, width:40, filter:"drop-shadow(0 2px 6px rgba(0,32,64,0.18))"}} />
+          </div>
+          <div className="login-title"></div>
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -55,7 +52,6 @@ const Login = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <FaLock className="input-icon" />
             <input
@@ -67,14 +63,10 @@ const Login = () => {
               required
             />
           </div>
-
-          <button type="submit" className="login-btn">
-            Login
-          </button>
-
-          <p className="signup-link">
-            Don’t have an account? <a href="/signup">Sign Up</a>
-          </p>
+          <button type="submit" className="login-btn">Login</button>
+          <div className="signup-link">
+            Don't have an account? <a href="/signup">Sign Up</a>
+          </div>
         </form>
       </div>
     </div>
