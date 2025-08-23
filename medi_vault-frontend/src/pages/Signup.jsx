@@ -3,7 +3,6 @@ import "./Signup.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { signup } from "../api/auth";
 import { useNavigate } from "react-router-dom";
-
 import { toast } from "react-toastify";
 
 const Signup = () => {
@@ -19,52 +18,51 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await signup(formData);
+    e.preventDefault();
+    try {
+      const res = await signup(formData);
+      localStorage.setItem("user", JSON.stringify(res.data));
+      toast.success("Signup successful! Welcome.");
 
-    // save user data locally same as login for consistency
-    localStorage.setItem("user", JSON.stringify(res.data));
+      // Optional profile completeness logic
+      const profileRes = await fetch(
+        `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/user/profile`,
+        {
+          headers: { Authorization: `Bearer ${res.data.token}` },
+        }
+      );
+      const profileData = await profileRes.json();
 
-    // Show toast always on signup success
-    toast.success("Signup successful! Welcome.");
-
-    // Fetch profile data to check completeness
-    const profileRes = await fetch(
-      `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/user/profile`,
-      {
-        headers: { Authorization: `Bearer ${res.data.token}` },
+      if (!profileData.dob || !profileData.gender) {
+        navigate("/setup-profile");
+      } else {
+        navigate("/");
       }
-    );
-    const profileData = await profileRes.json();
-
-    // Redirect based on profile completeness
-    if (!profileData.dob || !profileData.gender) {
-      navigate("/setup-profile");
-    } else {
-      navigate("/");
+    } catch (err) {
+      console.error("Signup error:", err.response?.data || err);
+      alert(err.response?.data?.message || "Signup failed. Try again.");
     }
-
-  } catch (err) {
-    console.error("Signup error:", err.response?.data || err);
-    alert(err.response?.data?.message || "Signup failed. Try again.");
-  }
-};
-
+  };
 
   return (
-    <div className="signup-container">
-      {/* Left Section */}
-      <div className="signup-left">
-        <h1>WELCOME BACK!</h1>
-        <p>To keep connected with us please login with your personal info</p>
+    <div className="signup-bg">
+      <div className="signup-left-part">
+        <div className="left-box">
+          <div className="left-title">Welcome to MEDI-VAULT!</div>
+          <div className="left-desc">
+            Join a smarter way to organize your health.<br />
+            <br />
+          <span style={{color:"#4c6959ff",fontWeight:"bold"}}> Secure. Easy. Personalized.</span> 
+          </div>
+          <div className="left-note">
+            Sign up with your personal info to begin your journey!
+          </div>
+        </div>
       </div>
-
-      {/* Right Section */}
-      <div className="signup-right">
-        <form className="signup-form" onSubmit={handleSubmit}>
-          <h2>Sign Up</h2>
-
+      <div className="signup-right-part">
+        <form className="right-box" onSubmit={handleSubmit}>
+           <img src="/logooo.png" alt="logo" style={{height:40, width:40, filter:"drop-shadow(0 2px 6px rgba(0,32,64,0.18))"}} />
+          <br />
           <div className="input-group">
             <FaUser className="input-icon" />
             <input
@@ -76,7 +74,6 @@ const Signup = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -88,7 +85,6 @@ const Signup = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <FaLock className="input-icon" />
             <input
@@ -100,11 +96,9 @@ const Signup = () => {
               required
             />
           </div>
-
           <button type="submit" className="signup-btn">
             Sign Up
           </button>
-
           <p className="login-link">
             Already have an account? <a href="/login">Login</a>
           </p>

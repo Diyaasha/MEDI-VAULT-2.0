@@ -3,7 +3,6 @@ import "./Login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { login } from "../api/auth";
 import { useNavigate } from "react-router-dom";
-
 import { toast } from "react-toastify";
 
 const Login = () => {
@@ -31,19 +30,26 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      {/* Left Section */}
-      <div className="login-left">
-        <h1>HELLO, FRIEND!</h1>
-        <p>Enter your personal details  </p>
-      <p>            Start your journey today with us</p>
+    <div className="login-bg">
+      <div className="login-left-part">
+        <div className="left-box">
+          <div className="left-title">Welcome Back!</div>
+          <div className="left-highlight">For those who care.</div>
+          <div style={{ margin: "12px 0", textAlign: "center" }}>
+            <span style={{ color: "#4c6959", fontWeight: "bold" }}>
+              Empower your health today!<br />
+              <br />
+            </span>
+            Log in and discover a smarter way to organize your healthcare.<br />
+
+
+          </div>
+        </div>
       </div>
-
-      {/* Right Section */}
-      <div className="login-right">
-        <form className="login-form" onSubmit={handleSubmit}>
-          <h2>Login</h2>
-
+      <div className="login-right-part">
+        <form className="login-card" onSubmit={handleSubmit}>
+          <img src="/logooo.png" alt="logo" style={{ height: 40, width: 40, filter: "drop-shadow(0 2px 6px rgba(0,32,64,0.18))" }} />
+          <br />
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -55,7 +61,6 @@ const Login = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <FaLock className="input-icon" />
             <input
@@ -67,13 +72,11 @@ const Login = () => {
               required
             />
           </div>
-
           <button type="submit" className="login-btn">
             Login
           </button>
-
           <p className="signup-link">
-            Don’t have an account? <a href="/signup">Sign Up</a>
+            Don&apos;t have an account? <a href="/signup">Sign Up</a>
           </p>
         </form>
       </div>
