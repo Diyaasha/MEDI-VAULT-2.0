@@ -1,106 +1,126 @@
-/* ------------------- Signup Page Styles ------------------- */
-
-/* Page background (same as login) */
-.signup-page {
+.signup-bg {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(108deg, #447f5f 0%, #5485b7 100%);
+  background-size: 200% 200%;
+  animation: gradientMotion 10s ease-in-out infinite;
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%); /* teal → blue */
-  font-family: "Inter", sans-serif;
-  gap: 2rem;
+  justify-content: center;
 }
 
-/* Card Styles */
-.welcome-card,
-.form-card {
-  background: #b5d0d6; /* Match login card color */
-  padding: 2rem;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.10);
-  width: 350px;
+@keyframes gradientMotion {
+  0% {background-position: 0% 40%;}
+  50% {background-position: 100% 60%;}
+  100% {background-position: 0% 40%;}
+}
+
+.signup-left-part,
+.signup-right-part {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
+  min-height: 440px;
+}
+
+.left-box, .right-box {
+  background: rgba(180, 208, 220, 0.97);
+  border-radius: 28px;
+  box-shadow: 0 8px 32px rgba(40, 37, 63, 0.14);
+  width: 100%;
+  max-width: 410px;
+  min-width: 310px;
+  padding: 40px 32px 22px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #18407c;
+  margin-bottom: 18px;
+}
+.left-desc {
+  font-size: 1.18rem;
+  color: #187d93;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+.left-note {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #20619c;
+  margin-top: 14px;
   text-align: center;
 }
 
-/* Welcome Section */
-.welcome-card h1 {
-  color: #0b3d91; /* deep blue */
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-.welcome-card h3 {
-  color: #003f88; /* darker blue */
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-.welcome-card p {
-  color: #2b2b2b;
-  font-size: 1rem;
-  line-height: 1.4;
+.right-box h2 {
+  color: #185a9d;
+  margin-bottom: 17px;
+  font-size: 1.7rem;
+  font-weight: bold;
 }
 
-/* Form Section */
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-}
-.form-header {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
-}
-.signup-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-/* Input Fields */
 .input-group {
+  width: 100%;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
-  background: #e2f0f4; /* Match login input background */
-  border-radius: 8px;
-  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid #a9c3db;
 }
 .input-icon {
-  color: #174eab; /* Match login icon color */
   margin-right: 8px;
+  color: #185a9d;
 }
 .input-group input {
+  flex: 1;
+  font-size: 1rem;
+  background: #f3fafc;
   border: none;
   outline: none;
-  background: transparent;
-  width: 100%;
-  font-size: 0.95rem;
-  color: #0d1b2a;
+  color: #145453;
+  padding: 10px 8px;
+  border-radius: 0;
+  transition: border-bottom 0.2s;
+}
+.input-group input::placeholder {
+  color: #5485b7;
+}
+.input-group input:focus {
+  border-bottom: 2px solid #43cea2;
+  background: #eeffff;
 }
 
-/* Button */
 .signup-btn {
-  background: linear-gradient(90deg, #2fd6b5, #174eab); /* teal → blue, same as login */
+  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+  color: #fff;
+  font-weight: 700;
+  padding: 12px 0px;
   border: none;
-  color: white;
-  padding: 0.8rem;
   border-radius: 8px;
-  font-size: 1rem;
+  width: 100%;
+  margin-top: 14px;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: 0.3s ease;
+  box-shadow: 0 2px 8px rgba(40,37,63,0.08);
+  transition: background 0.2s;
 }
 .signup-btn:hover {
-  /* opacity: 0.9; */
-    background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+  background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
 }
 
-/* Login Link */
 .login-link {
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  color: #2b2b2b;
+  margin-top: 18px;
+  color: #145453;
+  font-size: 0.97rem;
+  text-align: center;
 }
 .login-link a {
-  color: #174eab;
+  color: #0f0fa0;
   text-decoration: none;
   font-weight: 500;
 }
@@ -108,14 +128,23 @@
   text-decoration: underline;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .signup-page {
+@media (max-width: 950px) {
+  .signup-bg {
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
   }
-  .welcome-card,
-  .form-card {
-    width: 95%;
+  .signup-left-part, .signup-right-part {
+    max-width: 98vw;
+    width: 100%;
+    min-height: unset;
+    padding: 0;
+    margin-top: 18px;
+  }
+  .left-box, .right-box {
+    padding: 28px 10px;
+    border-radius: 20px;
+    max-width: 98vw;
+    min-width: 0;
   }
 }

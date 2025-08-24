@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { signup } from "../api/auth";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Signup = () => {
@@ -21,13 +21,10 @@ const Signup = () => {
     e.preventDefault();
     try {
       const res = await signup(formData);
-
-      // Save user data
       localStorage.setItem("user", JSON.stringify(res.data));
-
       toast.success("Signup successful! Welcome.");
 
-      // Check profile completeness
+      // Optional profile completeness logic
       const profileRes = await fetch(
         `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/user/profile`,
         {
@@ -43,35 +40,29 @@ const Signup = () => {
       }
     } catch (err) {
       console.error("Signup error:", err.response?.data || err);
-      toast.error(err.response?.data?.message || "Signup failed. Try again.");
+      alert(err.response?.data?.message || "Signup failed. Try again.");
     }
   };
 
   return (
-    <div className="signup-page">
-      {/* Welcome Section */}
-      <div className="welcome-card">
-        <h1>Welcome!</h1>
-        <h3>For those who care.</h3>
-        <p>
-          Sign up and discover a smarter way to organize your healthcare.
-          <br />
-          <strong>Empower your health today!</strong>
-        </p>
-      </div>
-
-      {/* Signup Form Section */}
-      <div className="form-card">
-        <form onSubmit={handleSubmit} className="signup-form">
-          <div className="form-header">
-            {/* App logo or icon */}
-            <img
-              src="/logo.png"
-              alt="App Logo"
-              className="signup-logo"
-            />
+    <div className="signup-bg">
+      <div className="signup-left-part">
+        <div className="left-box">
+          <div className="left-title">Welcome to MEDI-VAULT!</div>
+          <div className="left-desc">
+            Join a smarter way to organize your health.<br />
+            <br />
+          <span style={{color:"#4c6959ff",fontWeight:"bold"}}> Secure. Easy. Personalized.</span> 
           </div>
-
+          <div className="left-note">
+            Sign up with your personal info to begin your journey!
+          </div>
+        </div>
+      </div>
+      <div className="signup-right-part">
+        <form className="right-box" onSubmit={handleSubmit}>
+           <img src="/logooo.png" alt="logo" style={{height:40, width:40, filter:"drop-shadow(0 2px 6px rgba(0,32,64,0.18))"}} />
+          <br />
           <div className="input-group">
             <FaUser className="input-icon" />
             <input
@@ -83,7 +74,6 @@ const Signup = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -95,7 +85,6 @@ const Signup = () => {
               required
             />
           </div>
-
           <div className="input-group">
             <FaLock className="input-icon" />
             <input
@@ -107,11 +96,9 @@ const Signup = () => {
               required
             />
           </div>
-
           <button type="submit" className="signup-btn">
             Sign Up
           </button>
-
           <p className="login-link">
             Already have an account? <Link to="/login">Login</Link>
           </p>
