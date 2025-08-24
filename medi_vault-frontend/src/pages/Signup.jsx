@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { signup } from "../api/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Signup = () => {
@@ -48,13 +48,14 @@ const Signup = () => {
     <div className="signup-bg">
       <div className="signup-left-part">
         <div className="left-box">
+          <br /><br />
           <div className="left-title">Welcome to MEDI-VAULT!</div>
-          <div className="left-desc">
+          <div className="left-desc"><br />
             Join a smarter way to organize your health.<br />
-            <br />
+            <br /><br />
           <span style={{color:"#4c6959ff",fontWeight:"bold"}}> Secure. Easy. Personalized.</span> 
           </div>
-          <div className="left-note">
+          <div className="left-note"><br />
             Sign up with your personal info to begin your journey!
           </div>
         </div>
@@ -100,7 +101,7 @@ const Signup = () => {
             Sign Up
           </button>
           <p className="login-link">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </form>
       </div>

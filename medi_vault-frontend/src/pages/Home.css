@@ -33,6 +33,9 @@
 .logo-icon {
   font-size: 24px;
 }
+.logo-text {
+  color: #000;
+}
 
 .nav-links a {
   text-decoration: none;
@@ -44,6 +47,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  color: #000;
   gap: 16px;
 }
 
@@ -115,6 +119,7 @@
   transition: box-shadow 0.2s;
   align-self: center;
 }
+
 
 .get-started-btn:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
@@ -323,3 +328,290 @@ body, #root, .animated-bg {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+.glass-footer {
+  width: 100vw;
+  margin: 0;
+  margin-top: 60px;
+  padding: 0;
+  background: none;
+  display: flex;
+  justify-content: center;
+}
+
+.footer-grid {
+  
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+  background: rgba(25, 160, 90, 0.28);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(20,67,40,0.10), 0 2px 12px rgba(20,67,40,0.11) inset;
+  backdrop-filter: blur(36px) saturate(140%);
+  -webkit-backdrop-filter: blur(36px) saturate(140%);
+  display: flex;
+  gap: 270px;
+  align-items: flex-start;
+  padding: 36px 58px 26px 56px;
+  border: 1.5px solid rgba(255,255,255,0.11);
+}
+
+/* Cols */
+.footer-col {
+  flex: 1;
+  min-width: 280px;
+  margin: 0 12px;
+}
+
+.about-section {
+  max-width: 380px;
+}
+.footer-logo-and-title {
+  display: flex;
+  gap: 13px;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+.footer-logo-icon {
+  font-size: 2.2rem;
+}
+.footer-app-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color:  hwb(203 9% 42%);;
+  letter-spacing: 0.015em;
+  margin-bottom: 1px;
+}
+.footer-app-sub {
+  font-size: 1.02rem;
+  color: #cefeec;
+  font-weight: 500;
+}
+.footer-desc {
+  margin-bottom: 18px;
+  color: #ecfffa;
+  font-size: 1.08rem;
+}
+.footer-tags { margin: 11px 0 0 0; }
+.footer-tag {
+  background: rgba(255,255,255,0.18);
+  color:  hwb(203 9% 42%);
+  border-radius: 15px;
+  font-size: 0.92rem;
+  padding: 4px 13px;
+  margin-right: 9px;
+  font-weight: 500;
+}
+
+.links-section {
+  min-width: 290px;
+}
+.footer-section {
+  margin-bottom: 22px;
+}
+.footer-section-title {
+  font-weight: 600;
+  color: hwb(203 9% 42%);
+  font-size: 1.13rem;
+  margin-bottom: 10px;
+}
+.footer-links ul, .footer-links li, .footer-section ul {
+  list-style: none;
+  padding-inline-start: 0px;
+  margin: 0;
+}
+.footer-section ul li {
+  font-size: 1.01rem;
+  margin-bottom: 7px;
+  color: #eafff9;
+}
+
+.footer-section ul li a {
+  color: #f9fff9;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.17s;
+}
+.footer-section ul li a:hover {
+  color: #ffda75;
+  text-decoration: underline;
+}
+
+/* Right: Download and contact */
+.action-section {
+  min-width: 390px;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  align-items: stretch;
+}
+.footer-download-btn {
+  width: 100%;
+  background: rgba(255,255,255,0.88);
+  color: #05954d;
+  font-weight: 600;
+  font-size: 1.06rem;
+  border: none;
+  border-radius: 11px;
+  padding: 15px 0 13px 0;
+  margin-bottom: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.16s,color 0.16s,box-shadow 0.18s;
+  box-shadow: 0 2px 7px rgba(54,192,90,0.07);
+}
+
+.footer-contact-section { margin-top: 6px; }
+.footer-contact {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-top: 4px;
+  color: #eaffff;
+}
+.footer-contact a {
+  color: #eaffff;
+  margin-left: 2px;
+  text-decoration: underline dotted;
+  transition: color 0.15s;
+}
+.footer-contact a:hover {
+  color: #ffda75;
+}
+
+@media (max-width: 1100px) {
+  .footer-grid {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 33px;
+    padding: 30px 18px 24px 18px;
+  }
+  .footer-col { margin-bottom: 20px;}
+}
+.about-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 38px 0 10px 0;
+}
+
+.about-btn, .features-btn {
+  background: linear-gradient(90deg, #a9bfcb 0%, #5d96b3 99%);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  padding: 12px 34px;
+  margin: 18px 0 18px 0;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 3px 16px rgba(0,0,0,0.09);
+  align-self: center;
+  display: flex; align-items: center;
+  gap: 6px;
+  letter-spacing: 0.01em;
+  user-select: none;
+  outline: none;
+}.about-outer-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;         /* vertical centering in parent */
+  min-height: 60vh;                /* adjust as needed for your layout */
+  width: 100%;
+}
+
+.about-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-btn {
+  /* (keep your existing about-btn styles from earlier) */
+  margin-bottom: 20px;
+}
+
+.about-text {
+  /* keep your about-text glass styles from earlier, plus: */
+  margin: 0 auto;           /* centers horizontally when not flex */
+  max-width: 520px;
+  text-align: center;       /* center text for clarity */
+}
+
+.about-btn:hover, .features-btn:hover {
+  background: linear-gradient(90deg,#a9bfcb 0%, #5d96b3 99%);
+  color: #f9fdff;
+  transform: translateY(-4px) scale(1.065);
+  box-shadow: 0 8px 26px rgba(17,135,210,0.18);
+  text-shadow: 0 1.5px 8px #2df7de49;
+  outline: 2px solid #565e63;
+}
+@keyframes buttonFloat {
+  0% { transform: translateY(0);}
+  100% { transform: translateY(-9px);}
+}
+
+.about-text {
+  background: #6391852f;
+  border-radius: 23px;
+  max-width: 720px;
+  margin: 10px 0 18px 0;
+  padding: 32px 34px;
+  box-shadow: 0 2px 24px 0 rgba(80, 148, 210, 0.10);
+  font-size: 1.17rem;
+  color: #164067;
+  line-height: 1.6;
+  text-align: left;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.about-text h2 {
+  margin: 0 0 12px 0;
+  color: #1087c2;
+  font-family: inherit;
+  font-size: 2.1rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.about-highlight {
+  color: #1087c2;
+  font-weight: 600;
+}
+.about-signature {
+  display: block;
+  margin-top: 13px;
+  font-weight: 700;
+  color: #24b278;
+  letter-spacing: 1px;
+  text-align: right;
+  font-size: 1.08rem;
+}
+.feature-label {
+  background: linear-gradient(to right, #a0c3cf, #4a90af);
+  color: white;
+  font-weight: bold;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 18px;
+  padding: 12px 34px;
+  margin: 18px 0 18px 0;
+  border-radius: 16px;
+  display: inline-block;
+  text-align: center;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.feature-label:hover {
+  background: linear-gradient(to right, #8bb5c3, #3a7a99); /* Darker gradient */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Lift effect */
+  transform: translateY(-2px); /* Subtle upward shift */
+    border: 2px solid #444; 
+}
+
+
+
