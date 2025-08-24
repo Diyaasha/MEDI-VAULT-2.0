@@ -334,6 +334,7 @@ body, #root, .animated-bg {
 }
 
 .footer-grid {
+  
   width: 100%;
   max-width: 1500px;
   margin: 0 auto;
@@ -343,7 +344,7 @@ body, #root, .animated-bg {
   backdrop-filter: blur(36px) saturate(140%);
   -webkit-backdrop-filter: blur(36px) saturate(140%);
   display: flex;
-  gap: 44px;
+  gap: 270px;
   align-items: flex-start;
   padding: 36px 58px 26px 56px;
   border: 1.5px solid rgba(255,255,255,0.11);
@@ -371,7 +372,7 @@ body, #root, .animated-bg {
 .footer-app-title {
   font-size: 1.55rem;
   font-weight: 700;
-  color: #fff;
+  color:  hwb(203 9% 42%);;
   letter-spacing: 0.015em;
   margin-bottom: 1px;
 }
@@ -388,7 +389,7 @@ body, #root, .animated-bg {
 .footer-tags { margin: 11px 0 0 0; }
 .footer-tag {
   background: rgba(255,255,255,0.18);
-  color: #fff;
+  color:  hwb(203 9% 42%);
   border-radius: 15px;
   font-size: 0.92rem;
   padding: 4px 13px;
@@ -404,7 +405,7 @@ body, #root, .animated-bg {
 }
 .footer-section-title {
   font-weight: 600;
-  color: #fff;
+  color: hwb(203 9% 42%);
   font-size: 1.13rem;
   margin-bottom: 10px;
 }
@@ -432,11 +433,11 @@ body, #root, .animated-bg {
 
 /* Right: Download and contact */
 .action-section {
-  min-width: 290px;
-  max-width: 340px;
+  min-width: 390px;
+  max-width: 540px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 1px;
   align-items: stretch;
 }
 .footer-download-btn {
@@ -551,7 +552,7 @@ body, #root, .animated-bg {
 }
 
 .about-text {
-  background: rgba(255,255,255,0.54);
+  background: #6391852f;
   border-radius: 23px;
   max-width: 720px;
   margin: 10px 0 18px 0;

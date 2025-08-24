@@ -48,13 +48,14 @@ const Signup = () => {
     <div className="signup-bg">
       <div className="signup-left-part">
         <div className="left-box">
+          <br /><br />
           <div className="left-title">Welcome to MEDI-VAULT!</div>
-          <div className="left-desc">
+          <div className="left-desc"><br />
             Join a smarter way to organize your health.<br />
-            <br />
+            <br /><br />
           <span style={{color:"#4c6959ff",fontWeight:"bold"}}> Secure. Easy. Personalized.</span> 
           </div>
-          <div className="left-note">
+          <div className="left-note"><br />
             Sign up with your personal info to begin your journey!
           </div>
         </div>

@@ -245,10 +245,10 @@ function Home() {
             <div className="footer-section">
               <div className="footer-section-title">App Features</div>
               <ul>
-                <li>Medicine & Appointment Reminders</li>
+                <li>Medicine Reminders</li>
                 <li>Prescription & Report Upload</li>
-                <li>Doctor & Hospital Search</li>
-                <li>Emergency Services Access</li>
+                <li> Hospital & Clinic Search</li>
+                <li>AI Health Summariser</li>
               </ul>
             </div>
           </div>
@@ -262,8 +262,8 @@ function Home() {
             <div className="footer-contact-section">
               <div className="footer-section-title" style={{ marginTop: 16 }}>Contact Developers</div>
               <div className="footer-contact">
-                Diptanshu Vishwa: diptanshuvishwa364@gmail.com<br />
-                Diyasha Nag: diyashanag23@gmail.com<br />
+                Diptanshu Vishwa: diptanshuvishwa364@gmail.com<br /><br />
+                Diyasha Nag: diyashanag23@gmail.com<br /><br />
                 Ashwin Yadav: ashwinyadavv@gmail.com
               </div>
               <br />
