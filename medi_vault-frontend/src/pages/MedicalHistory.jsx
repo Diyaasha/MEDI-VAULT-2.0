@@ -1,40 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  FiFileText,
-  // FiBell,
-  // FiClock,
-  FiFilter,
-  FiSearch,
-  FiDownload,
-  // FiShare,
-  FiUpload,
+  FiFileText, FiFilter, FiSearch, FiDownload, FiUpload
 } from "react-icons/fi";
+import "./MedicalHistory.css";
+// ... import any custom Button/Card/Badge/Input/Tabs components you use here ...
 
-import Button from "../components/ui/Button";
-import Card from "../components/ui/Card";
-import Badge from "../components/ui/Badge";
-import Input from "../components/ui/Input";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../components/ui/Tabs";
 
 const MedicalHistory = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
-
   const [recentRecords, setRecentRecords] = useState([]);
   const [vitalStats, setVitalStats] = useState([]);
   const [upcomingReminders, setUpcomingReminders] = useState([]);
   const [documents, setDocuments] = useState([]);
-
   const [uploading, setUploading] = useState(false);
   const [uploadCategory, setUploadCategory] = useState("general");
-
   const fileInputRef = useRef(null);
 
   const storedUser = localStorage.getItem("user");
   const token = storedUser ? JSON.parse(storedUser).token : null;
   const baseUrl = process.env.REACT_APP_API_URL || "http://localhost:3000";
-
+  
   // Fetch user profile for vitals
   const fetchUserProfile = async () => {
     try {
@@ -55,17 +42,17 @@ const MedicalHistory = () => {
     }
   };
 
+
+  // Fetch records, reminders, documents
   const fetchMedicalData = async () => {
     try {
       if (!token) return;
       const headers = { Authorization: `Bearer ${token}` };
-
       const [recordsRes, remindersRes, docsRes] = await Promise.all([
         fetch(`${baseUrl}/api/medical-history`, { headers }),
         fetch(`${baseUrl}/api/medicine-reminders`, { headers }),
         fetch(`${baseUrl}/api/medical-history`, { headers }),
       ]);
-
       if (recordsRes.ok) setRecentRecords(await recordsRes.json());
       if (remindersRes.ok) setUpcomingReminders(await remindersRes.json());
       if (docsRes.ok) setDocuments(await docsRes.json());
@@ -74,31 +61,29 @@ const MedicalHistory = () => {
     }
   };
 
+
   useEffect(() => {
     fetchUserProfile();
     fetchMedicalData();
   }, [token]);
 
+
+  // File upload
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file || !token) return;
-
     const formData = new FormData();
     formData.append("file", file);
     formData.append("category", uploadCategory);
     formData.append("title", file.name);
     formData.append("date", new Date().toISOString());
-
     setUploading(true);
     try {
       const res = await fetch(`${baseUrl}/api/medical-history/upload`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
-
       if (res.ok) {
         alert("Upload successful");
         fetchMedicalData();
@@ -113,12 +98,12 @@ const MedicalHistory = () => {
       e.target.value = null;
     }
   };
-
   const triggerUpload = () => {
     if (fileInputRef.current) fileInputRef.current.click();
   };
 
-  // downloadDocument declared once here
+
+  // Download document
   async function downloadDocument(docId) {
     try {
       if (!token) {
@@ -137,6 +122,8 @@ const MedicalHistory = () => {
     }
   }
 
+
+  // UI Return
   return (
     <div className="medicine-reminder-page">
       <div className="medicine-reminder-container">
@@ -150,16 +137,16 @@ const MedicalHistory = () => {
             Comprehensive tracking and management of your complete medical history, health records, and vital information in one secure location.
           </p>
         </div>
-
-        {/* Search and Filter */}
+        {/* Search and Filter Section */}
         <div className="flex gap-4 mb-4 flex-wrap">
           <div style={{ position: "relative", flexGrow: 1 }}>
             <FiSearch style={{ position: "absolute", top: "50%", left: 8, transform: "translateY(-50%)", color: "#888" }} />
-            <Input
+            <input
               placeholder="Search medical records, medications, doctors..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
+              style={{ paddingLeft: 32, width: "100%", borderRadius: 6 }}
             />
           </div>
           <div>
@@ -175,18 +162,16 @@ const MedicalHistory = () => {
             </select>
           </div>
           <div>
-            <Button variant="outline" className="mr-2">
+            <button className="mr-2" style={{ border: "1px solid #fff", background: "#222e", padding: "0.5em 1em", borderRadius: 4, color: "#fff", marginRight: 10 }}>
               <FiDownload style={{ verticalAlign: "middle", marginRight: 6 }} />
               Export
-            </Button>
-            <Button variant="outline" onClick={triggerUpload} disabled={uploading}>
+            </button>
+            <button onClick={triggerUpload} disabled={uploading} style={{ border: "1px solid #fff", background: "#222e", padding: "0.5em 1em", borderRadius: 4, color: "#fff" }}>
               <FiUpload style={{ verticalAlign: "middle", marginRight: 6 }} />
               {uploading ? "Uploading..." : "Upload Document"}
-            </Button>
+            </button>
           </div>
         </div>
-
-        {/* Hidden file input for upload */}
         <input
           type="file"
           ref={fileInputRef}
@@ -194,8 +179,7 @@ const MedicalHistory = () => {
           onChange={handleFileChange}
           accept=".pdf,image/*"
         />
-
-        {/* Category Selector for upload */}
+        {/* Category Selector */}
         <div style={{ marginBottom: "1rem" }}>
           <label>
             Document Category:{" "}
@@ -209,79 +193,61 @@ const MedicalHistory = () => {
             </select>
           </label>
         </div>
+        {/* ---- MEDICAL HISTORY SECTION: 6 HORIZONTAL BOXES ---- */}
+       <div>
+  <h3 style={{ color: "#fff", fontWeight: 700, marginBottom: 18 }}>Medical History</h3>
+  <div className="mh-grid-3x2">
+    <div className="mh-card">
+      <div className="mh-title">Hospitalizations</div>
+      <ul>
+        <li>Admission & Discharge dates</li>
+        <li>Reason (illness, surgery, accident, etc.)</li>
+        <li>Hospital/Clinic name</li>
+      </ul>
+    </div>
+    <div className="mh-card">
+      <div className="mh-title">Surgeries / Procedures</div>
+      <ul>
+        <li>Type of surgery</li>
+        <li>Date of surgery</li>
+        <li>Hospital & Surgeon’s name</li>
+      </ul>
+    </div>
+    <div className="mh-card">
+      <div className="mh-title">Major Illnesses / Conditions</div>
+      <ul>
+        <li>Infectious/Chronic diseases</li>
+        <li>Mental health treatments</li>
+      </ul>
+    </div>
+    <div className="mh-card">
+      <div className="mh-title">Injuries / Accidents</div>
+      <ul>
+        <li>Fractures, burns, etc.</li>
+        <li>Treatment received</li>
+      </ul>
+    </div>
+    <div className="mh-card">
+      <div className="mh-title">Lab & Diagnostic Reports</div>
+      <ul>
+        <li>Blood tests, X-rays, MRI, CT, ECG</li>
+        <li>Date of test</li>
+        <li>Report upload (PDF/Image)</li>
+      </ul>
+    </div>
+    <div className="mh-card">
+      <div className="mh-title">Prescriptions & Treatment Records</div>
+      <ul>
+        <li>Past medications prescribed</li>
+        <li>Duration of treatment</li>
+        <li>Doctor’s details</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
-        {/* Tabs */}
-        <Tabs>
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-6">
-            <TabsTrigger value="overview" activeTab={activeTab} onClick={setActiveTab}>Overview</TabsTrigger>
-            <TabsTrigger value="records" activeTab={activeTab} onClick={setActiveTab}>Records</TabsTrigger>
-            <TabsTrigger value="vitals" activeTab={activeTab} onClick={setActiveTab}>Vitals</TabsTrigger>
-            <TabsTrigger value="medications" activeTab={activeTab} onClick={setActiveTab}>Medications</TabsTrigger>
-            <TabsTrigger value="providers" activeTab={activeTab} onClick={setActiveTab}>Providers</TabsTrigger>
-            <TabsTrigger value="documents" activeTab={activeTab} onClick={setActiveTab}>Documents</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="overview" activeTab={activeTab}>
-            <h3>Vital Stats</h3>
-            <div className="grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: "16px", marginBottom: "1rem" }}>
-              {vitalStats.map((stat, idx) => (
-                <Card key={idx} className={`p-4 ${stat.status === "normal" ? "border-green-400" : "border-red-400"}`}>
-                  <h4>{stat.label}</h4>
-                  <p style={{ fontSize: "1.5rem", fontWeight: "bold" }}>{stat.value}</p>
-                  <p>Trend: {stat.trend === "stable" ? "→" : stat.trend === "up" ? "↗" : "↘"} {stat.trend}</p>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="records" activeTab={activeTab}>
-            <h3>Recent Activity</h3>
-            <div>
-              {recentRecords.length === 0 ? (
-                <p>No recent medical records found.</p>
-              ) : (
-                recentRecords.map((rec) => (
-                  <Card key={rec._id} className="mb-4 p-4">
-                    <strong>{rec.title}</strong>
-                    <div>{rec.doctor} • {new Date(rec.date).toLocaleDateString()}</div>
-                    <Badge variant="outline">{rec.category}</Badge>{" "}
-                    <Badge variant="secondary">{rec.status || "Unknown"}</Badge>
-                  </Card>
-                ))
-              )}
-            </div>
-          </TabsContent>
-
-          <TabsContent value="vitals" activeTab={activeTab}>
-            <h3>Vitals data goes here</h3>
-          </TabsContent>
-          <TabsContent value="medications" activeTab={activeTab}>
-            <h3>Medications data goes here</h3>
-          </TabsContent>
-          <TabsContent value="providers" activeTab={activeTab}>
-            <h3>Providers data goes here</h3>
-          </TabsContent>
-
-          <TabsContent value="documents" activeTab={activeTab}>
-            <h3>Uploaded Documents</h3>
-            {documents.length === 0 ? (
-              <p>No documents found.</p>
-            ) : (
-              documents.map((doc) => (
-                <Card key={doc._id} className="mb-4 p-4 flex justify-between items-center">
-                  <div>
-                    <strong>{doc.title || doc.originalFileName}</strong><br />
-                    <small>{new Date(doc.date).toLocaleDateString()}</small>
-                  </div>
-                  <Button variant="outline" size="sm" onClick={() => downloadDocument(doc._id)}>
-                    <FiDownload style={{ marginRight: 6 }} />
-                    Download
-                  </Button>
-                </Card>
-              ))
-            )}
-          </TabsContent>
-        </Tabs>
+        {/* ---- END MEDICAL HISTORY SECTION ---- */}
+        {/* Other content below ... */}
       </div>
     </div>
   );

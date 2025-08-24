@@ -88,7 +88,8 @@ function Home() {
             }}
           />
           <span className="logo-text">
-            <strong>MEDI-VAULT</strong>
+            <strong>MEDI-VAULT</strong> 
+            {/* color black */}
           </span>
           <div className="nav-links">
             <Link to="/">Home</Link>

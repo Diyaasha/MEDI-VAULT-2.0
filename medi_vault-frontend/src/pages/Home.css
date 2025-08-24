@@ -33,6 +33,9 @@
 .logo-icon {
   font-size: 24px;
 }
+.logo-text {
+  color: #000;
+}
 
 .nav-links a {
   text-decoration: none;
@@ -44,6 +47,7 @@
 .navbar-right {
   display: flex;
   align-items: center;
+  color: #000;
   gap: 16px;
 }
 
@@ -115,6 +119,7 @@
   transition: box-shadow 0.2s;
   align-self: center;
 }
+
 
 .get-started-btn:hover {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
