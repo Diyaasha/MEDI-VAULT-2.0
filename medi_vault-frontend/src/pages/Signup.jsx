@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { signup } from "../api/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Signup = () => {

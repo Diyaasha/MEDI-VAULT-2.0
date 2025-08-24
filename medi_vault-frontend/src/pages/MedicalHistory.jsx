@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
   FiFileText,
-  FiBell,
-  FiClock,
+  // FiBell,
+  // FiClock,
   FiFilter,
   FiSearch,
   FiDownload,
-  FiShare,
+  // FiShare,
   FiUpload,
 } from "react-icons/fi";
 

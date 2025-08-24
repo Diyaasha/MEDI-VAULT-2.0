@@ -119,7 +119,7 @@ const Profile = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p></p>;
 
   return (
     <div className="profile-page">
