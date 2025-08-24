@@ -14,7 +14,7 @@ const features = [
   {
     title: "Medical History",
     desc: "Securely store and access your medical records, test results, and health checkups.",
-    route: "/Medical-History",
+    route: "/medical-history",
     icon: "📋",
   },
   {
