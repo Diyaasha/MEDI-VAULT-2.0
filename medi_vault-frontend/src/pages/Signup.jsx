@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { signup } from "../api/auth";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Signup = () => {
@@ -19,51 +18,59 @@ const Signup = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await signup(formData);
+    e.preventDefault();
+    try {
+      const res = await signup(formData);
 
-    // save user data locally same as login for consistency
-    localStorage.setItem("user", JSON.stringify(res.data));
+      // Save user data
+      localStorage.setItem("user", JSON.stringify(res.data));
 
-    // Show toast always on signup success
-    toast.success("Signup successful! Welcome.");
+      toast.success("Signup successful! Welcome.");
 
-    // Fetch profile data to check completeness
-    const profileRes = await fetch(
-      `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/user/profile`,
-      {
-        headers: { Authorization: `Bearer ${res.data.token}` },
+      // Check profile completeness
+      const profileRes = await fetch(
+        `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/user/profile`,
+        {
+          headers: { Authorization: `Bearer ${res.data.token}` },
+        }
+      );
+      const profileData = await profileRes.json();
+
+      if (!profileData.dob || !profileData.gender) {
+        navigate("/setup-profile");
+      } else {
+        navigate("/");
       }
-    );
-    const profileData = await profileRes.json();
-
-    // Redirect based on profile completeness
-    if (!profileData.dob || !profileData.gender) {
-      navigate("/setup-profile");
-    } else {
-      navigate("/");
+    } catch (err) {
+      console.error("Signup error:", err.response?.data || err);
+      toast.error(err.response?.data?.message || "Signup failed. Try again.");
     }
-
-  } catch (err) {
-    console.error("Signup error:", err.response?.data || err);
-    alert(err.response?.data?.message || "Signup failed. Try again.");
-  }
-};
-
+  };
 
   return (
-    <div className="signup-container">
-      {/* Left Section */}
-      <div className="signup-left">
-        <h1>WELCOME BACK!</h1>
-        <p>To keep connected with us please login with your personal info</p>
+    <div className="signup-page">
+      {/* Welcome Section */}
+      <div className="welcome-card">
+        <h1>Welcome!</h1>
+        <h3>For those who care.</h3>
+        <p>
+          Sign up and discover a smarter way to organize your healthcare.
+          <br />
+          <strong>Empower your health today!</strong>
+        </p>
       </div>
 
-      {/* Right Section */}
-      <div className="signup-right">
-        <form className="signup-form" onSubmit={handleSubmit}>
-          <h2>Sign Up</h2>
+      {/* Signup Form Section */}
+      <div className="form-card">
+        <form onSubmit={handleSubmit} className="signup-form">
+          <div className="form-header">
+            {/* App logo or icon */}
+            <img
+              src="/logo.png"
+              alt="App Logo"
+              className="signup-logo"
+            />
+          </div>
 
           <div className="input-group">
             <FaUser className="input-icon" />
@@ -106,7 +113,7 @@ const Signup = () => {
           </button>
 
           <p className="login-link">
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <Link to="/login">Login</Link>
           </p>
         </form>
       </div>
