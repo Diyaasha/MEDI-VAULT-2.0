@@ -12,9 +12,7 @@ import Profile from "./pages/Profile";
 import SetupProfile from "./pages/SetupProfile";
 import MedicalFacilitiesMap from "./components/MedicalFacilitiesMap";
 import MedicalHistory from "./pages/MedicalHistory";
-
-
-
+import ForgotPassword from "./pages/ForgotPassword";
 
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -27,7 +25,7 @@ function App() {
         {/* Public landing/Home page */}
         <Route path="/" element={<Home />} />
 
-        {/* Login & Signup: Redirect logged-in users to home */}
+        {/* Login & Signup */}
         <Route
           path="/login"
           element={
@@ -45,7 +43,10 @@ function App() {
           }
         />
 
-        {/* Medicine Reminder - Protected */}
+        {/* Forgot Password (Public) */}
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+
+        {/* Protected Routes */}
         <Route
           path="/medicine-reminder"
           element={
@@ -73,7 +74,6 @@ function App() {
           }
         />
 
-        {/* Medical Facilities - Protected (moved inside Routes) */}
         <Route
           path="/medical-facilities"
           element={
@@ -82,21 +82,21 @@ function App() {
             </ProtectedRoute>
           }
         />
-         <Route
-    path="/medical-history"
-    element={
-      <ProtectedRoute>
-        <MedicalHistory />
-      </ProtectedRoute>
-    }
-  />
+
+        <Route
+          path="/medical-history"
+          element={
+            <ProtectedRoute>
+              <MedicalHistory />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
-      {/* Add ToastContainer here */}
+      {/* Toast Notifications */}
       <ToastContainer />
     </Router>
   );
 }
-
 
 export default App;
