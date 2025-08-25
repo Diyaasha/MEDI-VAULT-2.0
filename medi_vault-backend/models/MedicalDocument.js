@@ -3,11 +3,27 @@ const { Schema } = mongoose;
 
 const MedicalDocumentSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  category: { 
-    type: String, 
-    enum: ['symptoms', 'vitals', 'medication', 'consultation', 'general', 'other'], 
-    required: true 
-  },
+  category: {  
+  type: String,  
+  enum: [
+    'lab',
+    'imaging',
+    'prescription',
+    'visit-summary',
+    'immunization',
+    'insurance',
+    'specialist',
+    'emergency',
+    'uploaded',
+    'symptoms',
+    'vitals',
+    'medication',
+    'consultation',
+    'general',
+    'other'
+  ],
+  required: true  
+},
   title: { type: String, required: true },
   date: { type: Date, required: true },
   doctor: { type: String },            // for doctor visit category
