@@ -1,0 +1,138 @@
+.mh-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.mh-title {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.mh-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mh-search,
+.mh-select {
+  flex-grow: 1;
+  min-width: 200px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.mh-upload-btn {
+  background: linear-gradient(to right, #4caf50, #81c784);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.mh-upload-btn:hover {
+  background: linear-gradient(to right, #43a047, #66bb6a);
+}
+
+/* Feature cards */
+.mh-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.mh-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mh-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.mh-card-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.mh-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.mh-card-desc {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Reports */
+.mh-empty {
+  text-align: center;
+  margin-top: 60px;
+  color: #777;
+  font-size: 18px;
+}
+
+.mh-report-list {
+  list-style: none;
+  padding: 0;
+}
+
+.mh-report-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
+  padding: 16px;
+}
+
+.mh-report-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.mh-btn-download {
+  background: #1976d2;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.mh-btn-download:hover {
+  background: #1565c0;
+}
+
+.mh-btn-delete {
+  background: #d32f2f;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.mh-btn-delete:hover {
+  background: #c62828;
+}

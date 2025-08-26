@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./UploadReportModal.css";
 
 const REPORT_TYPES = [
   { value: "lab", label: "Lab Results" },
@@ -31,20 +32,13 @@ export default function UploadReportModal({ isOpen, onClose, defaultType, onUplo
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!file) {
-      setError("Please select a file to upload.");
-      return;
-    }
-    if (!doctor.trim()) {
-      setError("Please enter doctor's name.");
-      return;
-    }
-    if (!title.trim()) {
-      setError("Please enter the report title.");
-      return;
-    }
+    if (!file) return setError("Please select a file to upload.");
+    if (!doctor.trim()) return setError("Please enter doctor's name.");
+    if (!title.trim()) return setError("Please enter the report title.");
+
     setLoading(true);
     setError("");
+
     try {
       const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
       if (!token) throw new Error("Not authenticated");
@@ -60,9 +54,7 @@ export default function UploadReportModal({ isOpen, onClose, defaultType, onUplo
 
       const res = await fetch(`${API_URL}/api/medical-history/upload`, {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
         body: formData,
       });
 
@@ -86,83 +78,69 @@ export default function UploadReportModal({ isOpen, onClose, defaultType, onUplo
   if (!isOpen) return null;
 
   return (
-    <div onClick={onClose} style={modalBackdropStyle}>
-      <div onClick={e => e.stopPropagation()} style={modalStyle}>
-        <h2>Upload Medical Report</h2>
-        <form onSubmit={handleSubmit}>
-          <div style={fieldStyle}>
+    <div className="modal-backdrop" onClick={onClose}>
+      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+        <h2 className="modal-title">Upload Medical Report</h2>
+        <form onSubmit={handleSubmit} className="modal-form">
+          <div className="form-group">
             <label>Type</label>
-            <select value={type} onChange={e => setType(e.target.value)} required>
+            <select value={type} onChange={(e) => setType(e.target.value)} required>
               {REPORT_TYPES.map(({ value, label }) => (
                 <option key={value} value={value}>{label}</option>
               ))}
             </select>
           </div>
-          <div style={fieldStyle}>
+
+          <div className="form-group">
             <label>Doctor's Name</label>
             <input
               type="text"
               value={doctor}
-              onChange={e => setDoctor(e.target.value)}
+              onChange={(e) => setDoctor(e.target.value)}
               placeholder="Doctor's Name"
               required
             />
           </div>
-          <div style={fieldStyle}>
+
+          <div className="form-group">
             <label>Report Title</label>
             <input
               type="text"
               value={title}
-              onChange={e => setTitle(e.target.value)}
+              onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter report title"
               required
             />
           </div>
-          <div style={fieldStyle}>
+
+          <div className="form-group">
             <label>Date</label>
             <input
               type="date"
               value={date}
-              onChange={e => setDate(e.target.value)}
+              onChange={(e) => setDate(e.target.value)}
               required
             />
           </div>
-          <div style={fieldStyle}>
+
+          <div className="form-group">
             <label>File</label>
             <input type="file" accept="application/pdf,image/*" onChange={handleFileChange} required />
           </div>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-          <div style={{ marginTop: 16, display: "flex", gap: 10, justifyContent: "flex-end" }}>
-            <button type="submit" disabled={loading}>{loading ? "Uploading..." : "Upload"}</button>
-            <button type="button" onClick={onClose}>Cancel</button>
+
+          {error && <p className="error-message">{error}</p>}
+
+          <div className="modal-actions">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? "Uploading..." : "Upload"}
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={onClose}>
+              Cancel
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
 }
-
-const modalBackdropStyle = {
-  position: "fixed",
-  inset: 0,
-  backgroundColor: "rgba(0,0,0,0.5)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  zIndex: 1000,
-};
-
-const modalStyle = {
-  backgroundColor: "#fff",
-  padding: 24,
-  borderRadius: 6,
-  width: "90%",
-  maxWidth: 400,
-};
-
-const fieldStyle = {
-  marginBottom: 12,
-  display: "flex",
-  flexDirection: "column",
-};
 

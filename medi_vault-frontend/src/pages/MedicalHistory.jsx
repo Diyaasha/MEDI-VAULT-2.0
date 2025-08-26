@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import UploadReportModal from "../components/UploadReportModal";
+import "./MedicalHistory.css";
 
 const REPORT_TYPES = [
-  { value: "lab", label: "Lab Results" },
-  { value: "imaging", label: "Imaging" },
-  { value: "prescription", label: "Prescriptions" },
-  { value: "visit-summary", label: "Visit Summary" },
-  { value: "immunization", label: "Immunizations" },
-  { value: "insurance", label: "Insurance" },
-  { value: "specialist", label: "Specialists" },
-  { value: "emergency", label: "Emergency" },
-  { value: "uploaded", label: "Uploaded" },
+  { value: "lab", label: "Lab Results", icon: "🧪", desc: "Blood work, urine tests, biopsies" },
+  { value: "imaging", label: "Imaging", icon: "📡", desc: "X-rays, MRIs, CT scans, ultrasounds" },
+  { value: "prescription", label: "Prescriptions", icon: "💊", desc: "Current and past medications" },
+  { value: "visit-summary", label: "Visit Summaries", icon: "📝", desc: "Doctor visit notes and plans" },
+  { value: "immunization", label: "Immunizations", icon: "💉", desc: "Vaccination records and schedules" },
+  { value: "insurance", label: "Insurance", icon: "🛡️", desc: "Coverage details and claims" },
+  { value: "specialist", label: "Specialists", icon: "👨‍⚕️", desc: "Specialist consultations" },
+  { value: "emergency", label: "Emergency", icon: "🚑", desc: "Emergency care records" },
+  { value: "uploaded", label: "Uploaded", icon: "📂", desc: "Your uploaded reports" },
 ];
 
 export default function MedicalHistory() {
@@ -24,7 +25,6 @@ export default function MedicalHistory() {
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
   const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
 
-  // Fetch reports on mount and after upload/delete
   useEffect(() => {
     async function fetchReports() {
       if (!token) return;
@@ -45,28 +45,19 @@ export default function MedicalHistory() {
     fetchReports();
   }, [token, API_URL]);
 
-  // Filter reports whenever allReports, filterType or searchText changes
   useEffect(() => {
     let filtered = allReports;
-
     if (filterType !== "all") {
+      filtered = filtered.filter((doc) => doc.category === filterType);
+    }
+    if (searchText.trim()) {
+      const lowerSearch = searchText.toLowerCase();
       filtered = filtered.filter(
         (doc) =>
-          doc.category === filterType ||
-          (REPORT_TYPES.find((t) => t.value === doc.category)?.label === REPORT_TYPES.find((t) => t.value === filterType)?.label)
+          (doc.title && doc.title.toLowerCase().includes(lowerSearch)) ||
+          (doc.doctor && doc.doctor.toLowerCase().includes(lowerSearch))
       );
     }
-
-    if (searchText.trim()) {
-  const lowerSearch = searchText.toLowerCase();
-  filtered = filtered.filter(
-    doc =>
-      (doc.title && doc.title.toLowerCase().includes(lowerSearch)) ||
-      (doc.doctor && doc.doctor.toLowerCase().includes(lowerSearch))
-  );
-}
-
-
     setReports(filtered);
   }, [allReports, filterType, searchText]);
 
@@ -77,7 +68,6 @@ export default function MedicalHistory() {
 
   const handleUploadSuccess = () => {
     setModalOpen(false);
-    // Refetch after successful upload
     async function fetchReports() {
       if (!token) return;
       try {
@@ -103,13 +93,11 @@ export default function MedicalHistory() {
     setModalOpen(true);
   };
 
-  // Download document
   const openDocument = async (id) => {
     if (!token) {
       alert("Please login to download.");
       return;
     }
-
     try {
       const res = await fetch(`${API_URL}/api/medical-history/download-url/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -130,14 +118,12 @@ export default function MedicalHistory() {
     }
   };
 
-  // Delete document
   const deleteDocument = async (id) => {
     if (!token) {
       alert("Please login to delete.");
       return;
     }
     if (!window.confirm("Are you sure you want to delete this document?")) return;
-
     try {
       const res = await fetch(`${API_URL}/api/medical-history/${id}`, {
         method: "DELETE",
@@ -145,7 +131,6 @@ export default function MedicalHistory() {
       });
       if (res.ok) {
         alert("Document deleted");
-        // Refetch to update list
         const updatedReports = allReports.filter((r) => r._id !== id);
         setAllReports(updatedReports);
       } else {
@@ -157,117 +142,65 @@ export default function MedicalHistory() {
   };
 
   return (
-    <div style={{ maxWidth: 900, margin: "auto", padding: 24, fontFamily: "Arial, sans-serif" }}>
-      <h1 style={{ textAlign: "center", marginBottom: 24 }}>Medical History Management System</h1>
+    <div className="mh-container">
+      <h1 className="mh-title">Medical History Management System</h1>
 
-      {/* Search and filter */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 24, flexWrap: "wrap", alignItems: "center" }}>
+      {/* Search & filter */}
+      <div className="mh-filters">
         <input
           type="search"
           placeholder="Search by report or doctor"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
-          style={{ flexGrow: 1, minWidth: 200, padding: 12, fontSize: 16, borderRadius: 6, border: "1px solid #ccc" }}
+          className="mh-search"
         />
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          style={{ padding: 12, fontSize: 16, borderRadius: 6, border: "1px solid #ccc", minWidth: 200 }}
+          className="mh-select"
         >
           <option value="all">All Types</option>
           {REPORT_TYPES.map(({ value, label }) => (
             <option key={value} value={value}>{label}</option>
           ))}
         </select>
-        <button
-          onClick={() => openUploadModal()}
-          style={{
-            background: "linear-gradient(to right, #4caf50, #81c784)",
-            color: "white",
-            border: "none",
-            borderRadius: 6,
-            fontSize: 16,
-            padding: "12px 24px",
-            cursor: "pointer",
-          }}
-        >
+        <button onClick={() => openUploadModal()} className="mh-upload-btn">
           + Upload Report
         </button>
       </div>
 
       {/* Feature cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(140px,1fr))", gap: 16, marginBottom: 32 }}>
-        {REPORT_TYPES.filter(t => t.value !== "uploaded").map(({ value, label }) => (
-          <div
-            key={value}
-            onClick={() => handleFeatureClick(value)}
-            style={{
-              background: "#f9f9f9",
-              borderRadius: 12,
-              padding: 20,
-              cursor: "pointer",
-              textAlign: "center",
-              boxShadow: "0 2px 8px rgb(0 0 0 / 0.1)",
-              userSelect: "none",
-              transition: "transform 0.2s ease",
-            }}
-            onMouseEnter={e => e.currentTarget.style.transform = "scale(1.02)"}
-            onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <div style={{ fontSize: 28, fontWeight: "600", marginBottom: 8 }}>{label}</div>
-            <div style={{ fontSize: 12, color: "#555" }}>{label} Documents</div>
+      <div className="mh-card-grid">
+        {REPORT_TYPES.filter(t => t.value !== "uploaded").map(({ value, label, icon, desc }) => (
+          <div key={value} onClick={() => handleFeatureClick(value)} className="mh-card">
+            <div className="mh-card-icon">{icon}</div>
+            <div className="mh-card-title">{label}</div>
+            <div className="mh-card-desc">{desc}</div>
           </div>
         ))}
       </div>
 
       {/* Document list */}
       {reports.length === 0 ? (
-        <div style={{ textAlign: "center", marginTop: 60, color: "#777", fontSize: 18 }}>
+        <div className="mh-empty">
           <p>No reports found.</p>
           <p>Upload your first report to get started.</p>
         </div>
       ) : (
-        <ul style={{ listStyle: "none", padding: 0 }}>
+        <ul className="mh-report-list">
           {reports.map((r) => (
-            <li key={r._id} style={{
-              background: "#fff",
-              borderRadius: 12,
-              boxShadow: "0 2px 6px rgba(0,0,0,0.05)",
-              marginBottom: 16,
-              padding: 16,
-              position: "relative",
-            }}>
+            <li key={r._id} className="mh-report-item">
               <h3>{r.title}</h3>
               <p><strong>Type:</strong> {REPORT_TYPES.find(t => t.value === r.category)?.label || r.category}</p>
               <p><strong>Date:</strong> {new Date(r.date).toLocaleDateString()}</p>
               <p><strong>Doctor:</strong> {r.doctor || "Unknown"}</p>
-              <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
+              <div className="mh-report-actions">
                 {r.fileUrl && (
-                  <button
-                    onClick={() => openDocument(r._id)}
-                    style={{
-                      background: "#1976d2",
-                      border: "none",
-                      color: "white",
-                      borderRadius: 6,
-                      padding: "8px 16px",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <button onClick={() => openDocument(r._id)} className="mh-btn-download">
                     Download Report
                   </button>
                 )}
-                <button
-                  onClick={() => deleteDocument(r._id)}
-                  style={{
-                    background: "#d32f2f",
-                    border: "none",
-                    color: "white",
-                    borderRadius: 6,
-                    padding: "8px 16px",
-                    cursor: "pointer",
-                  }}
-                >
+                <button onClick={() => deleteDocument(r._id)} className="mh-btn-delete">
                   Delete
                 </button>
               </div>
