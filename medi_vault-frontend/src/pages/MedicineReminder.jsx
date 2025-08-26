@@ -175,8 +175,10 @@ const MedicineReminder = () => {
             </button>
             {editingId && (
               <button
+
                 type="button"
-                className="cancel-btn"
+
+                className="cancel-btns"
                 onClick={() => {
                   setFormData({
                     medicineName: "",
@@ -216,10 +218,10 @@ const MedicineReminder = () => {
               </p>
               {r.notes && <p className="notes">Notes: {r.notes}</p>}
               <div className="actions">
-                <button className="edit-btn" onClick={() => handleEdit(r)}>
+                <button className="edit-btns" onClick={() => handleEdit(r)}>
                   Edit
                 </button>
-                <button className="delete-btn" onClick={() => handleDelete(r._id)}>
+                <button className="delete-btns" onClick={() => handleDelete(r._id)}>
                   Delete
                 </button>
               </div>

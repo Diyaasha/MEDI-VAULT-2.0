@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { login } from "../api/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -29,11 +30,14 @@ const Login = () => {
     }
   };
 
+  // Google login handler (replace with your actual OAuth logic)
+  const handleGoogleLogin = () => {
+    // Example: window.location.href = "/api/auth/google";
+    toast.info("Google login coming soon!");
+  };
+
   const handleForgotPassword = () => {
-    <p className="forgot-link">
-  <a href="/forgot-password">Forgot Password?</a>
-</p>
- // redirect to Forgot Password page
+    navigate("/forgot-password");
   };
 
   return (
@@ -67,6 +71,8 @@ const Login = () => {
           />
           <br />
 
+          
+
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -94,7 +100,19 @@ const Login = () => {
           <button type="submit" className="login-btn">
             Login
           </button>
-
+{/* Google Login Button */}
+          <button
+            type="button"
+            className="google-login-btn"
+            onClick={handleGoogleLogin}
+            
+            style={{ marginBottom: "28px" }}
+          >
+            <br/>
+            
+            <FcGoogle size={22} style={{ marginRight: "10px" }} />
+            Continue with Google
+          </button>
           <p className="signup-link">
             Don&apos;t have an account? <a href="/signup">Sign Up</a>
           </p>
