@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "./SetupProfile.css";
 
 const SetupProfile = () => {
   const navigate = useNavigate();
@@ -73,73 +74,110 @@ const SetupProfile = () => {
   };
 
   return (
-    <div className="setup-profile-page" style={{ padding: "20px", maxWidth: "600px", margin: "auto" }}>
-      <h2>Complete Your Profile</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Date of Birth:
-          <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
-        </label>
-        <br />
+    <div className="setup-profile-page">
+      <div className="setup-profile-card">
+        <h2>Complete Your Profile</h2>
+        <form onSubmit={handleSubmit} className="setup-form">
+          <label>
+            Date of Birth:
+            <input
+              type="date"
+              name="dob"
+              value={formData.dob}
+              onChange={handleChange}
+              required
+            />
+          </label>
 
-        <label>
-          Gender:
-          <select name="gender" value={formData.gender} onChange={handleChange} required>
-            <option value="">Select</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </select>
-        </label>
-        <br />
+          <label>
+            Gender:
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
 
-        <label>
-          Blood Group:
-          <input name="bloodGroup" value={formData.bloodGroup} onChange={handleChange} required />
-        </label>
-        <br />
+          <label>
+            Blood Group:
+            <input
+              name="bloodGroup"
+              value={formData.bloodGroup}
+              onChange={handleChange}
+              required
+            />
+          </label>
 
-        <label>
-          Weight:
-          <input name="weight" value={formData.weight} onChange={handleChange} placeholder="e.g. 75 kg" />
-        </label>
-        <br />
+          <label>
+            Weight:
+            <input
+              name="weight"
+              value={formData.weight}
+              onChange={handleChange}
+              placeholder="e.g. 75 kg"
+            />
+          </label>
 
-        <label>
-          Height:
-          <input name="height" value={formData.height} onChange={handleChange} placeholder="e.g. 175 cm" />
-        </label>
-        <br />
+          <label>
+            Height:
+            <input
+              name="height"
+              value={formData.height}
+              onChange={handleChange}
+              placeholder="e.g. 175 cm"
+            />
+          </label>
 
-        <label>
-          Eye Power (L):
-          <input name="eyePowerL" value={formData.eyePowerL} onChange={handleChange} />
-        </label>
-        <br />
+          <label>
+            Eye Power (L):
+            <input
+              name="eyePowerL"
+              value={formData.eyePowerL}
+              onChange={handleChange}
+            />
+          </label>
 
-        <label>
-          Eye Power (R):
-          <input name="eyePowerR" value={formData.eyePowerR} onChange={handleChange} />
-        </label>
-        <br />
+          <label>
+            Eye Power (R):
+            <input
+              name="eyePowerR"
+              value={formData.eyePowerR}
+              onChange={handleChange}
+            />
+          </label>
 
-        <label>
-          Allergies (comma separated):
-          <input
-            name="allergies"
-            value={formData.allergies}
-            onChange={handleChange}
-            placeholder="e.g. Peanuts, Penicillin"
-          />
-        </label>
-        <br />
+          <label>
+            Allergies (comma separated):
+            <input
+              name="allergies"
+              value={formData.allergies}
+              onChange={handleChange}
+              placeholder="e.g. Peanuts, Penicillin"
+            />
+          </label>
 
-        {error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p className="error-message">{error}</p>}
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Saving..." : "Save and Continue"}
-        </button>
-      </form>
+          <div className="setup-buttons">
+            <button type="submit" disabled={loading} className="save-btn">
+              {loading ? "Saving..." : "Save and Continue"}
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              className="cancel-btn"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
