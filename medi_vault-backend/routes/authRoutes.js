@@ -47,7 +47,7 @@ router.post("/google/verify", async (req, res) => {
     });
 
     const payload = ticket.getPayload();
-    console.log("Verified token payload:", payload);
+    // console.log("Verified token payload:", payload);
 
     // Look for existing user by email
     let user = await User.findOne({ email: payload.email });

@@ -3,8 +3,6 @@ import "./Signup.css"; // reuse signup styling
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { login, googleVerify } from "../api/auth";
 import { useNavigate, Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GoogleLogin } from "@react-oauth/google";
 
@@ -27,29 +25,23 @@ const Login = () => {
     }
   };
 
-  // Google login handler (replace with your actual OAuth logic)
-  const handleGoogleLogin = () => {
-    // Example: window.location.href = "/api/auth/google";
-    toast.info("Google login coming soon!");
-  };
-
   const onGoogleSuccess = async (credentialResponse) => {
     if (!credentialResponse?.credential) {
       toast.error("Google login failed: no credential received");
       return;
     }
     try {
-       const res = await googleVerify(credentialResponse.credential);
-        console.log("Google verify response data:", res.data);
-    localStorage.setItem("user", JSON.stringify(res.data));
-    toast.success("Login/signup successful!");
+      const res = await googleVerify(credentialResponse.credential);
+      console.log("Google verify response data:", res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
+      toast.success("Login/signup successful!");
 
-    // Redirect depending on profile completeness
-    if (res.data.isProfileComplete === false) {
-      navigate("/setup-profile"); // your profile completion page
-    } else {
-      navigate("/");
-    }
+      // Redirect depending on profile completeness
+      if (res.data.isProfileComplete === false) {
+        navigate("/setup-profile"); // your profile completion page
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       toast.error(error.response?.data?.message || "Google login/signup failed.");
     }
@@ -95,7 +87,6 @@ const Login = () => {
             }}
           />
           <br />
-
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -118,12 +109,13 @@ const Login = () => {
               required
             />
           </div>
+
           <button type="submit" className="signup-btn">
             Login
           </button>
 
           <p className="signup-link">
-            Don&apos;t have an account? <a href="/signup">Sign Up</a>
+            Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
           </p>
 
           <div className="forgot-password-bottom">
