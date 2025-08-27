@@ -328,39 +328,81 @@ body, #root, .animated-bg {
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-.glass-footer {
-  width: 100vw;
+glass-footer {
+  width: 100vw;   /* Full width like navbar */
   margin: 0;
   margin-top: 60px;
   padding: 0;
   background: none;
   display: flex;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .footer-grid {
-  
-  width: 100%;
-  max-width: 1500px;
-  margin: 0 auto;
+  width: 100%;   /* Stretch across full screen */
+  margin: 0;     /* Remove centering */
   background: rgba(25, 160, 90, 0.28);
-  border-radius: 24px;
+  border-radius: 0; /* Navbar doesn't have rounded corners */
   box-shadow: 0 8px 32px rgba(20,67,40,0.10), 0 2px 12px rgba(20,67,40,0.11) inset;
   backdrop-filter: blur(36px) saturate(140%);
   -webkit-backdrop-filter: blur(36px) saturate(140%);
+  
   display: flex;
-  gap: 270px;
+  justify-content: space-between; /* Spread columns */
   align-items: flex-start;
-  padding: 36px 58px 26px 56px;
-  border: 1.5px solid rgba(255,255,255,0.11);
+  padding: 36px 70px; /* Match navbar padding */
+  border-top: 1.5px solid rgba(255,255,255,0.11); /* Like navbar border-bottom */
+  gap: 40px;
+  box-sizing: border-box;
 }
 
 /* Cols */
 .footer-col {
   flex: 1;
-  min-width: 280px;
+  min-width: 200px;
   margin: 0 12px;
 }
+/* Footer MediVault Box */
+.footer-col.about-section {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 15px;
+  padding: 20px;
+  width: 320px;         /* same width as signin */
+  min-height: auto;     /* remove stretch */
+  height: auto;         /* auto-adjust height */
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;             /* reduce spacing */
+}
+
+.footer-col.about-section p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.footer-col.about-section .footer-logo-and-title {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-col.about-section .tech-tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.footer-col.about-section .tech-tags span {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
 
 .about-section {
   max-width: 380px;
@@ -630,7 +672,7 @@ body, #root, .animated-bg {
 
 .footer-grid {
   width: 100%;
-  max-width: 1500px;
+  max-width: 100%;
   margin: 0 auto;
   background: rgba(25, 160, 90, 0.28);
   border-radius: 24px;
@@ -691,6 +733,3 @@ body, #root, .animated-bg {
   color: #d1d1d1;
   font-size: 14px;
 }
-
-
-

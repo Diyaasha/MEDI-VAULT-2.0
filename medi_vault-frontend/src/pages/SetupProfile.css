@@ -1,0 +1,126 @@
+/* Overall Page Background */
+.setup-profile-page {
+  background: #a7c0e7;
+  min-height: 100vh;
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Card Container */
+.setup-profile-card {
+  background: url('/public/profile.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0.88);
+  border-radius: 22px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.07);
+  padding: 42px 38px 32px 38px;
+  max-width: 700px;
+  width: 100%;
+  margin: 40px auto;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.setup-profile-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 0;
+  border-radius: 22px;
+  pointer-events: none;
+}
+
+.setup-profile-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Title */
+.setup-profile-card h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #203354;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Form Styles */
+.setup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Labels and Inputs */
+.setup-form label {
+  font-size: 1rem;
+  color: #2d1457;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.setup-form input,
+.setup-form select {
+  padding: 10px 12px;
+  border-radius: 7px;
+  border: 1.5px solid #dadcec;
+  font-size: 1rem;
+  background: #f7f8fa;
+  color: #2d1457;
+  transition: all 0.2s ease;
+}
+
+.setup-form input:focus,
+.setup-form select:focus {
+  border-color: #536fd5;
+  outline: none;
+  box-shadow: 0 0 6px rgba(83, 111, 213, 0.2);
+}
+
+/* Error Message */
+.error-message {
+  color: red;
+  font-size: 0.95rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+.setup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.save-btn {
+  background: #536fd5;
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.save-btn:hover {
+  background: #2207ac;
+}
+
+.cancel-btn {
+  background: #ddddee;
+  color: #555575;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  cursor: pointer;
+}

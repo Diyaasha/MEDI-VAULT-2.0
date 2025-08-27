@@ -3,6 +3,8 @@ import "./Signup.css"; // reuse signup styling
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { login, googleVerify } from "../api/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GoogleLogin } from "@react-oauth/google";
 
@@ -23,6 +25,12 @@ const Login = () => {
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed. Invalid credentials.");
     }
+  };
+
+  // Google login handler (replace with your actual OAuth logic)
+  const handleGoogleLogin = () => {
+    // Example: window.location.href = "/api/auth/google";
+    toast.info("Google login coming soon!");
   };
 
   const onGoogleSuccess = async (credentialResponse) => {
@@ -87,6 +95,7 @@ const Login = () => {
             }}
           />
           <br />
+
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -113,8 +122,8 @@ const Login = () => {
             Login
           </button>
 
-          <p className="login-link">
-            Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
+          <p className="signup-link">
+            Don&apos;t have an account? <a href="/signup">Sign Up</a>
           </p>
 
           <div className="forgot-password-bottom">
