@@ -9,6 +9,9 @@ const medicineReminderRoutes = require("./routes/medicineReminderRoutes");
 const userRoutes = require("./routes/userRoutes");
 const medicalFacilityRoutes = require("./routes/medicalFacilityRoutes");
 const medicalHistoryRoutes = require("./routes/medicalHistoryRoutes");
+const passport = require('./config/passport');
+const session = require('express-session');
+
 
 // Connect to MongoDB
 connectDB();
@@ -26,6 +29,17 @@ app.use(
     credentials: true, // Allow cookies & headers
   })
 );
+
+
+app.use(session({
+  secret: process.env.JWT_SECRET, 
+  resave: false,
+  saveUninitialized: false,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Health check route
 app.get("/health", (req, res) => {

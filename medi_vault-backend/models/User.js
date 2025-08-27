@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
      enum: ['patient', 'doctor', 'admin'], 
      default: 'patient' 
   },
+  isProfileComplete: { type: Boolean, default: false },
   dob: { type: Date },
 gender: { type: String, enum: ['Male', 'Female', 'Other'] },
 bloodGroup: { type: String },
