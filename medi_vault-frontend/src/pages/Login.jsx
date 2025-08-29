@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Signup.css"; // reuse signup styling
+import "./Login.css"; 
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { login, googleVerify } from "../api/auth";
 import { useNavigate, Link } from "react-router-dom";
@@ -32,13 +32,11 @@ const Login = () => {
     }
     try {
       const res = await googleVerify(credentialResponse.credential);
-      console.log("Google verify response data:", res.data);
       localStorage.setItem("user", JSON.stringify(res.data));
       toast.success("Login/signup successful!");
 
-      // Redirect depending on profile completeness
       if (res.data.isProfileComplete === false) {
-        navigate("/setup-profile"); // your profile completion page
+        navigate("/setup-profile");
       } else {
         navigate("/");
       }
@@ -52,16 +50,13 @@ const Login = () => {
   };
 
   return (
-    <div className="signup-bg">
-      <div className="signup-left-part">
+    <div className="login-bg">
+      {/* Left Part */}
+      <div className="login-left-part">
         <div className="left-box">
-          <br />
-          <br />
           <div className="left-title">Welcome Back!</div>
           <div className="left-desc">
-            <br />
             Log back in and continue managing your health with ease.
-            <br />
             <br />
             <br />
             <span style={{ color: "#4c6959ff", fontWeight: "bold" }}>
@@ -69,14 +64,14 @@ const Login = () => {
             </span>
           </div>
           <div className="left-note">
-            <br />
             Sign in and continue your journey with MEDI-VAULT!
           </div>
         </div>
       </div>
 
-      <div className="signup-right-part">
-        <form className="right-box" onSubmit={handleSubmit}>
+      {/* Right Part */}
+      <div className="login-right-part">
+        <form className="login-card" onSubmit={handleSubmit}>
           <img
             src="/logooo.png"
             alt="logo"
@@ -84,9 +79,10 @@ const Login = () => {
               height: 40,
               width: 40,
               filter: "drop-shadow(0 2px 6px rgba(0,32,64,0.18))",
+              marginBottom: "15px",
             }}
           />
-          <br />
+
           <div className="input-group">
             <FaEnvelope className="input-icon" />
             <input
@@ -98,6 +94,7 @@ const Login = () => {
               required
             />
           </div>
+
           <div className="input-group">
             <FaLock className="input-icon" />
             <input
@@ -110,31 +107,24 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="signup-btn">
+          <button type="submit" className="login-btn">
             Login
           </button>
+
+          
+          <div className="google-login-container">
+            <GoogleLogin onSuccess={onGoogleSuccess} onError={onGoogleError} useOneTap />
+          </div>
 
           <p className="signup-link">
             Don&apos;t have an account? <Link to="/signup">Sign Up</Link>
           </p>
 
+       
           <div className="forgot-password-bottom">
-            <button
-              type="button"
-              onClick={() => (window.location.href = "/forgot-password")}
-            >
-              Forgot Password?
-            </button>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </div>
         </form>
-
-        <div style={{ marginTop: "20px", textAlign: "center" }}>
-          <GoogleLogin
-            onSuccess={onGoogleSuccess}
-            onError={onGoogleError}
-            useOneTap
-          />
-        </div>
       </div>
     </div>
   );
