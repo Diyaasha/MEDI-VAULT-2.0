@@ -20,7 +20,7 @@ const features = [
   {
     title: "Vaccinations & Surgeries",
     desc: "Track all vaccination dates and your surgical history conveniently in one place.",
-    route: "/vaccination-surgeries",
+    route: "/vaccination-and-surgery",
     icon: "💉",
   },
   {

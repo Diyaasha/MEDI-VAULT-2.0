@@ -11,9 +11,12 @@ const medicalFacilityRoutes = require("./routes/medicalFacilityRoutes");
 const medicalHistoryRoutes = require("./routes/medicalHistoryRoutes");
 const aiSimplifiedRoutes = require("./routes/aiSimplifiedRoutes");
 
+// New route imports
+const vaccinationRoutes = require("./routes/vaccinationRoutes");
+const surgeryRoutes = require("./routes/surgeryRoutes");
+
 const passport = require('./config/passport');
 const session = require('express-session');
-
 
 // Connect to MongoDB
 connectDB();
@@ -32,7 +35,6 @@ app.use(
   })
 );
 
-
 app.use(session({
   secret: process.env.JWT_SECRET, 
   resave: false,
@@ -41,7 +43,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Health check route
 app.get("/health", (req, res) => {
@@ -55,18 +56,15 @@ app.get("/health", (req, res) => {
 
 // API routes
 app.use("/api/auth", authRoutes);
-
 app.use("/api/medicine-reminders", medicineReminderRoutes);
-
 app.use("/api/user", userRoutes);
-
 app.use("/api/medical-facilities", medicalFacilityRoutes);
-
 app.use("/api/medical-history", medicalHistoryRoutes);
-
 app.use("/api/ai-simplified", aiSimplifiedRoutes);
 
-
+// New backend routes for vaccinations and surgeries
+app.use("/api/vaccinations", vaccinationRoutes);
+app.use("/api/surgeries", surgeryRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler); // <-- corrected here

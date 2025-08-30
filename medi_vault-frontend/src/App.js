@@ -14,11 +14,16 @@ import MedicalFacilitiesMap from "./components/MedicalFacilitiesMap";
 import MedicalHistory from "./pages/MedicalHistory";
 import ForgotPassword from "./pages/ForgotPassword";
 
+// ProtectedRoute and PublicRoute wrappers
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 
-// **NEW IMPORT: AI Simplified Docs page**
+// Existing new import for AI docs
 import MedicalDocumentsPage from "./components/MedicalDocumentsPage";
+
+// Import Vaccinations and Surgeries page/component (create if not existing)
+import VaccinationAndSurgery from "./pages/vaccinationAndSurgery";
+
 
 function App() {
   return (
@@ -94,16 +99,25 @@ function App() {
           }
         />
 
-        {/* NEW: AI Simplified Docs Upload & List */}
+        {/* NEW Routes for Vaccinations and Surgeries */}
         <Route
-  path="/ai-simplified"
+  path="/vaccination-and-surgery"
   element={
     <ProtectedRoute>
-      <MedicalDocumentsPage />
+      <VaccinationAndSurgery />
     </ProtectedRoute>
   }
 />
 
+        {/* NEW: AI Simplified Docs Upload & List */}
+        <Route
+          path="/ai-simplified"
+          element={
+            <ProtectedRoute>
+              <MedicalDocumentsPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {/* Toast Notifications */}
