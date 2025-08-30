@@ -14,9 +14,11 @@ import MedicalFacilitiesMap from "./components/MedicalFacilitiesMap";
 import MedicalHistory from "./pages/MedicalHistory";
 import ForgotPassword from "./pages/ForgotPassword";
 
-
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
+
+// **NEW IMPORT: AI Simplified Docs page**
+import MedicalDocumentsPage from "./components/MedicalDocumentsPage";
 
 function App() {
   return (
@@ -91,6 +93,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* NEW: AI Simplified Docs Upload & List */}
+        <Route
+  path="/ai-simplified"
+  element={
+    <ProtectedRoute>
+      <MedicalDocumentsPage />
+    </ProtectedRoute>
+  }
+/>
+
       </Routes>
 
       {/* Toast Notifications */}

@@ -30,11 +30,11 @@ const features = [
     icon: "🏥",
   },
   {
-    title: "Insurance Details",
-    desc: "Keep your insurance, emergency info, and blood group details ready anytime.",
-    route: "/insurance-details",
-    icon: "💼",
-  },
+  title: "AI-Simplified",
+  desc: "Let AI summarize and simplify your insurance or medical documents for easy understanding.",
+  route: "/ai-simplified",
+  icon: "🤖",
+},
   {
     title: "Treatments & Wellness",
     desc: "Explore and track holistic treatments, therapies, and wellness remedies.",

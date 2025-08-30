@@ -9,6 +9,8 @@ const medicineReminderRoutes = require("./routes/medicineReminderRoutes");
 const userRoutes = require("./routes/userRoutes");
 const medicalFacilityRoutes = require("./routes/medicalFacilityRoutes");
 const medicalHistoryRoutes = require("./routes/medicalHistoryRoutes");
+const aiSimplifiedRoutes = require("./routes/aiSimplifiedRoutes");
+
 const passport = require('./config/passport');
 const session = require('express-session');
 
@@ -61,6 +63,9 @@ app.use("/api/user", userRoutes);
 app.use("/api/medical-facilities", medicalFacilityRoutes);
 
 app.use("/api/medical-history", medicalHistoryRoutes);
+
+app.use("/api/ai-simplified", aiSimplifiedRoutes);
+
 
 
 // Error handling middleware (must be last)

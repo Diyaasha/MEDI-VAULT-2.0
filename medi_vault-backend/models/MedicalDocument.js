@@ -30,6 +30,7 @@ const MedicalDocumentSchema = new Schema({
   notes: { type: String },
   fileUrl: { type: String },
   originalFileName: { type: String },
+  mimetype: { type: String },
   details: { type: Schema.Types.Mixed },  // <-- New field for dynamic data
   isManual: { type: Boolean, default: false },
 }, { timestamps: true });
