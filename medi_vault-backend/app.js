@@ -15,6 +15,12 @@ const aiSimplifiedRoutes = require("./routes/aiSimplifiedRoutes");
 const vaccinationRoutes = require("./routes/vaccinationRoutes");
 const surgeryRoutes = require("./routes/surgeryRoutes");
 
+const treatmentRoutes = require("./routes/treatmentRoutes");
+const doshaAssessmentRoutes = require("./routes/doshaAssessmentRoutes");
+const treatmentPlanRoutes = require("./routes/treatmentPlanRoutes");
+const herbalMedicineRoutes = require("./routes/herbalMedicineRoutes");
+const wellnessLogRoutes = require("./routes/wellnessLogRoutes");
+
 const passport = require('./config/passport');
 const session = require('express-session');
 
@@ -65,6 +71,11 @@ app.use("/api/ai-simplified", aiSimplifiedRoutes);
 // New backend routes for vaccinations and surgeries
 app.use("/api/vaccinations", vaccinationRoutes);
 app.use("/api/surgeries", surgeryRoutes);
+app.use("/api/treatments", treatmentRoutes);
+app.use("/api/dosha-assessments", doshaAssessmentRoutes);
+app.use("/api/treatment-plans", treatmentPlanRoutes);
+app.use("/api/herbal-medicines", herbalMedicineRoutes);
+app.use("/api/wellness-logs", wellnessLogRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler); // <-- corrected here
