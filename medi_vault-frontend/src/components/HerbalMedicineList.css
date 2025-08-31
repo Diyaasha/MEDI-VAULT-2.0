@@ -1,0 +1,90 @@
+.medicine-list {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.medicine-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.medicine-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.medicine-title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  color: #2c3e50;
+}
+
+.botanical {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: normal;
+}
+
+.medicine-card p {
+  margin: 0.3rem 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.card-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+.btn {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn.edit {
+  background: #3498db;
+  color: white;
+}
+
+.btn.edit:hover {
+  background: #2980b9;
+}
+
+.btn.delete {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn.delete:hover {
+  background: #c0392b;
+}
+
+.loading,
+.error,
+.empty {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+}
+
+.error {
+  color: red;
+}
+
+.empty {
+  color: #666;
+}

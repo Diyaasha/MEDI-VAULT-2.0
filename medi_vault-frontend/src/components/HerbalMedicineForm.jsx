@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./HerbalMedicineForm.css";
 
 export default function HerbalMedicineForm({ medicine, onCancel }) {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function HerbalMedicineForm({ medicine, onCancel }) {
     supplier: "",
     notes: "",
   });
+
   const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
   const token = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).token
@@ -80,129 +82,123 @@ export default function HerbalMedicineForm({ medicine, onCancel }) {
         throw new Error(text || "Failed to save herbal medicine");
       }
 
-      // After success, optionally parse response data if needed:
-      // const savedMedicine = await res.json();
-
       alert(`Herbal medicine ${medicine ? "updated" : "created"} successfully.`);
-      onCancel(); // Close form after save
+      onCancel();
     } catch (err) {
       alert(`Error: ${err.message}`);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 600, margin: "auto", padding: 16 }}>
-      <h2>{medicine ? "Edit" : "Add"} Herbal Medicine</h2>
+    <div className="herbal-form-container">
+      <form className="herbal-form" onSubmit={handleSubmit}>
+        <h2>{medicine ? "Edit" : "Add"} Herbal Medicine</h2>
 
-      <label title="Common or trade name of the herb">
-        Name:<br />
-        <input
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          placeholder="e.g. Tulsi"
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Name:
+          <input
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            placeholder="e.g. Tulsi"
+          />
+        </label>
 
-      <label title="Scientific Latin name, e.g. Ocimum sanctum">
-        Botanical Name:<br />
-        <input
-          name="botanicalName"
-          value={formData.botanicalName}
-          onChange={handleChange}
-          required
-          placeholder="e.g. Ocimum sanctum"
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Botanical Name:
+          <input
+            name="botanicalName"
+            value={formData.botanicalName}
+            onChange={handleChange}
+            required
+            placeholder="e.g. Ocimum sanctum"
+          />
+        </label>
 
-      <label title="Formulation type like powder, decoction, capsule">
-        Formulation:<br />
-        <input
-          name="formulation"
-          value={formData.formulation}
-          onChange={handleChange}
-          placeholder="e.g. powder, tablet"
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Formulation:
+          <input
+            name="formulation"
+            value={formData.formulation}
+            onChange={handleChange}
+            placeholder="e.g. powder, tablet"
+          />
+        </label>
 
-      <label title="How the medicine is administered">
-        Dosage Form:<br />
-        <input
-          name="dosageForm"
-          value={formData.dosageForm}
-          onChange={handleChange}
-          placeholder="e.g. capsule, syrup"
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Dosage Form:
+          <input
+            name="dosageForm"
+            value={formData.dosageForm}
+            onChange={handleChange}
+            placeholder="e.g. capsule, syrup"
+          />
+        </label>
 
-      <label title="Therapeutic use or instructions">
-        Usage:<br />
-        <textarea
-          name="usage"
-          value={formData.usage}
-          onChange={handleChange}
-          rows={3}
-          placeholder="Description or traditional uses"
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Usage:
+          <textarea
+            name="usage"
+            value={formData.usage}
+            onChange={handleChange}
+            rows={3}
+            placeholder="Description or traditional uses"
+          />
+        </label>
 
-      <label title="Available quantity in stock (units)">
-        Stock Quantity:<br />
-        <input
-          type="number"
-          name="stockQuantity"
-          value={formData.stockQuantity}
-          onChange={handleChange}
-          min={0}
-          style={{ width: 100, marginBottom: 12 }}
-        />
-      </label>
+        <div className="form-row">
+          <label>
+            Stock Quantity:
+            <input
+              type="number"
+              name="stockQuantity"
+              value={formData.stockQuantity}
+              onChange={handleChange}
+              min={0}
+            />
+          </label>
 
-      <label title="Expiry date of the stock/batch">
-        Expiry Date:<br />
-        <input
-          type="date"
-          name="expiryDate"
-          value={formData.expiryDate}
-          onChange={handleChange}
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+          <label>
+            Expiry Date:
+            <input
+              type="date"
+              name="expiryDate"
+              value={formData.expiryDate}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
 
-      <label title="Supplier or provider of the herbal medicine">
-        Supplier:<br />
-        <input
-          name="supplier"
-          value={formData.supplier}
-          onChange={handleChange}
-          placeholder="Supplier name"
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Supplier:
+          <input
+            name="supplier"
+            value={formData.supplier}
+            onChange={handleChange}
+            placeholder="Supplier name"
+          />
+        </label>
 
-      <label title="Additional notes or special instructions">
-        Notes:<br />
-        <textarea
-          name="notes"
-          value={formData.notes}
-          onChange={handleChange}
-          rows={3}
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+        <label>
+          Notes:
+          <textarea
+            name="notes"
+            value={formData.notes}
+            onChange={handleChange}
+            rows={3}
+          />
+        </label>
 
-      <button type="submit" style={{ marginRight: 12 }}>
-        {medicine ? "Update" : "Add"} Medicine
-      </button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
-    </form>
+        <div className="form-buttons">
+          <button type="submit" className="btn-primary">
+            {medicine ? "Update" : "Add"} Medicine
+          </button>
+          <button type="button" className="btn-secondary" onClick={onCancel}>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

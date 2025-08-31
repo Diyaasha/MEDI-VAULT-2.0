@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./TreatmentForm.css";
 
 const TREATMENT_TYPES = [
   "Medicine",
@@ -9,10 +10,8 @@ const TREATMENT_TYPES = [
   "Other",
 ];
 
-const STATUS_OPTIONS = ["Active", "Completed", "Paused"]; // exact backend status enums
-
+const STATUS_OPTIONS = ["Active", "Completed", "Paused"];
 const DURATION_UNITS = ["days", "weeks", "months"];
-
 const CONSTITUTIONS = ["Vata", "Pitta", "Kapha"];
 
 export default function TreatmentForm({ treatment, onSave, onCancel }) {
@@ -69,7 +68,7 @@ export default function TreatmentForm({ treatment, onSave, onCancel }) {
       !formData.durationUnit ||
       !formData.status
     ) {
-      alert("Please fill in all required fields including patient name, constitution, treatment modalities, start date, duration, and status.");
+      alert("Please fill in all required fields.");
       return;
     }
 
@@ -77,104 +76,97 @@ export default function TreatmentForm({ treatment, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ border: "1px solid #ccc", borderRadius: 8, padding: 16, maxWidth: 480 }}>
-      <label>
-        Patient Name:
-        <input type="text" name="patientName" value={formData.patientName} onChange={handleChange} required />
-      </label>
-      <br /><br />
+    <form className="treatment-form" onSubmit={handleSubmit}>
+      <h2 className="form-title">Treatment Plan</h2>
 
-      <label>
-        Primary Constitution:
+      <div className="form-group">
+        <label>Patient Name</label>
+        <input type="text" name="patientName" value={formData.patientName} onChange={handleChange} required />
+      </div>
+
+      <div className="form-group">
+        <label>Primary Constitution</label>
         <select name="primaryConstitution" value={formData.primaryConstitution} onChange={handleChange} required>
           <option value="">Select Constitution</option>
           {CONSTITUTIONS.map((c) => (
             <option key={c} value={c}>{c}</option>
           ))}
         </select>
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Treatment Modalities:
+      <div className="form-group">
+        <label>Treatment Modalities</label>
         <input type="text" name="treatmentModalities" value={formData.treatmentModalities} onChange={handleChange} required />
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Treatment Goals:
+      <div className="form-group">
+        <label>Treatment Goals</label>
         <input type="text" name="treatmentGoals" value={formData.treatmentGoals} onChange={handleChange} />
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Type:
+      <div className="form-group">
+        <label>Type</label>
         <select name="type" value={formData.type} onChange={handleChange} required>
           {TREATMENT_TYPES.map((type) => (
             <option key={type} value={type}>{type}</option>
           ))}
         </select>
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Name:
+      <div className="form-group">
+        <label>Name</label>
         <input type="text" name="name" value={formData.name} onChange={handleChange} required />
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Start Date:
-        <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
-      </label>
-      <br /><br />
+      <div className="form-row">
+        <div className="form-group">
+          <label>Start Date</label>
+          <input type="date" name="startDate" value={formData.startDate} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <label>End Date</label>
+          <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} />
+        </div>
+      </div>
 
-      <label>
-        End Date:
-        <input type="date" name="endDate" value={formData.endDate} onChange={handleChange} />
-      </label>
-      <br /><br />
-
-      <label>
-        Dosage / Frequency:
+      <div className="form-group">
+        <label>Dosage / Frequency</label>
         <input type="text" name="dosageFrequency" value={formData.dosageFrequency} onChange={handleChange} />
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Duration Value:
-        <input type="number" name="durationValue" value={formData.durationValue} min={1} onChange={handleChange} required />
-      </label>
-      <br /><br />
+      <div className="form-row">
+        <div className="form-group">
+          <label>Duration Value</label>
+          <input type="number" name="durationValue" value={formData.durationValue} min={1} onChange={handleChange} required />
+        </div>
+        <div className="form-group">
+          <label>Duration Unit</label>
+          <select name="durationUnit" value={formData.durationUnit} onChange={handleChange} required>
+            {DURATION_UNITS.map((unit) => (
+              <option key={unit} value={unit}>{unit}</option>
+            ))}
+          </select>
+        </div>
+      </div>
 
-      <label>
-        Duration Unit:
-        <select name="durationUnit" value={formData.durationUnit} onChange={handleChange} required>
-          {["days", "weeks", "months"].map((unit) => (
-            <option key={unit} value={unit}>{unit}</option>
-          ))}
-        </select>
-      </label>
-      <br /><br />
-
-      <label>
-        Status:
+      <div className="form-group">
+        <label>Status</label>
         <select name="status" value={formData.status} onChange={handleChange} required>
-          {["Active", "Completed", "Paused"].map((status) => (
+          {STATUS_OPTIONS.map((status) => (
             <option key={status} value={status}>{status}</option>
           ))}
         </select>
-      </label>
-      <br /><br />
+      </div>
 
-      <label>
-        Notes:
+      <div className="form-group">
+        <label>Notes</label>
         <textarea name="notes" value={formData.notes} onChange={handleChange} rows={3} />
-      </label>
-      <br /><br />
+      </div>
 
-      <button type="submit">Save</button>
-      <button type="button" onClick={onCancel} style={{ marginLeft: 8 }}>Cancel</button>
+      <div className="form-actions">
+        <button type="submit" className="btn save">Save</button>
+        <button type="button" className="btn cancel" onClick={onCancel}>Cancel</button>
+      </div>
     </form>
   );
 }

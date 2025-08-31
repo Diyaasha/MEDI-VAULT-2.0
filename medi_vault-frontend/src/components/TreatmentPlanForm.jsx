@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./TreatmentPlanForm.css"; // Import CSS file
 
 const CONSTITUTIONS = ["Vata", "Pitta", "Kapha"];
 const DURATIONS = ["2 weeks", "4 weeks", "6 weeks", "2 months", "3 months", "6 months"];
@@ -39,137 +40,108 @@ export default function TreatmentPlanForm({ plan, onSave, onCancel }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Could add validation here
     onSave(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 600, margin: "auto", padding: 16 }}>
-      <h2>{plan ? "Edit" : "Create"} Treatment Plan</h2>
+    <form onSubmit={handleSubmit} className="treatment-form">
+      <h2 className="form-title">{plan ? "Edit Treatment Plan" : "Create Treatment Plan"}</h2>
 
-      <label>
-        Patient Name:<br />
-        <input
-          name="patientName"
-          value={formData.patientName}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+      <label>Patient Name</label>
+      <input
+        name="patientName"
+        value={formData.patientName}
+        onChange={handleChange}
+        required
+      />
 
-      <label>
-        Primary Constitution:<br />
-        <select
-          name="primaryConstitution"
-          value={formData.primaryConstitution}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 12 }}
-        >
-          {CONSTITUTIONS.map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
-      </label>
+      <label>Primary Constitution</label>
+      <select
+        name="primaryConstitution"
+        value={formData.primaryConstitution}
+        onChange={handleChange}
+        required
+      >
+        {CONSTITUTIONS.map(c => (
+          <option key={c} value={c}>{c}</option>
+        ))}
+      </select>
 
-      <label>
-        Start Date:<br />
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 12 }}
-        />
-      </label>
+      <label>Start Date</label>
+      <input
+        type="date"
+        name="startDate"
+        value={formData.startDate}
+        onChange={handleChange}
+        required
+      />
 
-      <label>
-        Duration:<br />
-        <select
-          name="duration"
-          value={formData.duration}
-          onChange={handleChange}
-          required
-          style={{ width: "100%", marginBottom: 12 }}
-        >
-          {DURATIONS.map(d => (
-            <option key={d} value={d}>{d}</option>
-          ))}
-        </select>
-      </label>
+      <label>Duration</label>
+      <select
+        name="duration"
+        value={formData.duration}
+        onChange={handleChange}
+        required
+      >
+        {DURATIONS.map(d => (
+          <option key={d} value={d}>{d}</option>
+        ))}
+      </select>
 
-      <label>
-        Treatment Modalities:<br />
-        <textarea
-          name="treatmentModalities"
-          value={formData.treatmentModalities}
-          onChange={handleChange}
-          required
-          rows={3}
-          style={{ width: "100%", marginBottom: 12 }}
-          placeholder="e.g. Abhyanga, Shirodhara, Panchakarma"
-        />
-      </label>
+      <label>Treatment Modalities</label>
+      <textarea
+        name="treatmentModalities"
+        value={formData.treatmentModalities}
+        onChange={handleChange}
+        required
+        placeholder="e.g. Abhyanga, Shirodhara, Panchakarma"
+      />
 
-      <label>
-        Treatment Goals:<br />
-        <textarea
-          name="treatmentGoals"
-          value={formData.treatmentGoals}
-          onChange={handleChange}
-          rows={2}
-          style={{ width: "100%", marginBottom: 12 }}
-          placeholder="Define specific objectives"
-        />
-      </label>
+      <label>Treatment Goals</label>
+      <textarea
+        name="treatmentGoals"
+        value={formData.treatmentGoals}
+        onChange={handleChange}
+        placeholder="Define specific objectives"
+      />
 
-      <label>
-        Status:<br />
-        <select
-          name="status"
-          value={formData.status}
-          onChange={handleChange}
-          style={{ width: "100%", marginBottom: 12 }}
-        >
-          <option value="Active">Active</option>
-          <option value="Completed">Completed</option>
-          <option value="Paused">Paused</option>
-        </select>
-      </label>
+      <label>Status</label>
+      <select
+        name="status"
+        value={formData.status}
+        onChange={handleChange}
+      >
+        <option value="Active">Active</option>
+        <option value="Completed">Completed</option>
+        <option value="Paused">Paused</option>
+      </select>
 
-      <label>
-        Progress (%):<br />
-        <input
-          type="number"
-          name="progressPercent"
-          value={formData.progressPercent}
-          onChange={handleChange}
-          min={0}
-          max={100}
-          style={{ width: 100, marginBottom: 12 }}
-        />
-      </label>
+      <label>Progress (%)</label>
+      <input
+        type="number"
+        name="progressPercent"
+        value={formData.progressPercent}
+        onChange={handleChange}
+        min={0}
+        max={100}
+      />
 
-      <label>
-        Notes:<br />
-        <textarea
-          name="notes"
-          value={formData.notes}
-          onChange={handleChange}
-          rows={3}
-          style={{ width: "100%", marginBottom: 12 }}
-          placeholder="Any additional info"
-        />
-      </label>
+      <label>Notes</label>
+      <textarea
+        name="notes"
+        value={formData.notes}
+        onChange={handleChange}
+        placeholder="Any additional info"
+      />
 
-      <button type="submit" style={{ marginRight: 12 }}>
-        {plan ? "Update Plan" : "Create Plan"}
-      </button>
-      <button type="button" onClick={onCancel}>
-        Cancel
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="btn primary">
+          {plan ? "Update Plan" : "Create Plan"}
+        </button>
+        <button type="button" className="btn secondary" onClick={onCancel}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }

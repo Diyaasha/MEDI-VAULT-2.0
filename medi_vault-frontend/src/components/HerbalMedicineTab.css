@@ -1,0 +1,23 @@
+.add-btn {
+  background: linear-gradient(135deg, #1976d2, #42a5f5);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 10px rgba(25, 118, 210, 0.3);
+  transition: all 0.3s ease;
+  margin-bottom: 16px;
+}
+
+.add-btn:hover {
+  background: linear-gradient(135deg, #1565c0, #1e88e5);
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 14px rgba(25, 118, 210, 0.5);
+}
+
+.add-btn:active {
+  transform: scale(0.96);
+}

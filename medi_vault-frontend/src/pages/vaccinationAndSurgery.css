@@ -236,3 +236,71 @@ body {
   border-bottom: 3px solid #2563eb;
   color: #2563eb;
 }
+/* Two-column grid inside form */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 24px;
+  margin-bottom: 20px;
+}
+
+.form-card label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #374151;
+}
+
+.form-card input,
+.form-card textarea {
+  background-color: #f9fafb;
+}
+/* Edit button (Green) */
+.button-edit,
+.status-actions .button-edit {
+  background: #10b981; /* green */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.2s;
+}
+
+.button-edit:hover,
+.status-actions .button-edit:hover {
+  background: #059669; /* darker green */
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+/* Delete button (Red) */
+.button-delete,
+.status-actions .button-delete {
+  background: #ef4444; /* red */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.2s;
+}
+
+.button-delete:hover,
+.status-actions .button-delete:hover {
+  background: #dc2626; /* darker red */
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.35);
+}
+
+

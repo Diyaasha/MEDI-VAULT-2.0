@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./vaccinationAndSurgery.css";
-import { Syringe, Stethoscope, CheckCircle, Clock, AlertCircle, Edit, Trash2 } from "lucide-react";
+import {
+  Syringe,
+  Stethoscope,
+  CheckCircle,
+  Clock,
+  AlertCircle,
+  Edit,
+  Trash2,
+} from "lucide-react";
 
 const STATUS_ICONS = {
   Complete: <CheckCircle style={{ color: "green" }} />,
@@ -20,7 +28,8 @@ const STATUS_VARIANTS = {
 };
 
 const getStatusIcon = (status) => STATUS_ICONS[status] || STATUS_ICONS.Default;
-const getStatusVariant = (status) => STATUS_VARIANTS[status] || STATUS_VARIANTS.Default;
+const getStatusVariant = (status) =>
+  STATUS_VARIANTS[status] || STATUS_VARIANTS.Default;
 
 const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -35,6 +44,7 @@ const VaccinationAndSurgery = () => {
   const [editSurgId, setEditSurgId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // ✅ Only required fields for vaccination form
   const [vaccForm, setVaccForm] = useState({
     patientName: "",
     vaccine: "",
@@ -73,7 +83,9 @@ const VaccinationAndSurgery = () => {
     const headers = { Authorization: `Bearer ${token}` };
     try {
       if (tab === "vaccinations") {
-        const res = await axios.get(`${API_BASE}/api/vaccinations`, { headers });
+        const res = await axios.get(`${API_BASE}/api/vaccinations`, {
+          headers,
+        });
         setVaccinations(res.data);
       } else {
         const res = await axios.get(`${API_BASE}/api/surgeries`, { headers });
@@ -90,8 +102,11 @@ const VaccinationAndSurgery = () => {
     fetchData();
   }, [tab]);
 
-  const handleVaccFormChange = (e) => setVaccForm({ ...vaccForm, [e.target.name]: e.target.value });
-  const handleSurgFormChange = (e) => setSurgForm({ ...surgForm, [e.target.name]: e.target.value });
+  const handleVaccFormChange = (e) =>
+    setVaccForm({ ...vaccForm, [e.target.name]: e.target.value });
+
+  const handleSurgFormChange = (e) =>
+    setSurgForm({ ...surgForm, [e.target.name]: e.target.value });
 
   const handleCancelEditVaccination = () => {
     setEditVaccId(null);
@@ -130,10 +145,14 @@ const VaccinationAndSurgery = () => {
     if (!token) return setMessage("You must be logged in.");
     try {
       if (editVaccId) {
-        await axios.put(`${API_BASE}/api/vaccinations/${editVaccId}`, vaccForm, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.put(`${API_BASE}/api/vaccinations/${editVaccId}`, vaccForm, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMessage("Vaccination record updated.");
       } else {
-        await axios.post(`${API_BASE}/api/vaccinations`, vaccForm, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${API_BASE}/api/vaccinations`, vaccForm, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMessage("New vaccination record saved.");
       }
       handleCancelEditVaccination();
@@ -148,10 +167,14 @@ const VaccinationAndSurgery = () => {
     if (!token) return setMessage("You must be logged in.");
     try {
       if (editSurgId) {
-        await axios.put(`${API_BASE}/api/surgeries/${editSurgId}`, surgForm, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.put(`${API_BASE}/api/surgeries/${editSurgId}`, surgForm, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMessage("Surgery record updated.");
       } else {
-        await axios.post(`${API_BASE}/api/surgeries`, surgForm, { headers: { Authorization: `Bearer ${token}` } });
+        await axios.post(`${API_BASE}/api/surgeries`, surgForm, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMessage("New surgery record saved.");
       }
       handleCancelEditSurgery();
@@ -163,14 +186,22 @@ const VaccinationAndSurgery = () => {
 
   const handleEditVaccination = (v) => {
     setEditVaccId(v._id);
-    setVaccForm({ ...v, date: v.date?.slice(0, 10) || "", nextDue: v.nextDue?.slice(0, 10) || "" });
+    setVaccForm({
+      ...v,
+      date: v.date?.slice(0, 10) || "",
+      nextDue: v.nextDue?.slice(0, 10) || "",
+    });
     setTab("vaccinations");
     setMessage(null);
   };
 
   const handleEditSurgery = (s) => {
     setEditSurgId(s._id);
-    setSurgForm({ ...s, date: s.date?.slice(0, 10) || "", followUpDate: s.followUpDate?.slice(0, 10) || "" });
+    setSurgForm({
+      ...s,
+      date: s.date?.slice(0, 10) || "",
+      followUpDate: s.followUpDate?.slice(0, 10) || "",
+    });
     setTab("surgeries");
     setMessage(null);
   };
@@ -178,9 +209,12 @@ const VaccinationAndSurgery = () => {
   const handleDeleteVaccination = async (id) => {
     const token = getToken();
     if (!token) return setMessage("You must be logged in.");
-    if (!window.confirm("Are you sure you want to delete this vaccination record?")) return;
+    if (!window.confirm("Are you sure you want to delete this vaccination record?"))
+      return;
     try {
-      await axios.delete(`${API_BASE}/api/vaccinations/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${API_BASE}/api/vaccinations/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setMessage("Vaccination record deleted.");
       fetchData();
     } catch {
@@ -191,9 +225,12 @@ const VaccinationAndSurgery = () => {
   const handleDeleteSurgery = async (id) => {
     const token = getToken();
     if (!token) return setMessage("You must be logged in.");
-    if (!window.confirm("Are you sure you want to delete this surgery record?")) return;
+    if (!window.confirm("Are you sure you want to delete this surgery record?"))
+      return;
     try {
-      await axios.delete(`${API_BASE}/api/surgeries/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${API_BASE}/api/surgeries/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setMessage("Surgery record deleted.");
       fetchData();
     } catch {
@@ -228,54 +265,131 @@ const VaccinationAndSurgery = () => {
       />
 
       <div className="tab-buttons">
-        <button className={tab === "vaccinations" ? "active" : ""} onClick={() => setTab("vaccinations")}>
+        <button
+          className={tab === "vaccinations" ? "active" : ""}
+          onClick={() => setTab("vaccinations")}
+        >
           <Syringe size={16} /> Vaccinations
         </button>
-        <button className={tab === "surgeries" ? "active" : ""} onClick={() => setTab("surgeries")}>
+        <button
+          className={tab === "surgeries" ? "active" : ""}
+          onClick={() => setTab("surgeries")}
+        >
           <Stethoscope size={16} /> Surgeries
         </button>
       </div>
 
-      {/* Vaccination Tab */}
+      {/* ✅ Vaccination Tab */}
       {tab === "vaccinations" && (
         <>
           <h2>{editVaccId ? "Edit Vaccination Record" : "Add New Vaccination Record"}</h2>
           <div className="form-card">
-            <label>Patient Name:
-              <input type="text" name="patientName" value={vaccForm.patientName} onChange={handleVaccFormChange} />
-            </label>
-            <label>Vaccine:
-              <input type="text" name="vaccine" value={vaccForm.vaccine} onChange={handleVaccFormChange} />
-            </label>
-            <label>Date Administered:
-              <input type="date" name="date" value={vaccForm.date} onChange={handleVaccFormChange} />
-            </label>
-            <label>Next Due:
-              <input type="date" name="nextDue" value={vaccForm.nextDue} onChange={handleVaccFormChange} />
-            </label>
-            <label>Status:
-              <input type="text" name="status" value={vaccForm.status} onChange={handleVaccFormChange} />
-            </label>
-            <label>Batch Number:
-              <input type="text" name="batchNumber" value={vaccForm.batchNumber} onChange={handleVaccFormChange} />
-            </label>
-            <label>Administrator:
-              <input type="text" name="administrator" value={vaccForm.administrator} onChange={handleVaccFormChange} />
-            </label>
-            <label>Location:
-              <input type="text" name="location" value={vaccForm.location} onChange={handleVaccFormChange} />
-            </label>
-            <label>Side Effects:
-              <input type="text" name="sideEffects" value={vaccForm.sideEffects} onChange={handleVaccFormChange} />
-            </label>
-            <label>Notes:
-              <textarea name="notes" value={vaccForm.notes} onChange={handleVaccFormChange} />
-            </label>
-            <div style={{ display: "flex", gap: "12px" }}>
+            <div className="form-grid">
+              <div>
+                <label>Patient Name</label>
+                <input
+                  type="text"
+                  name="patientName"
+                  value={vaccForm.patientName}
+                  onChange={handleVaccFormChange}
+                  placeholder="Select or search patient..."
+                />
+              </div>
+              <div>
+                <label>Vaccine Type</label>
+                <input
+                  type="text"
+                  name="vaccine"
+                  value={vaccForm.vaccine}
+                  onChange={handleVaccFormChange}
+                  placeholder="COVID-19, Flu, Hepatitis..."
+                />
+              </div>
+              <div>
+                <label>Date Administered</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={vaccForm.date}
+                  onChange={handleVaccFormChange}
+                />
+              </div>
+              <div>
+                <label>Next Due Date</label>
+                <input
+                  type="date"
+                  name="nextDue"
+                  value={vaccForm.nextDue}
+                  onChange={handleVaccFormChange}
+                />
+              </div>
+              <div>
+                <label>Status</label>
+                <input
+                  type="text"
+                  name="status"
+                  value={vaccForm.status}
+                  onChange={handleVaccFormChange}
+                  placeholder="Completed, Scheduled..."
+                />
+              </div>
+              <div>
+                <label>Batch Number</label>
+                <input
+                  type="text"
+                  name="batchNumber"
+                  value={vaccForm.batchNumber}
+                  onChange={handleVaccFormChange}
+                  placeholder="Vaccine batch number..."
+                />
+              </div>
+              <div>
+                <label>Administrator</label>
+                <input
+                  type="text"
+                  name="administrator"
+                  value={vaccForm.administrator}
+                  onChange={handleVaccFormChange}
+                  placeholder="Healthcare provider..."
+                />
+              </div>
+              <div>
+                <label>Injection Site</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={vaccForm.location}
+                  onChange={handleVaccFormChange}
+                  placeholder="Left arm, Right arm..."
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Side Effects</label>
+              <input
+                type="text"
+                name="sideEffects"
+                value={vaccForm.sideEffects}
+                onChange={handleVaccFormChange}
+                placeholder="Fever, pain, etc."
+              />
+            </div>
+
+            <div>
+              <label>Notes</label>
+              <textarea
+                name="notes"
+                value={vaccForm.notes}
+                onChange={handleVaccFormChange}
+                placeholder="Any additional notes..."
+              />
+            </div>
+
+            <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end" }}>
               <button className="button button-primary" onClick={handleSaveVaccination}>
                 {editVaccId ? "Update Record" : "Save Record"}
               </button>
-              {editVaccId && <button className="button button-secondary" onClick={handleCancelEditVaccination}>Cancel</button>}
             </div>
           </div>
 
@@ -286,16 +400,16 @@ const VaccinationAndSurgery = () => {
                 <div className="record-card" key={v._id}>
                   <h3>{v.patientName}</h3>
 
-                  {/* Status + Actions Row */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div>
-                      {getStatusIcon(v.status)} <span className={getStatusVariant(v.status)}>{v.status}</span>
+                      {getStatusIcon(v.status)}{" "}
+                      <span className={getStatusVariant(v.status)}>{v.status}</span>
                     </div>
                     <div className="status-actions">
-                      <button className="button button-secondary" onClick={() => handleEditVaccination(v)}>
+                      <button className="button-edit" onClick={() => handleEditVaccination(v)}>
                         <Edit size={14} /> Edit
                       </button>
-                      <button className="button button-secondary" onClick={() => handleDeleteVaccination(v._id)}>
+                      <button className="button-delete" onClick={() => handleDeleteVaccination(v._id)}>
                         <Trash2 size={14} /> Delete
                       </button>
                     </div>
@@ -305,6 +419,7 @@ const VaccinationAndSurgery = () => {
                     <p><strong>Vaccine:</strong> {v.vaccine}</p>
                     <p><strong>Date Administered:</strong> {new Date(v.date).toLocaleDateString()}</p>
                     <p><strong>Next Due:</strong> {v.nextDue ? new Date(v.nextDue).toLocaleDateString() : "N/A"}</p>
+                    <p><strong>Status:</strong> {v.status}</p>
                     <p><strong>Batch Number:</strong> {v.batchNumber}</p>
                     <p><strong>Administrator:</strong> {v.administrator}</p>
                     <p><strong>Location:</strong> {v.location}</p>
@@ -319,46 +434,112 @@ const VaccinationAndSurgery = () => {
         </>
       )}
 
-      {/* Surgery Tab */}
+      {/* Surgery Tab (kept same) */}
       {tab === "surgeries" && (
         <>
           <h2>{editSurgId ? "Edit Surgery Record" : "Add New Surgery Record"}</h2>
           <div className="form-card">
-            <label>Patient Name:
-              <input type="text" name="patientName" value={surgForm.patientName} onChange={handleSurgFormChange} />
-            </label>
-            <label>Procedure:
-              <input type="text" name="procedure" value={surgForm.procedure} onChange={handleSurgFormChange} />
-            </label>
-            <label>Surgery Date:
-              <input type="date" name="date" value={surgForm.date} onChange={handleSurgFormChange} />
-            </label>
-            <label>Surgeon:
-              <input type="text" name="surgeon" value={surgForm.surgeon} onChange={handleSurgFormChange} />
-            </label>
-            <label>Status:
-              <input type="text" name="status" value={surgForm.status} onChange={handleSurgFormChange} />
-            </label>
-            <label>Duration:
-              <input type="text" name="duration" value={surgForm.duration} onChange={handleSurgFormChange} />
-            </label>
-            <label>Anesthesia:
-              <input type="text" name="anesthesia" value={surgForm.anesthesia} onChange={handleSurgFormChange} />
-            </label>
-            <label>Complications:
-              <input type="text" name="complications" value={surgForm.complications} onChange={handleSurgFormChange} />
-            </label>
-            <label>Follow-up Date:
-              <input type="date" name="followUpDate" value={surgForm.followUpDate} onChange={handleSurgFormChange} />
-            </label>
-            <label>Notes:
-              <textarea name="notes" value={surgForm.notes} onChange={handleSurgFormChange} />
-            </label>
-            <div style={{ display: "flex", gap: "12px" }}>
+            <div className="form-grid">
+              <div>
+                <label>Patient Name</label>
+                <input
+                  type="text"
+                  name="patientName"
+                  value={surgForm.patientName}
+                  onChange={handleSurgFormChange}
+                  placeholder="Select or search patient..."
+                />
+              </div>
+              <div>
+                <label>Procedure</label>
+                <input
+                  type="text"
+                  name="procedure"
+                  value={surgForm.procedure}
+                  onChange={handleSurgFormChange}
+                  placeholder="Appendectomy, Knee Replacement..."
+                />
+              </div>
+              <div>
+                <label>Surgery Date</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={surgForm.date}
+                  onChange={handleSurgFormChange}
+                />
+              </div>
+              <div>
+                <label>Follow-up Date</label>
+                <input
+                  type="date"
+                  name="followUpDate"
+                  value={surgForm.followUpDate}
+                  onChange={handleSurgFormChange}
+                />
+              </div>
+              <div>
+                <label>Status</label>
+                <input
+                  type="text"
+                  name="status"
+                  value={surgForm.status}
+                  onChange={handleSurgFormChange}
+                />
+              </div>
+              <div>
+                <label>Duration</label>
+                <input
+                  type="text"
+                  name="duration"
+                  value={surgForm.duration}
+                  onChange={handleSurgFormChange}
+                />
+              </div>
+              <div>
+                <label>Anesthesia</label>
+                <input
+                  type="text"
+                  name="anesthesia"
+                  value={surgForm.anesthesia}
+                  onChange={handleSurgFormChange}
+                />
+              </div>
+              <div>
+                <label>Complications</label>
+                <input
+                  type="text"
+                  name="complications"
+                  value={surgForm.complications}
+                  onChange={handleSurgFormChange}
+                />
+              </div>
+              <div>
+                <label>Surgeon</label>
+                <input
+                  type="text"
+                  name="surgeon"
+                  value={surgForm.surgeon}
+                  onChange={handleSurgFormChange}
+                  placeholder="Doctor's name..."
+                />
+              </div>
+            </div>
+
+            <div>
+              <label>Notes</label>
+              <textarea
+                name="notes"
+                value={surgForm.notes}
+                onChange={handleSurgFormChange}
+                placeholder="Post-surgery notes or patient recovery info..."
+              />
+            </div>
+
+            <div style={{ display: "flex", gap: "12px", justifyContent: "flex-end" }}>
               <button className="button button-primary" onClick={handleSaveSurgery}>
                 {editSurgId ? "Update Record" : "Save Record"}
               </button>
-              {editSurgId && <button className="button button-secondary" onClick={handleCancelEditSurgery}>Cancel</button>}
             </div>
           </div>
 
@@ -369,16 +550,16 @@ const VaccinationAndSurgery = () => {
                 <div className="record-card" key={s._id}>
                   <h3>{s.patientName}</h3>
 
-                  {/* Status + Actions Row */}
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <div>
-                      {getStatusIcon(s.status)} <span className={getStatusVariant(s.status)}>{s.status}</span>
+                      {getStatusIcon(s.status)}{" "}
+                      <span className={getStatusVariant(s.status)}>{s.status}</span>
                     </div>
                     <div className="status-actions">
-                      <button className="button button-secondary" onClick={() => handleEditSurgery(s)}>
+                      <button className="button-edit" onClick={() => handleEditSurgery(s)}>
                         <Edit size={14} /> Edit
                       </button>
-                      <button className="button button-secondary" onClick={() => handleDeleteSurgery(s._id)}>
+                      <button className="button-delete" onClick={() => handleDeleteSurgery(s._id)}>
                         <Trash2 size={14} /> Delete
                       </button>
                     </div>

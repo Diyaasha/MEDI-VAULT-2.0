@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-
+import "./HerbalMedicineList.css";
 
 const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
@@ -8,7 +8,9 @@ export default function HerbalMedicineList({ onEdit, reloadList }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
+  const token = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).token
+    : null;
 
   const fetchMedicines = useCallback(async () => {
     if (!token) return;
@@ -29,12 +31,10 @@ export default function HerbalMedicineList({ onEdit, reloadList }) {
     } finally {
       setLoading(false);
     }
-  },[token]);
+  }, [token]);
 
   useEffect(() => {
     fetchMedicines();
-    // Optionally add fetchMedicines to dependency array if wrapped in useCallback
-    // eslint-disable-next-line
   }, [fetchMedicines]);
 
   const handleDelete = async (id) => {
@@ -47,9 +47,7 @@ export default function HerbalMedicineList({ onEdit, reloadList }) {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to delete medicine");
-      // Choose only one reload strategy:
       await fetchMedicines();
-      // reloadList && reloadList(); // Optionally call the parent reload if you use this pattern elsewhere
     } catch (err) {
       setError(err.message);
     } finally {
@@ -57,32 +55,36 @@ export default function HerbalMedicineList({ onEdit, reloadList }) {
     }
   };
 
-  if (loading) return <p>Loading herbal medicines...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
-  if (!medicines.length) return <p>No herbal medicines found.</p>;
+  if (loading) return <p className="loading">Loading herbal medicines...</p>;
+  if (error) return <p className="error">{error}</p>;
+  if (!medicines.length) return <p className="empty">No herbal medicines found.</p>;
 
   return (
-    <ul style={{ listStyle: "none", padding: 0 }}>
+    <div className="medicine-list">
       {medicines.map((med) => (
-        <li
-          key={med._id}
-          style={{
-            border: "1px solid #ddd",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 12,
-          }}
-        >
-          <strong>{med.name}</strong> {med.botanicalName && `(${med.botanicalName})`}<br />
-          Formulation: {med.formulation} <br />
-          Dosage Form: {med.dosageForm} <br />
-          Stock: {med.stockQuantity} <br />
-          Expiry: {med.expiryDate ? new Date(med.expiryDate).toLocaleDateString() : "N/A"} <br />
-          Supplier: {med.supplier}<br />
-          <button onClick={() => onEdit(med)}>Edit</button>{" "}
-          <button onClick={() => handleDelete(med._id)}>Delete</button>
-        </li>
+        <div key={med._id} className="medicine-card">
+          <h3 className="medicine-title">
+            {med.name}{" "}
+            {med.botanicalName && (
+              <span className="botanical">({med.botanicalName})</span>
+            )}
+          </h3>
+          <p><strong>Formulation:</strong> {med.formulation}</p>
+          <p><strong>Dosage Form:</strong> {med.dosageForm}</p>
+          <p><strong>Stock:</strong> {med.stockQuantity}</p>
+          <p>
+            <strong>Expiry:</strong>{" "}
+            {med.expiryDate
+              ? new Date(med.expiryDate).toLocaleDateString()
+              : "N/A"}
+          </p>
+          <p><strong>Supplier:</strong> {med.supplier}</p>
+          <div className="card-actions">
+            <button className="btn edit" onClick={() => onEdit(med)}>Edit</button>
+            <button className="btn delete" onClick={() => handleDelete(med._id)}>Delete</button>
+          </div>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }

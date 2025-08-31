@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import HerbalMedicineList from "./HerbalMedicineList";
 import HerbalMedicineForm from "./HerbalMedicineForm";
+import "./HerbalMedicineTab.css"; // ⬅️ add css file
 
 const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 export default function HerbalMedicinesTab() {
   const [showForm, setShowForm] = useState(false);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
-  const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
-  const [listKey, setListKey] = useState(0); // for list refresh
+  const token = localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user")).token
+    : null;
+  const [listKey, setListKey] = useState(0);
 
   const handleAddNew = () => {
     setSelectedMedicine(null);
@@ -25,9 +28,8 @@ export default function HerbalMedicinesTab() {
     setSelectedMedicine(null);
   };
 
-  // Force HerbalMedicineList to reload data
   const reloadList = () => {
-    setListKey(prev => prev + 1);
+    setListKey((prev) => prev + 1);
   };
 
   const handleSave = async (formData) => {
@@ -71,12 +73,24 @@ export default function HerbalMedicinesTab() {
     <div>
       <h2>Herbal Medicines</h2>
 
-      {!showForm && <button onClick={handleAddNew}>Add New Herbal Medicine</button>}
+      {!showForm && (
+        <button className="add-btn" onClick={handleAddNew}>
+          + Add New Herbal Medicine
+        </button>
+      )}
 
       {showForm ? (
-        <HerbalMedicineForm medicine={selectedMedicine} onSave={handleSave} onCancel={handleCancel} />
+        <HerbalMedicineForm
+          medicine={selectedMedicine}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
       ) : (
-        <HerbalMedicineList key={listKey} onEdit={handleEdit} reloadList={reloadList} />
+        <HerbalMedicineList
+          key={listKey}
+          onEdit={handleEdit}
+          reloadList={reloadList}
+        />
       )}
     </div>
   );

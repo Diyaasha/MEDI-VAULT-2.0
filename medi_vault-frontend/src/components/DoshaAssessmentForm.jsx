@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./DoshaAssessmentForm.css";
 
 const OPTIONS = {
   bodyFrame: ["Thin, light", "Medium build", "Large, heavy"],
@@ -37,47 +38,54 @@ export default function DoshaAssessmentForm({ onSubmit }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-
     onSubmit(formData);
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 500, margin: "auto", padding: 16 }}>
+    <form className="dosha-form" onSubmit={handleSubmit}>
       <h2>Dosha Assessment Form</h2>
 
-      <label>
-        Patient Name:
+      {/* Patient Name */}
+      <div className="form-group">
+        <label>Patient Name</label>
         <input
           name="patientName"
           value={formData.patientName}
           onChange={handleChange}
-          style={{ marginBottom: 8, width: "100%" }}
+          className={errors.patientName ? "error" : ""}
         />
-        {errors.patientName && <div style={{ color: "red" }}>{errors.patientName}</div>}
-      </label>
+        {errors.patientName && <div className="error-text">{errors.patientName}</div>}
+      </div>
 
+      {/* Dynamic Options */}
       {Object.entries(OPTIONS).map(([field, choices]) => (
-        <div key={field} style={{ margin: "16px 0" }}>
-          <div style={{ fontWeight: "bold", marginBottom: 8, textTransform: "capitalize" }}>
+        <div key={field} className="form-group">
+          <label className="field-label">
             {field.replace(/([A-Z])/g, " $1")}
+          </label>
+          <div className="radio-group">
+            {choices.map((choice) => (
+              <label key={choice} className="radio-option">
+                <input
+                  type="radio"
+                  name={field}
+                  value={choice}
+                  checked={formData[field] === choice}
+                  onChange={handleChange}
+                />
+                {choice}
+              </label>
+            ))}
           </div>
-          {choices.map((choice) => (
-            <label key={choice} style={{ marginRight: 12 }}>
-              <input
-                type="radio"
-                name={field}
-                value={choice}
-                checked={formData[field] === choice}
-                onChange={handleChange}
-              />{" "}
-              {choice}
-            </label>
-          ))}
-          {errors[field] && <div style={{ color: "red" }}>{errors[field]}</div>}
+          {errors[field] && <div className="error-text">{errors[field]}</div>}
         </div>
       ))}
 
-      <button type="submit">Complete Assessment</button>
+      <div className="form-actions">
+        <button type="submit" className="submit-btn">
+          Complete Assessment
+        </button>
+      </div>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import TreatmentForm from "./TreatmentForm";
+import "./TreatmentPlanTab.css";   // 👈 import css
 
 export default function TreatmentPlansTab({ treatments, onSavePlan, onDeletePlan }) {
   const [selectedPlan, setSelectedPlan] = useState(null);
@@ -63,13 +64,23 @@ export default function TreatmentPlansTab({ treatments, onSavePlan, onDeletePlan
         <>
           {treatments.length === 0 && <p>No treatment plans found.</p>}
 
-          <button onClick={handleAddNew} style={{ marginBottom: 16 }}>
-            Create New Plan
+          {/* Styled Button */}
+          <button onClick={handleAddNew} className="createButton">
+            + Create New Plan
           </button>
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginTop: 16 }}>
             {treatments.map((plan) => (
-              <div key={plan._id} style={{ border: "1px solid #ddd", borderRadius: 8, padding: 16, width: 280, boxSizing: "border-box" }}>
+              <div
+                key={plan._id}
+                style={{
+                  border: "1px solid #ddd",
+                  borderRadius: 8,
+                  padding: 16,
+                  width: 280,
+                  boxSizing: "border-box",
+                }}
+              >
                 <strong>{plan.patientName}</strong> <br />
                 Constitution: {plan.primaryConstitution} <br />
                 Start: {plan.startDate ? new Date(plan.startDate).toLocaleDateString() : "N/A"} <br />
@@ -78,18 +89,32 @@ export default function TreatmentPlansTab({ treatments, onSavePlan, onDeletePlan
                 Progress: {plan.calculatedProgressPercent || 0}% <br />
                 <div style={{ margin: "8px 0" }}>
                   <div style={{ background: "#ddd", borderRadius: 4, height: 16, width: "100%" }}>
-                    <div style={{ height: "100%", width: `${plan.calculatedProgressPercent || 0}%`, backgroundColor: "#1976d2", borderRadius: 4, transition: "width 0.3s ease" }} />
+                    <div
+                      style={{
+                        height: "100%",
+                        width: `${plan.calculatedProgressPercent || 0}%`,
+                        backgroundColor: "#1976d2",
+                        borderRadius: 4,
+                        transition: "width 0.3s ease",
+                      }}
+                    />
                   </div>
                 </div>
                 Status: {plan.status} <br />
-                <button onClick={() => handleEdit(plan)} style={{ marginRight: 8 }}>Edit</button>
+                <button onClick={() => handleEdit(plan)} style={{ marginRight: 8 }}>
+                  Edit
+                </button>
                 <button onClick={() => handleDelete(plan._id)}>Delete</button>
               </div>
             ))}
           </div>
         </>
       ) : (
-        <TreatmentForm treatment={selectedPlan} onSave={handleSave} onCancel={handleCancel} />
+        <TreatmentForm
+          treatment={selectedPlan}
+          onSave={handleSave}
+          onCancel={handleCancel}
+        />
       )}
     </div>
   );
