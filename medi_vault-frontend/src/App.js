@@ -24,6 +24,12 @@ import MedicalDocumentsPage from "./components/MedicalDocumentsPage";
 // Import Vaccinations and Surgeries page/component (create if not existing)
 import VaccinationAndSurgery from "./pages/vaccinationAndSurgery";
 
+import TreatmentsPage from "./pages/TreatmentsPage";
+import DoshaAssessmentPage from "./pages/DoshaAssessmentPage";
+import HerbalMedicinesTab from "./components/HerbalMedicinesTab";
+import WellnessTrackingTab from "./components/WellnessTrackingTab";
+
+
 
 function App() {
   return (
@@ -118,6 +124,25 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route 
+  path="/treatments" 
+  element={
+    <ProtectedRoute>
+      <TreatmentsPage />
+    </ProtectedRoute>
+  } 
+/>
+<Route
+  path="/dosha-assessment"
+  element={
+    <ProtectedRoute>
+      <DoshaAssessmentPage />
+    </ProtectedRoute>
+  }
+/>
+<Route path="/herbal-medicines" element={<HerbalMedicinesTab />} />
+<Route path="/wellness-tracking" element={<WellnessTrackingTab />} />
       </Routes>
 
       {/* Toast Notifications */}
