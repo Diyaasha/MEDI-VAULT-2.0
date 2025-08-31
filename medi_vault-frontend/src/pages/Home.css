@@ -232,7 +232,7 @@ body, #root, .animated-bg {
   width: 100vw;
   margin: 0;
   padding: 0;
-  background: linear-gradient(120deg, #a8edea, #fed6e3, #97e9fe, #a7ffeb);
+  /* background: linear-gradient(120deg, #a8edea, #fed6e3, #97e9fe, #a7ffeb); */
   background-size: 400% 400%;
   animation: gradientBG 16s ease infinite;
   font-family: 'Segoe UI', Arial, sans-serif;
