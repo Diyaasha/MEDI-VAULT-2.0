@@ -20,6 +20,7 @@ const MedicalDocumentSchema = new Schema({
     'medication',
     'consultation',
     'general',
+    'ai-simplified',
     'other'
   ],
   required: true  

@@ -15,6 +15,7 @@ const UploadZone = ({ onFileChange }) => {
         mt: 4,
         maxWidth: 600,
         mx: "auto",
+        cursor: "pointer",
       }}
       onClick={() => inputRef.current.click()}
     >
@@ -23,7 +24,14 @@ const UploadZone = ({ onFileChange }) => {
       <Typography color="text.secondary" mb={2}>
         Drag and drop your medical reports, lab results, or prescriptions here
       </Typography>
-      <Button variant="contained" sx={{ mt: 2 }} onClick={() => inputRef.current.click()}>
+      <Button 
+        variant="contained" 
+        sx={{ mt: 2 }} 
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent double click
+          inputRef.current.click();
+        }}
+      >
         Choose Files
       </Button>
       <Typography variant="body2" color="text.secondary" mt={2}>

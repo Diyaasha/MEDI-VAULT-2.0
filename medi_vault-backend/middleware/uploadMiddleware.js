@@ -14,10 +14,20 @@ const upload = multer({
   }),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
   fileFilter: (req, file, cb) => {
-    if (file.mimetype === "application/pdf" || file.mimetype.startsWith("image/")) {
+    const allowedMimetypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "image/jpeg",
+      "image/jpg", 
+      "image/png",
+      "image/gif"
+    ];
+    
+    if (allowedMimetypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error("Only PDF and image files are allowed!"), false);
+      cb(new Error(`File type ${file.mimetype} not allowed. Supported: PDF, DOC, DOCX, images`), false);
     }
   },
 });
