@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import usePageTitle from '../hooks/usePageTitle';
 import "./vaccinationAndSurgery.css";
 import {
   Syringe,
@@ -34,6 +35,7 @@ const getStatusVariant = (status) =>
 const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
 
 const VaccinationAndSurgery = () => {
+  usePageTitle('Vaccinations & Surgery');
   const [tab, setTab] = useState("vaccinations");
   const [vaccinations, setVaccinations] = useState([]);
   const [surgeries, setSurgeries] = useState([]);

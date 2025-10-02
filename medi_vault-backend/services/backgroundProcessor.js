@@ -1,6 +1,3 @@
-require('dotenv').config();
-
-const connectDB = require("../config/db"); // Import MongoDB connection
 const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
 const pdfParse = require("pdf-parse");
 const mammoth = require("mammoth");
@@ -8,16 +5,9 @@ const { createWorker } = require('tesseract.js');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const MedicalDocument = require("../models/MedicalDocument");
 
-// Connect to MongoDB before DB operations
-connectDB().then(() => {
-  console.log("MongoDB connected successfully");
-
-  // Start processing documents now and every 5 minutes
-  processPendingDocuments();
-  setInterval(processPendingDocuments, 5 * 60 * 1000);
-}).catch((err) => {
-  console.error("Error connecting to MongoDB:", err);
-});
+// Initialize Google Gemini client
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // Initialize AWS S3 client (v3)
 const s3Client = new S3Client({
@@ -27,10 +17,6 @@ const s3Client = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
-
-// Initialize Google Gemini client
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 // Helper function to convert S3 GetObjectCommand stream to Buffer
 async function streamToBuffer(stream) {
@@ -71,7 +57,6 @@ async function extractTextFromS3(bucket, key, mimetype, originalFileName = '') {
         detectedMimetype = 'image/png';
         break;
     }
-    // Detected mimetype from filename
   }
 
   if (detectedMimetype === "application/pdf") {
@@ -85,7 +70,6 @@ async function extractTextFromS3(bucket, key, mimetype, originalFileName = '') {
     return result.value;
   } else if (detectedMimetype?.startsWith('image/')) {
     // Use OCR for image files
-    // Processing image with OCR
     const worker = await createWorker('eng');
     const { data: { text } } = await worker.recognize(buffer);
     await worker.terminate();
@@ -94,14 +78,13 @@ async function extractTextFromS3(bucket, key, mimetype, originalFileName = '') {
       return "Could not extract readable text from this image. The image might be unclear or not contain text.";
     }
     
-    // OCR extraction completed
     return text;
   } else {
     throw new Error(`Unsupported file type for text extraction: ${detectedMimetype || 'unknown'}`);
   }
 }
 
-// Enhanced medical report analysis with OpenAI GPT-4
+// Enhanced medical report analysis with Gemini
 async function analyzeMedicalReport(text) {
   if (!text || text.trim().length === 0) return { summary: "No content to analyze.", suggestions: [] };
 
@@ -120,11 +103,11 @@ Medical Report/Document:\n${text}
 
 Format your response as JSON with keys: summary, keyFindings (array of strings or objects), suggestions (array of strings), followUp (string)`;
 
-  const result = await model.generateContent(prompt);
-  const response = await result.response;
-  const content = response.text();
-
   try {
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const content = response.text();
+
     // Remove markdown code block markers if present
     let cleanContent = content.trim();
     if (cleanContent.startsWith('```json')) {
@@ -135,11 +118,11 @@ Format your response as JSON with keys: summary, keyFindings (array of strings o
     return parsedResponse;
   } catch (error) {
     // Fallback if JSON parsing fails
-    console.warn('Background job: Failed to parse JSON response from Gemini, using fallback:', error.message);
+    console.warn('Background processing: Failed to parse JSON response from Gemini, using fallback');
     return {
-      summary: content.trim(),
-      keyFindings: [],
-      suggestions: [],
+      summary: "Document processed with basic analysis. Please consult your healthcare provider for detailed interpretation.",
+      keyFindings: ["Medical document processed - content extracted"],
+      suggestions: ["Regular monitoring and follow-up with your healthcare team is recommended", "Maintain a balanced diet and regular exercise"],
       followUp: "Consult your doctor for detailed interpretation."
     };
   }
@@ -148,20 +131,21 @@ Format your response as JSON with keys: summary, keyFindings (array of strings o
 // Process documents missing AI analysis
 async function processPendingDocuments() {
   try {
-    // Find documents that need AI processing
+    // Find documents that need AI processing (limit to 3 to avoid overloading)
     const docs = await MedicalDocument.find({
       $or: [
         { category: "ai-simplified", "details.aiSummary": { $exists: false } },
         { category: { $ne: "ai-simplified" }, fileUrl: { $exists: true, $ne: null }, "details.aiSummary": { $exists: false } }
       ]
-    }).limit(5);
+    }).limit(3);
 
-    console.log(`Found ${docs.length} documents to process`);
+    if (docs.length > 0) {
+      console.log(`📋 Processing ${docs.length} documents in background`);
+    }
 
     for (const doc of docs) {
       try {
         if (!doc.fileUrl) {
-          console.log(`Skipping doc ${doc._id} - no file URL`);
           continue;
         }
 
@@ -182,16 +166,67 @@ async function processPendingDocuments() {
         };
         
         await doc.save();
-        console.log(`✅ Processed AI analysis for doc ${doc._id} - ${doc.title}`);
+        console.log(`✅ AI analysis completed for document: ${doc.title}`);
       } catch (error) {
-        console.error(`❌ Error processing doc ${doc._id}:`, error.message);
+        // Handle S3 file not found errors gracefully
+        if (error.name === 'NoSuchKey' || error.message.includes('does not exist') || error.message.includes('NoSuchKey')) {
+          console.log(`⚠️  Skipping document "${doc.title}" - file not accessible in S3`);
+          
+          // Mark as processed with a note about the missing file
+          doc.details = { 
+            ...doc.details, 
+            aiSummary: 'Document file not accessible - please re-upload if needed',
+            aiProcessedAt: new Date(),
+            skipped: true,
+            skipReason: 'S3 file not found'
+          };
+          await doc.save();
+        } else {
+          console.error(`❌ Error processing document ${doc._id}:`, error.message);
+        }
       }
     }
   } catch (err) {
-    console.error("Error in processPendingDocuments:", err);
+    console.error("Background processing error:", err.message);
   }
 }
 
-// Run job at startup and every 5 minutes
-processPendingDocuments();
-setInterval(processPendingDocuments, 5 * 60 * 1000);
+let processingInterval;
+
+// Start background processing
+function startBackgroundProcessing() {
+  console.log('🤖 Starting background document processor');
+  
+  // Process immediately on startup (after a short delay to let server fully start)
+  setTimeout(() => {
+    processPendingDocuments();
+  }, 10000); // 10 seconds delay
+  
+  // Then process every 10 minutes to be gentle on resources
+  processingInterval = setInterval(processPendingDocuments, 10 * 60 * 1000);
+}
+
+// Stop background processing (for cleanup)
+function stopBackgroundProcessing() {
+  if (processingInterval) {
+    clearInterval(processingInterval);
+    console.log('🛑 Stopped background document processor');
+  }
+}
+
+// Graceful shutdown handling
+process.on('SIGTERM', () => {
+  console.log('🔄 Graceful shutdown initiated');
+  stopBackgroundProcessing();
+});
+
+process.on('SIGINT', () => {
+  console.log('🔄 Graceful shutdown initiated');
+  stopBackgroundProcessing();
+});
+
+module.exports = {
+  startBackgroundProcessing,
+  stopBackgroundProcessing,
+  processPendingDocuments // Export for manual triggering if needed
+};

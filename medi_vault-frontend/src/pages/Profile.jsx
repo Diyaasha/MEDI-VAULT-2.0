@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../components/Modal";
+import usePageTitle from '../hooks/usePageTitle';
 import './Profile.css';
 
 const Profile = () => {
+  usePageTitle('Profile');
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);

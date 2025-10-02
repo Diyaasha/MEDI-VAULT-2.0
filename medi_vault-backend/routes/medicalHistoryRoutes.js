@@ -16,7 +16,21 @@ router.use(protect);
 router.get("/", getDocuments);
 router.get("/download-url/:id", getSignedUrlForDocument);
 router.post("/manual", addManualDocument);
-router.post("/upload", upload.single("file"), addUploadedDocument);
+// Custom multer error handler
+const handleMulterError = (err, req, res, next) => {
+  if (err) {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({ message: 'File too large. Maximum size is 5MB.' });
+    }
+    if (err.message.includes('not allowed')) {
+      return res.status(400).json({ message: err.message });
+    }
+    return res.status(400).json({ message: 'File upload error: ' + err.message });
+  }
+  next();
+};
+
+router.post("/upload", upload.single("file"), handleMulterError, addUploadedDocument);
 router.delete("/:id", protect, deleteDocument);
 router.post("/verify-password", verifyPassword);
 

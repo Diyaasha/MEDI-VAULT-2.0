@@ -53,6 +53,19 @@ exports.addUploadedDocument = async (req, res) => {
   try {
     const { category, title, date, doctor, notes } = req.body;
 
+    // Validate required fields
+    if (!category) {
+      return res.status(400).json({ message: "Category is required" });
+    }
+    
+    if (!title) {
+      return res.status(400).json({ message: "Title is required" });
+    }
+    
+    if (!date) {
+      return res.status(400).json({ message: "Date is required" });
+    }
+
     // Check that file was uploaded
     if (!req.file) {
       return res.status(400).json({ message: "File is required" });
@@ -67,6 +80,7 @@ exports.addUploadedDocument = async (req, res) => {
       notes,
       fileUrl: req.file.location, // multer-s3 provides full S3 URL here
       originalFileName: req.file.originalname,
+      mimetype: req.file.mimetype, // Store mimetype for background processing
       isManual: false,
     });
 

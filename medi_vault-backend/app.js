@@ -23,6 +23,7 @@ const wellnessLogRoutes = require("./routes/wellnessLogRoutes");
 
 const passport = require('./config/passport');
 const session = require('express-session');
+const { startBackgroundProcessing, processPendingDocuments } = require('./services/backgroundProcessor');
 
 // Connect to MongoDB
 connectDB();
@@ -60,6 +61,18 @@ app.get("/health", (req, res) => {
   });
 });
 
+// Manual trigger for background processing (for testing)
+app.post("/api/admin/process-documents", async (req, res) => {
+  try {
+    console.log('🔄 Manual background processing triggered');
+    await processPendingDocuments();
+    res.json({ message: "Background processing triggered successfully" });
+  } catch (error) {
+    console.error('Manual processing error:', error);
+    res.status(500).json({ error: "Failed to trigger background processing" });
+  }
+});
+
 // API routes
 app.use("/api/auth", authRoutes);
 app.use("/api/medicine-reminders", medicineReminderRoutes);
@@ -84,4 +97,7 @@ app.use(errorHandler); // <-- corrected here
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
+  
+  // Start background document processing
+  startBackgroundProcessing();
 });

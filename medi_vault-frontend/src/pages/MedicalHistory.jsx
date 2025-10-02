@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UploadReportModal from "../components/UploadReportModal";
+import usePageTitle from '../hooks/usePageTitle';
 import "./MedicalHistory.css";
 
 const REPORT_TYPES = [
@@ -15,6 +16,7 @@ const REPORT_TYPES = [
 ];
 
 export default function MedicalHistory() {
+  usePageTitle('Medical History');
   const [allReports, setAllReports] = useState([]);
   const [reports, setReports] = useState([]);
   const [filterType, setFilterType] = useState("all");
@@ -62,7 +64,9 @@ export default function MedicalHistory() {
   }, [allReports, filterType, searchText]);
 
   const openUploadModal = (type = null) => {
-    setUploadType(type || filterType);
+    // Don't use 'all' as upload type - default to 'lab' instead
+    const uploadCategory = type || (filterType === 'all' ? 'lab' : filterType);
+    setUploadType(uploadCategory);
     setModalOpen(true);
   };
 

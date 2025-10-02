@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FiBell, FiUser } from "react-icons/fi";
 import { toast } from "react-toastify";
+import usePageTitle from '../hooks/usePageTitle';
 import "./Home.css";
 
 const features = [
@@ -44,6 +45,7 @@ const features = [
 ];
 
 function Home() {
+  usePageTitle('Home');
   const [user, setUser] = useState(null);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();

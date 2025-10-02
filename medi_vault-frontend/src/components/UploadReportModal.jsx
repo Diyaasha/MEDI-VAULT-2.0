@@ -14,7 +14,11 @@ const REPORT_TYPES = [
 ];
 
 export default function UploadReportModal({ isOpen, onClose, defaultType, onUploaded }) {
-  const [type, setType] = useState(defaultType || "lab");
+  const [type, setType] = useState(() => {
+    // Handle invalid default types (like 'all')
+    const validTypes = REPORT_TYPES.map(t => t.value);
+    return (defaultType && validTypes.includes(defaultType)) ? defaultType : "lab";
+  });
   const [doctor, setDoctor] = useState("");
   const [title, setTitle] = useState("");
   const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
@@ -23,7 +27,9 @@ export default function UploadReportModal({ isOpen, onClose, defaultType, onUplo
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setType(defaultType || "lab");
+    // Handle invalid default types (like 'all')
+    const validTypes = REPORT_TYPES.map(t => t.value);
+    setType((defaultType && validTypes.includes(defaultType)) ? defaultType : "lab");
   }, [defaultType]);
 
   const handleFileChange = (e) => {
