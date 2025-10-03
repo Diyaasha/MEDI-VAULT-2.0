@@ -88,7 +88,10 @@ MIT License
 ## Contact
 Created by Ashwin Yadav, Diptanshu Vishwa & Diyasha Nag 
 GitHub: [[MEDI-VAULT](https://github.com/DiptanshuVishwa/MEDI-VAULT)]  
-Email: [[your-email](diptanshuvishwa364@gmail.com)]
+
+- **Diptanshu Vishwa:** [diptanshuvishwa364@gmail.com](mailto:diptanshuvishwa364@gmail.com)  
+- **Diyasha Nag:** [diyashanag23@gmail.com](mailto:diyashanag23@gmail.com)  
+- **Ashwin Yadav:** [ashwinyadavv@gmail.com](mailto:ashwinyadavv@gmail.com) 
 
 ---
 
