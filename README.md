@@ -91,7 +91,7 @@ GitHub: [[MEDI-VAULT](https://github.com/DiptanshuVishwa/MEDI-VAULT)]
 
 - **Diptanshu Vishwa:** [diptanshuvishwa364@gmail.com](mailto:diptanshuvishwa364@gmail.com)  
 - **Diyasha Nag:** [diyashanag23@gmail.com](mailto:diyashanag23@gmail.com)  
-- **Ashwin Yadav:** [ashwinyadavv@gmail.com](mailto:ashwinyadavv@gmail.com) 
+- **Ashwin Yadav:** [ashwinyadavv911@gmail.com](mailto:ashwinyadavv911@gmail.com) 
 
 ---
 
