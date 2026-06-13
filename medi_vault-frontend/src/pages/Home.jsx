@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { FiBell, FiUser } from "react-icons/fi";
+import { FiBell, FiUser, FiClock, FiFileText, FiShield, FiMapPin, FiCpu, FiMessageSquare } from "react-icons/fi";
 import { toast } from "react-toastify";
 import usePageTitle from '../hooks/usePageTitle';
 import "./Home.css";
@@ -10,37 +10,37 @@ const features = [
     title: "Medicine Reminder",
     desc: "Never miss a dose again with smart notifications and personalized medication schedules.",
     route: "/Medicine-Reminder",
-    icon: "💊",
+    Icon: FiClock,
   },
   {
     title: "Medical History",
     desc: "Securely store and access your medical records, test results, and health checkups.",
     route: "/medical-history",
-    icon: "📋",
+    Icon: FiFileText,
   },
   {
     title: "Vaccinations & Surgeries",
     desc: "Track all vaccination dates and your surgical history conveniently in one place.",
     route: "/vaccination-and-surgery",
-    icon: "💉",
+    Icon: FiShield,
   },
   {
     title: "Find Medical Facilities",
     desc: "Locate nearby hospitals, clinics, and doctors quickly when you need care.",
     route: "/medical-facilities",
-    icon: "🏥",
+    Icon: FiMapPin,
   },
   {
-  title: "AI-Simplified",
-  desc: "Let AI summarize and simplify your insurance or medical documents for easy understanding.",
-  route: "/ai-simplified",
-  icon: "🤖",
-},
+    title: "AI Document Summarizer",
+    desc: "Upload medical reports, prescriptions, insurance papers, or test results and get simple AI-generated summaries that are easy to understand.",
+    route: "/ai-simplified",
+    Icon: FiCpu,
+  },
   {
-    title: "Treatments & Wellness",
-    desc: "Explore and track holistic treatments, therapies, and wellness remedies.",
-    route: "/treatments",
-    icon: "⚕️",
+    title: "AI Health Assistant",
+    desc: "Ask health-related questions, understand medical terms, get guidance on reports, medications, and general healthcare information through an intelligent AI chatbot.",
+    route: "/ai-health-assistant",
+    Icon: FiMessageSquare,
   },
 ];
 
@@ -188,7 +188,9 @@ function Home() {
               className="feature-card"
               onClick={() => navigate(feature.route)}
             >
-              <div className="feature-icon">{feature.icon}</div>
+              <div className="feature-icon">
+                <feature.Icon size={36} strokeWidth={1.5} />
+              </div>
               <h2 className="feature-title">{feature.title}</h2>
               <p className="feature-desc">{feature.desc}</p>
             </div>

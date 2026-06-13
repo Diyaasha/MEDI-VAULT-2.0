@@ -1,0 +1,28 @@
+{
+  "symptoms": [
+    "fever",
+    "cough",
+    "fatigue",
+    "headache",
+    "shortness_of_breath",
+    "nausea"
+  ],
+  "vitals": [
+    "heart_rate_resting",
+    "sleep_hours",
+    "activity_minutes",
+    "wearable_source"
+  ],
+  "adherence": [
+    "medications_count",
+    "missed_doses_last_week",
+    "late_doses_last_week",
+    "reminders_enabled",
+    "caregiver_support"
+  ],
+  "targets": [
+    "risk_diabetes",
+    "risk_heart_disease",
+    "risk_stress"
+  ]
+}

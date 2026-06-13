@@ -19,6 +19,7 @@ MEDI-VAULT is a full-stack healthcare application that allows users to securely 
 - User registration/login with JWT and Google OAuth integration
 - Secure medical document upload and management (PDF, images, DOCX)
 - AI-powered document text extraction and summarization
+- NLP-based patient query chatbot API with intent prediction and personalized answers
 - Medicine reminders, vaccination and surgery records
 - Search nearby medical facilities via map with geolocation
 - Responsive UI built with Material UI and React Hooks
@@ -75,6 +76,8 @@ Remember to set environment variables on Render and Vercel dashboards accordingl
 ## Usage
 - Register or log in via email/google oauth.
 - Upload medical documents and receive AI-powered summaries.
+- Ask patient-health questions through backend endpoint `POST /api/patient-query/ask` with body `{ "query": "your question" }` and Bearer token.
+- View supported chatbot intents using `GET /api/patient-query/intents`.
 - Create and manage medication reminders.
 - Track vaccination and surgery history.
 - Locate nearby medical services on interactive map.

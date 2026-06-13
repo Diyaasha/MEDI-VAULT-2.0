@@ -24,10 +24,11 @@ import MedicalDocumentsPage from "./components/MedicalDocumentsPage";
 // Import Vaccinations and Surgeries page/component (create if not existing)
 import VaccinationAndSurgery from "./pages/vaccinationAndSurgery";
 
-import TreatmentsPage from "./pages/TreatmentsPage";
 import DoshaAssessmentPage from "./pages/DoshaAssessmentPage";
 import HerbalMedicinesTab from "./components/HerbalMedicinesTab";
 import WellnessTrackingTab from "./components/WellnessTrackingTab";
+import AIHealthRiskPage from "./pages/AIHealthRiskPage";
+import AIHealthAssistantPage from "./pages/AIHealthAssistantPage";
 
 
 
@@ -125,14 +126,14 @@ function App() {
           }
         />
 
-        <Route 
-  path="/treatments" 
-  element={
-    <ProtectedRoute>
-      <TreatmentsPage />
-    </ProtectedRoute>
-  } 
-/>
+        <Route
+          path="/ai-health-risk"
+          element={
+            <ProtectedRoute>
+              <AIHealthRiskPage />
+            </ProtectedRoute>
+          }
+        />
 <Route
   path="/dosha-assessment"
   element={
@@ -143,6 +144,16 @@ function App() {
 />
 <Route path="/herbal-medicines" element={<HerbalMedicinesTab />} />
 <Route path="/wellness-tracking" element={<WellnessTrackingTab />} />
+
+        {/* AI Health Assistant Chatbot */}
+        <Route
+          path="/ai-health-assistant"
+          element={
+            <ProtectedRoute>
+              <AIHealthAssistantPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
 
       {/* Toast Notifications */}

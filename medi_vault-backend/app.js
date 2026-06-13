@@ -10,6 +10,7 @@ const userRoutes = require("./routes/userRoutes");
 const medicalFacilityRoutes = require("./routes/medicalFacilityRoutes");
 const medicalHistoryRoutes = require("./routes/medicalHistoryRoutes");
 const aiSimplifiedRoutes = require("./routes/aiSimplifiedRoutes");
+const patientQueryRoutes = require("./routes/patientQueryRoutes");
 
 // New route imports
 const vaccinationRoutes = require("./routes/vaccinationRoutes");
@@ -35,9 +36,26 @@ app.use(express.json()); // For JSON body parsing
 app.use(express.urlencoded({ extended: true })); // For form data
 
 // CORS configuration
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "http://localhost:3001",
+  "http://127.0.0.1:3001",
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "https://medi-vault-zeta.vercel.app",
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173", // Your frontend URL
+    origin: (origin, callback) => {
+      // Allow non-browser clients and explicitly listed browser origins.
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true, // Allow cookies & headers
   })
 );
@@ -80,6 +98,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/medical-facilities", medicalFacilityRoutes);
 app.use("/api/medical-history", medicalHistoryRoutes);
 app.use("/api/ai-simplified", aiSimplifiedRoutes);
+app.use("/api/patient-query", patientQueryRoutes);
 
 // New backend routes for vaccinations and surgeries
 app.use("/api/vaccinations", vaccinationRoutes);
