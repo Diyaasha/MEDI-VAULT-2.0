@@ -16,7 +16,7 @@ const MedicineReminder = () => {
   const token = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user")).token
     : null;
-  const baseUrl = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
+  const baseUrl = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : 'https://medi-vault-zsg1.onrender.com');
 
   const fetchReminders = useCallback(async () => {
     if (!token) return;

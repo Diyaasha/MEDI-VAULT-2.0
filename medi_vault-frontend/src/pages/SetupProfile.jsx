@@ -48,7 +48,7 @@ const SetupProfile = () => {
 
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com"}/api/user/profile`,
+        `${process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : 'https://medi-vault-zsg1.onrender.com')}/api/user/profile`,
         {
           method: "PUT",
           headers: {

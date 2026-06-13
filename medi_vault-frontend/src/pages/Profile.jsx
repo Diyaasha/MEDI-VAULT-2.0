@@ -24,7 +24,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         const res = await fetch(
-          `${process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com"}/api/user/profile`,
+          `${process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : 'https://medi-vault-zsg1.onrender.com')}/api/user/profile`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const data = await res.json();
@@ -61,7 +61,7 @@ const Profile = () => {
   const verifyPassword = async () => {
     try {
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com"}/api/user/profile/verify-password`,
+        `${process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : 'https://medi-vault-zsg1.onrender.com')}/api/user/profile/verify-password`,
         {
           method: "POST",
           headers: {
@@ -98,7 +98,7 @@ const Profile = () => {
             : formData.allergies,
       };
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com"}/api/user/profile`,
+        `${process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : 'https://medi-vault-zsg1.onrender.com')}/api/user/profile`,
         {
           method: "PUT",
           headers: {

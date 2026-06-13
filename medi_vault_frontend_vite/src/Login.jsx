@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Login.css';
 
-const API_BASE = 'https://medi-vault-zsg1.onrender.com/api';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3000/api' : 'https://medi-vault-zsg1.onrender.com/api';
 
 export default function Login({ onLogin }) {
   const [mode, setMode] = useState('login'); // 'login' | 'register'
