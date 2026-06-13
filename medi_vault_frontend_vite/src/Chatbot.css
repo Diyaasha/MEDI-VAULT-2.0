@@ -128,6 +128,19 @@
   transform: translateY(-1px);
 }
 
+.header-btn.logout {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+}
+
+.header-btn.logout:hover {
+  background: rgba(239, 68, 68, 0.22);
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #fecaca;
+  transform: translateY(-1px);
+}
+
 /* ===== MESSAGES AREA ===== */
 .chatbot-messages {
   flex: 1;

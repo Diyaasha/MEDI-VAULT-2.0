@@ -9,7 +9,7 @@ const features = [
   {
     title: "Medicine Reminder",
     desc: "Never miss a dose again with smart notifications and personalized medication schedules.",
-    route: "/Medicine-Reminder",
+    route: "/medicine-reminder",
     Icon: FiClock,
   },
   {

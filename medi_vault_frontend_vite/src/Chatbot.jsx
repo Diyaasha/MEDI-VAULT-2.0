@@ -74,6 +74,11 @@ export default function Chatbot({ token, onLogout }) {
         }),
       });
 
+      if (res.status === 401) {
+        onLogout();
+        return;
+      }
+
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
         throw new Error(errData.message || `Server error ${res.status}`);
@@ -160,6 +165,17 @@ export default function Chatbot({ token, onLogout }) {
               <path d="M12 5v14M5 12h14" />
             </svg>
             New Chat
+          </button>
+          <button
+            id="logout-btn"
+            className="header-btn logout"
+            onClick={onLogout}
+            title="Log out"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>
+            </svg>
+            Logout
           </button>
         </div>
       </div>
