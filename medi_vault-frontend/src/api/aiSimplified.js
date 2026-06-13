@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://medi-vault-zsg1.onrender.com';
 const API_URL = `${API_BASE_URL}/api`;
 
 // Create axios instance with authentication

@@ -24,7 +24,7 @@ export default function MedicalHistory() {
   const [modalOpen, setModalOpen] = useState(false);
   const [uploadType, setUploadType] = useState(null);
 
-  const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+  const API_URL = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
   const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
 
   useEffect(() => {

@@ -70,7 +70,7 @@ const MedicalFacilitiesMap = () => {
         setLoadingFacilities(true);
         setErrorFacilities(null);
         const res = await fetch(
-          `${process.env.REACT_APP_API_URL || "http://localhost:3000"}/api/medical-facilities?lat=${lat}&lng=${lng}&type=hospital,pharmacy`
+          `${process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com"}/api/medical-facilities?lat=${lat}&lng=${lng}&type=hospital,pharmacy`
         );
         if (!res.ok) throw new Error("Failed to fetch facilities");
         let data = await res.json();

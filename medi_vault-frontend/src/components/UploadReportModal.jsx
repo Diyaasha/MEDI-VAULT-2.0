@@ -49,7 +49,7 @@ export default function UploadReportModal({ isOpen, onClose, defaultType, onUplo
       const token = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")).token : null;
       if (!token) throw new Error("Not authenticated");
 
-      const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3000";
+      const API_URL = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
 
       const formData = new FormData();
       formData.append("category", type);

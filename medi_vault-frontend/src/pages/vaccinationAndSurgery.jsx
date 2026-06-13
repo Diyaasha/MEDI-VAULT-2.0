@@ -32,7 +32,7 @@ const getStatusIcon = (status) => STATUS_ICONS[status] || STATUS_ICONS.Default;
 const getStatusVariant = (status) =>
   STATUS_VARIANTS[status] || STATUS_VARIANTS.Default;
 
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_BASE = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
 
 const VaccinationAndSurgery = () => {
   usePageTitle('Vaccinations & Surgery');

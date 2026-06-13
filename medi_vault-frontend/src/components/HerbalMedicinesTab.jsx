@@ -3,7 +3,7 @@ import HerbalMedicineList from "./HerbalMedicineList";
 import HerbalMedicineForm from "./HerbalMedicineForm";
 import "./HerbalMedicineTab.css"; // ⬅️ add css file
 
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_BASE = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
 
 export default function HerbalMedicinesTab() {
   const [showForm, setShowForm] = useState(false);

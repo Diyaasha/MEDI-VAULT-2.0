@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DoshaAssessmentForm from "../components/DoshaAssessmentForm";
 import DoshaAssessmentResult from "../components/DoshaAssessmentResult";
 
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_BASE = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
 
 export default function DoshaAssessmentPage() {
   const [assessment, setAssessment] = useState(null);

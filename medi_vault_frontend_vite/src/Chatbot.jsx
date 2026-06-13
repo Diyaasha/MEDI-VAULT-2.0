@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import './Chatbot.css';
 
-const API_BASE = 'http://localhost:3000/api';
+const API_BASE = 'https://medi-vault-zsg1.onrender.com/api';
 
 // Simple markdown-like formatter for bot messages
 function formatBotMessage(text) {

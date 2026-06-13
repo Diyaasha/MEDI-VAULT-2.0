@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./WellnessTracking.module.css";
 
 
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_BASE = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
 
 export default function WellnessLogList({ onEdit, reloadList }) {
   const [logs, setLogs] = useState([]);

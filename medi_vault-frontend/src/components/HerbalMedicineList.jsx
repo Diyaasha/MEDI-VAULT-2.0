@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import "./HerbalMedicineList.css";
 
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
+const API_BASE = process.env.REACT_APP_API_URL || "https://medi-vault-zsg1.onrender.com";
 
 export default function HerbalMedicineList({ onEdit, reloadList }) {
   const [medicines, setMedicines] = useState([]);
