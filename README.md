@@ -5,7 +5,10 @@ MEDI-VAULT is a full-stack healthcare application that allows users to securely 
 
 ## Live Demo
 - Frontend: [https://medi-vault-zeta.vercel.app](https://medi-vault-zeta.vercel.app)
+- Latested 2.0 version : https://medi-vault-2-0.vercel.app/
 - Backend API: [https://medi-vault-zsg1.onrender.com](https://medi-vault-zsg1.onrender.com)
+- <img width="1917" height="883" alt="image" src="https://github.com/user-attachments/assets/f8656974-a41d-49fb-b34d-1ffad5f5afd7" />
+
 
 ## Technologies Used
 - Frontend: React, Material UI, Axios
